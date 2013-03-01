@@ -2,10 +2,10 @@ var port = process.env.PORT || 8080;
 
 var app = require('http').createServer(handler)
   , io = require('socket.io').listen(app)
-  , fs = require('fs')
+  , fs = require('fs');
 
-app.listen(parseInt(port, 10);
-io.set('log level', 1););
+app.listen(parseInt(port, 10));
+io.set('log level', 1);
 
 function handler (req, res) {
   fs.readFile(__dirname + '/client/index.html',
