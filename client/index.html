@@ -1,7 +1,6 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
-  var host = process.env.IP;
-  var socket = io.connect(host);
+  var socket = io.connect();
   socket.on('news', function (data) {
     console.log(data);
     socket.emit('my other event', { my: 'data' });
