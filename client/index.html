@@ -1,11 +1,9 @@
-<script src="/socket.io/socket.io.js"></script>
-<script>
-  var socket = io.connect();
-  socket.on('news', function (data) {
-    console.log(data);
-    socket.emit('my other event', { my: 'data' });
-  });
-</script>
-
-
-HELLO WORLD
+<!doctype html>
+<html>
+  <head>
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="/javascripts/application.js" defer></script>
+  </head>
+  <body>
+  </body>
+</html>
