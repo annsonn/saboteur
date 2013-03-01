@@ -1,0 +1,5 @@
+{"ts":1362098296558,"silentsave":true,"restoring":false,"patch":[[]],"length":0}
+{"contributors":[],"silentsave":false,"ts":1362098300403,"patch":[[{"diffs":[[1,"<script src=\"/socket.io/socket.io.js\"></script>\r\n<script>\r\n  var socket = io.connect('http://localhost');\r\n  socket.on('news', function (data) {\r\n    console.log(data);\r\n    socket.emit('my other event', { my: 'data' });\r\n  });\r\n</script>"]],"start1":0,"start2":0,"length1":0,"length2":238}]],"length":238,"saved":false}
+{"ts":1362098492434,"patch":[[{"diffs":[[0,"http"],[1,"s"],[0,"://"],[-1,"localhost"],[1,"c9.io/annsonn/saboteur"],[0,"');\r"]],"start1":86,"start2":86,"length1":20,"length2":34}]],"length":252,"saved":false}
+{"ts":1362098564274,"patch":[[{"diffs":[[0,"var "],[-1,"socket = io.connect('https://c9.io/annsonn/saboteur'"],[1,"host = process.env.IP;\r\n  var socket = io.connect(host"],[0,");\r\n"]],"start1":61,"start2":61,"length1":60,"length2":62}]],"length":254,"saved":false}
+{"ts":1362098583657,"patch":[[{"diffs":[[0,"  });\r\n</script>"],[1,"\r\n\r\n\r\nHELLO WORLD"]],"start1":238,"start2":238,"length1":16,"length2":33}]],"length":271,"saved":false}
