@@ -10,10 +10,36 @@ socket.on('news', function (data) {
 // Connect to server
 var socket = io.connect();
 
-// Listen for acknoledgement
+var canvas = document.getElementById("canvas");
+      
+var stage = new createjs.Stage(canvas);
 
-// Draw initial screens
-var context = document.querySelector('#game').getContext('2d');
+var loading = {};
 
-// Listen for more stuff and react
+loading.init = function() {
+  
+  //Create a Shape DisplayObject.
+  var square = new createjs.Shape();
+  square.graphics.beginFill("red").drawRect(0, 0, 100, 200);
+  
+  loading.square = square;
+  //Add Shape instance to stage display list.
+  stage.addChild(square);
+  //Update stage will render next frame
+  
+  square.onClick = function() {
+		console.log('yellow');
+		square.graphics.beginFill("yellow").drawRect(0, 0, 100, 200);
+  };
+};
+
+createjs.Ticker.addEventListener("tick", handleTick);
+
+function handleTick() {
+  stage.update();
+}
+
+loading.init();   
+
+	
 // Listen for state
