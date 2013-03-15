@@ -98,6 +98,8 @@ io.sockets.on('connection', function (socket) {
 
 
   // Send acknoledgement
+
+  
   // Synchronize state
   
   

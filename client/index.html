@@ -3,17 +3,21 @@
   <head>
     <script src="/socket.io/socket.io.js" defer></script>
     <script src="http://code.createjs.com/createjs-2013.02.12.min.js" defer></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js" defer></script>
     <script src="/javascripts/application.js" defer></script>
-    <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
   </head>
   <body>
-    <div class="loading-layer position-relative">
-      
-    </div>
-   	<div class="lobby-layer position-relative">
-      
-    </div>
-    <div class="choose-role-layer position-relative">
-    </div>
+    <article id="game" page="loading">
+    	<section id="loading" class="layer">
+        loading screen!
+      </section>
+      <section id="lobby" class="layer">
+        lobby screen!
+      </section>
+      <section id="choose-role" class="layer">
+        choose role!
+      </section>
+    </article>
   </body>
 </html>

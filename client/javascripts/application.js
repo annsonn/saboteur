@@ -14,32 +14,8 @@ var canvas = document.getElementById("canvas");
       
 var stage = new createjs.Stage(canvas);
 
-var loading = {};
-
-loading.init = function() {
-  
-  //Create a Shape DisplayObject.
-  var square = new createjs.Shape();
-  square.graphics.beginFill("red").drawRect(0, 0, 100, 200);
-  
-  loading.square = square;
-  //Add Shape instance to stage display list.
-  stage.addChild(square);
-  //Update stage will render next frame
-  
-  square.onClick = function() {
-		console.log('yellow');
-		square.graphics.beginFill("yellow").drawRect(0, 0, 100, 200);
-  };
-};
-
-createjs.Ticker.addEventListener("tick", handleTick);
-
-function handleTick() {
-  stage.update();
-}
-
-loading.init();   
-
-	
-// Listen for state
+// Loading screen
+socket.on('connect', function (data) {
+  console.log(data);
+  $('#game').attr('page', 'lobby'); 
+});

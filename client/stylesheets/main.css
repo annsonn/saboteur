@@ -1,3 +1,7 @@
-.block {
-  display: block;
+#game section {
+  display: none;
+}
+
+#game[page=loading] #loading, #game[page=lobby] #lobby, #game[page=choose-role] #choose-role {
+  display: block
 }
