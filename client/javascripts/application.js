@@ -17,5 +17,9 @@ var stage = new createjs.Stage(canvas);
 // Loading screen
 socket.on('connect', function (data) {
   console.log(data);
-  $('#game').attr('page', 'lobby'); 
+  if (window.innerWidth < 767) {
+    $('#game').attr('page', 'lobby-controller');
+  } else {
+    $('#game').attr('page', 'lobby-view'); 
+  }
 });

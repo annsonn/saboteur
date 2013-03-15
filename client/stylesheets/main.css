@@ -2,6 +2,9 @@
   display: none;
 }
 
-#game[page=loading] #loading, #game[page=lobby] #lobby, #game[page=choose-role] #choose-role {
+#game[page=loading] #loading, 
+#game[page=lobby-view] #lobby-view,
+#game[page=lobby-controller] #lobby-controller, 
+#game[page=choose-role] #choose-role {
   display: block
 }
