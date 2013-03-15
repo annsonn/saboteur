@@ -8,3 +8,47 @@
 #game[page=choose-role] #choose-role {
   display: block
 }
+
+
+
+#f1_container {
+  position: relative;
+  width: 313px;
+  height: 500px;
+  z-index: 1;
+  margin: auto;
+  border-radius: 10px;
+}
+#f1_container {
+  perspective: 1000;
+  -webkit-perspective: 1000;
+}
+#f1_card {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  transition: all 1.0s linear;
+  -webkit-transition: all 1.0s linear;
+}
+#f1_container:hover #f1_card {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+}
+.face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: block;
+  padding: 10px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility:hidden;
+  text-align: center;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+.back {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+}
