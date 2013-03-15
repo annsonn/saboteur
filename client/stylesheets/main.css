@@ -11,7 +11,7 @@
 
 
 
-#f1_container {
+#card_container {
   position: relative;
   width: 313px;
   height: 500px;
@@ -19,11 +19,11 @@
   margin: auto;
   border-radius: 10px;
 }
-#f1_container {
+#card_container {
   perspective: 1000;
   -webkit-perspective: 1000;
 }
-#f1_card {
+#loading_card {
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
@@ -31,7 +31,7 @@
   transition: all 1.0s linear;
   -webkit-transition: all 1.0s linear;
 }
-#f1_container:hover #f1_card {
+#card_container:hover #loading_card {
   transform: rotateY(180deg);
   -webkit-transform: rotateY(180deg);
 }
