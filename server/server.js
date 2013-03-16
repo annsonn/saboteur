@@ -1,23 +1,97 @@
 // Server module
-exports.listen = function() {
-    var port = process.env.PORT || 8080;
+var Server = function() {
+  var self = {
+    games: {},
+
+    listen: function() {
+      console.log(self);
+      console.log('Creating server...');
+      var port = process.env.PORT || 8080;
+      
+      var app = require('http').createServer(self._handler),
+          io = require('socket.io').listen(app);
+      
+      app.listen(parseInt(port, 10));
+      io.set('log level', 1);	// Debug
+      
+      io.sockets.on('connection', function (socket) {
+        socket.send('Who are you?');
+        console.log('Unknown connection');
+        
+        socket.on('identity', function (data) {
+          // {name, type}
+          socket.set('identity', data, function() {
+            console.log(data.name + ' connected.');
+          });
+        });
+        
+        socket.on('create', function() {
+          var gameId = Math.random().toString(20).substr(2, 5);
+          socket.set('game', gameId, function() {
+            socket.emit('joined', gameId);
+            console.log('Creating game ' + gameId);
+            
+            // TODO Create new game
+            games[gameId] = {host: socket.id, name: gameId};
+            socket.join(gameId);
+          });
+        });
+        
+        socket.on('join', function(id) {
+          // TODO check if already in game
+          socket.set('game', id, function() {
+          	socket.join(id);    
+            console.log('Device joined ' + id);
+          });
+        });
+        
+        socket.on('leave', function() {
+          // TODO check if in game
+          socket.get('game', function(gameId) {
+            socket.set('game', null, function() {
+              socket.leave(gameId); 
+              console.log('Device left ' + gameId);
+            });
+          });
+        });
+        
+        socket.on('message', function(message) {
+          socket.get('game', function(gameId) {
+            if (gameId) {
+              console.log('[' + gameId + '] Message: ' + message);
+              socket.to(gameId).send(message);
+            } else {
+              console.log('Message: ' + message);
+              socket.broadcast.send(message);	// TODO remove this
+            }
+          });
+        });
+        
+        socket.on('disconnect', function() {
+          socket.get('game', function(id) {
+            if (games[id].host === socket.id) {
+              // TODO destroy game
+            } else {
+            }
+          });
+        });
+      
+      
+        // Send acknoledgement
+        // Synchronize state
+        
+      });
+    },
     
-    var app = require('http').createServer(handler),
-        io = require('socket.io').listen(app),
-        url = require("url"),
-        path = require("path"),
-        fs = require('fs');
-    
-    app.listen(parseInt(port, 10));
-    io.set('log level', 1);	// Debug
-    
-    var mime = {
-      js: 'text/javascript'
-    }
-    
-    function handler(request, response) {
+    _handler: function (request, response) {
+      var url = require("url"),
+          path = require("path"),
+          fs = require('fs');
       var uri = url.parse(request.url).pathname,
           filename = path.join(__dirname, '../client', uri);
+      var mime = {
+        js: 'text/javascript'
+      };
       fs.exists(filename, function(exists) {
         if(!exists) {
           response.writeHead(404, {"Content-Type": "text/plain"});
@@ -25,9 +99,9 @@ exports.listen = function() {
           response.end();
           return;
         }
-    
+      
         if (fs.statSync(filename).isDirectory()) filename += '/index.html';
-    
+      
         fs.readFile(filename, "binary", function(err, file) {
           if(err) {
             response.writeHead(500, {"Content-Type": "text/plain"});
@@ -35,7 +109,7 @@ exports.listen = function() {
             response.end();
             return;
           }
-    
+      
           // TODO need MIME type mappings
           var changedMimeType = false;
           for (var type in mime) {
@@ -50,58 +124,13 @@ exports.listen = function() {
           }
           response.write(file, "binary");
           response.end();
-        });
-      });
+        }); // fs.readFile
+      }); // fs.exists
     }
-    
-    var games = {};
-    io.sockets.on('connection', function (socket) {
-      
-      socket.send('Who are you?');
-      console.log('Unknown connection');
-    
-      socket.on('handshake', function (data) {
-        socket.set('type', data, function() {
-          console.log('A ' + data + ' connected.');
-        });
-      });
-      
-      socket.on('create', function() {
-        socket.get('type', function(err, type) {
-          if (type == 'view') {
-            var gameId = Math.random().toString(20).substr(2, 5);
-            socket.set('game', gameId, function() {
-              socket.emit('joined', gameId);
-              console.log('Creating game ' + gameId);
-    
-              // TODO Create new game
-              games[gameId] = {socket: [socket]};
-            });
-          } else {
-            console.log('Only views can create games');
-          }
-        });
-      });
-      
-      socket.on('join', function(id) {
-        if (games[id] && games[id].sockets.length < 12) {
-          console.log('Device joined ' + id);
-        }
-      });
-      
-      socket.on('message', function(data) {
-        console.log('Message: ' + data);
-        socket.broadcast.emit('message', data);
-      });
-      
-      socket.on('disconnect', function() {
-        // TODO if game create, destroy game
-      });
-    
-    
-      // Send acknoledgement
-      // Synchronize state
-      
-    });
+  };
+  return self;
 };
 
+exports.createServer = function() {
+  return new Server();
+};
