@@ -1,5 +1,5 @@
 // Server module
-exports.start = function() {
+exports.listen = function() {
     var port = process.env.PORT || 8080;
     
     var app = require('http').createServer(handler),
