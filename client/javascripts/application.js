@@ -17,7 +17,7 @@ var stage = new createjs.Stage(canvas);
 // Loading screen
 socket.on('connect', function (data) {
   console.log(data);
-  if (window.innerWidth < 767) {
+  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
     $('#game').attr('page', 'lobby-controller');
   } else {
     $('#game').attr('page', 'lobby-view'); 
