@@ -1,5 +1,5 @@
-// Server module
-exports.start = function() {
+// Game module
+exports.startServer = function() {
     var port = process.env.PORT || 8080;
     
     var app = require('http').createServer(handler),
@@ -25,9 +25,9 @@ exports.start = function() {
           response.end();
           return;
         }
-
+    
         if (fs.statSync(filename).isDirectory()) filename += '/index.html';
-
+    
         fs.readFile(filename, "binary", function(err, file) {
           if(err) {
             response.writeHead(500, {"Content-Type": "text/plain"});
@@ -35,7 +35,7 @@ exports.start = function() {
             response.end();
             return;
           }
-
+    
           // TODO need MIME type mappings
           var changedMimeType = false;
           for (var type in mime) {
@@ -104,3 +104,4 @@ exports.start = function() {
       
     });
 };
+
