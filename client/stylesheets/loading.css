@@ -45,8 +45,9 @@
 }
 
 .loading-text {
-  color: blue;
+  color: white;
   font-size: 20px;
   font-weight: bold;
 	font-family:Arial,Helvetica,sans-serif;
+  text-shadow: 2px 2px black;
 }

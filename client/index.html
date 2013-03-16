@@ -12,25 +12,34 @@
   <body>
     <article id="game" page="loading">
     	<section id="loading" class="layer">
-        <div id="card_container">
-          <div id="loading_card" class="shadow">
-            <div class="front face">
-              <img src="/images/job-card-back.jpg"/>
-            </div>
-            <div class="back face">
-							<img src="/images/job-saboteur.jpg"/>	
+        <div class="screen">
+          <div id="card_container">
+            <div id="loading_card" class="shadow">
+              <div class="front face">
+                <img src="/images/job-card-back.jpg"/>
+              </div>
+              <div class="back face">
+                <img src="/images/job-saboteur.jpg"/>	
+              </div>
             </div>
           </div>
-        </div>
-        <div class="loading-text center">
-        	Now Loading!
+          <div class="loading-text center">
+        		Now Loading!
+        	</div>
         </div>
       </section>
       <section id="lobby-view" class="layer">
-        lobby desktop screen!
+        <div class="screen">
+          lobby desktop screen!
+          <button type="button" onclick="">Create a Game!</button>
+        </div>
       </section>
       <section id="lobby-controller" class="layer">
-        lobby mobile screen!
+        <div class="screen">
+          lobby mobile screen!
+          <input type="text" name="code">
+        	<input type="button" name="Submit" value="Enter">
+        </div>
       </section>
       <section id="choose-role" class="layer">
         choose role!
