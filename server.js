@@ -1,3 +1,3 @@
-var game = require('./server/game.js');
+var server = require('./server/server.js');
 
-game.startServer();
+server.listen();
