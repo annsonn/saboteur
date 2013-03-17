@@ -1,4 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Rosario:400,700italic);
+@import url(/stylesheets/loading.css);
+@import url(/stylesheets/lobby.css);
 
 #game section {
   display: none;
@@ -10,7 +12,6 @@
 #game[page=choose-role] #choose-role {
   display: block
 }
-
 
 .center {
   margin: auto;
