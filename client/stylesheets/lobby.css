@@ -1,0 +1,31 @@
+@import url(http://fonts.googleapis.com/css?family=Rosario:400,700italic);
+
+#title {
+  color: yellow; 
+  font-family: 'Rosario', latin;
+  font-size: 100px;
+  font-weight: bold;
+  -webkit-text-stroke: 3px black;
+}
+
+.button {
+  font-size: 50px;
+  font-weight: bold;
+  background: yellow;
+  padding: 10px 50px;
+	text-transform: uppercase;  
+  border-width: 10px;
+  border-style: solid;
+  border-top-color: #fff99f;
+  border-left-color: #e2db72;
+  border-right-color: #a59f4b;
+  border-bottom-color: #67632b;
+}
+
+.button:active {
+  padding: 13px 47px 7px 53px;
+  border-bottom-color: #fff99f;
+  border-right-color: #e2db72;
+  border-left-color: #a59f4b;
+  border-top-color: #67632b;
+}

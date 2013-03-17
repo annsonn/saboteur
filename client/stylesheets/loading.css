@@ -1,16 +1,22 @@
 
 #card_container {
   position: relative;
-  width: 313px;
-  height: 500px;
+  width: 160px;
+  height: 254px;
   z-index: 1;
   margin: auto;
-  border-radius: 30px;
 }
 #card_container {
   perspective: 1000;
   -webkit-perspective: 1000;
 }
+#card_container img {
+	max-width: 156px;
+  max-height: 250px;
+  border-radius: 15px;
+  border: 2px solid black;
+}
+
 #loading_card {
   width: 100%;
   height: 100%;
@@ -21,7 +27,7 @@
 }
 #card_container:hover #loading_card {
   transform: rotateY(180deg);
-  -webkit-transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg); 
 }
 .face {
   position: absolute;
@@ -38,10 +44,6 @@
 .back {
   transform: rotateY(180deg);
   -webkit-transform: rotateY(180deg);
-}
-
-.face img {
-  border-radius: 30px;
 }
 
 .loading-text {
