@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <script src="/socket.io/socket.io.js" defer></script>
     <script src="http://code.createjs.com/createjs-2013.02.12.min.js" defer></script>
     <script src="http://code.jquery.com/jquery-1.9.1.min.js" defer></script>
@@ -32,19 +33,27 @@
             Saboteur
           </div>
         	<div class="center">
-          	<button class="button" type="button" onclick="">Create a Game!</button>
+          	<button class="input create-game" type="button" onclick="socket.emit('create', { type: 'view' });">Create a Game!</button>
           </div>          
         </div>
       </section>
       <section id="lobby-controller" class="layer">
         <div class="screen">
-          lobby mobile screen!
-          <input type="text" name="code">
-        	<input type="button" name="Submit" value="Enter">
+          <div id="title" class="center">
+            Saboteur
+          </div>
+          <div id="inputs" class="center">
+            <input class="code" type="text" name="code">
+            <input class="input join" type="button" name="Submit" value="Enter">
+          </div>
         </div>
       </section>
       <section id="choose-role" class="layer">
-        choose role!
+         <div class="screen">
+          <div id="title" class="center">
+            Saboteur
+          </div>
+        </div>
       </section>
     </article>
   </body>

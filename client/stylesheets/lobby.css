@@ -1,30 +1,36 @@
 #title {
   color: yellow; 
   font-family: 'Rosario', latin;
-  font-size: 100px;
+  font-size: 65px;
   font-weight: bold;
   margin-bottom: 50px;
-  -webkit-text-stroke: 3px black;
+  -webkit-text-stroke: 1px black;
 }
 
-.button {
+.input {
   background: yellow;
   border-top-color: #fff99f;
   border-left-color: #e2db72;
   border-right-color: #a59f4b;
   border-bottom-color: #67632b;
   border-style: solid;
-  border-width: 10px;
-  font-size: 50px;
   font-weight: bold;
-  padding: 10px 50px;
 	text-transform: uppercase;  
 }
 
-.button:active {
+.input:active {
   border-bottom-color: #fff99f;
   border-right-color: #e2db72;
   border-left-color: #a59f4b;
   border-top-color: #67632b;
+}
+
+.create-game {
+  border-width: 10px;
+  font-size: 50px;
+  padding: 10px 50px;
+}
+
+.create-game:active {
   padding: 13px 47px 7px 53px;
 }
