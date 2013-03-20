@@ -14,8 +14,9 @@
   width: 100%;
   
   transform-style: preserve-3d;
-  -webkit-transform-style: preserve-3d;
   transition: all 1.0s linear;
+  
+  -webkit-transform-style: preserve-3d;
   -webkit-transition: all 1.0s linear;
   
   animation-name:card_rotation;
@@ -29,22 +30,18 @@
   -webkit-animation-iteration-count:infinite;
 }
 
-#loading_card img {
+#loading_card img {  
   border-radius: 20px;
   border: 3px solid black;
   max-width: 300px;
   max-height: 300px;
 }
 
-/*#card_container:hover #loading_card {
-  transform: rotateY(180deg);
-  -webkit-transform: rotateY(180deg); 
-}*/
-
 .face {
   backface-visibility: hidden;
-  -webkit-backface-visibility:hidden;
   box-sizing: border-box;
+  
+  -webkit-backface-visibility:hidden;
   -webkit-box-sizing: border-box;
   
   height: 100%;
@@ -60,11 +57,7 @@
 }
 
 .loading-text {
-  color: yellow;
-  font-family: 'Rosario', latin;
   font-size: 40px;
-  font-weight: bold;
-  -webkit-text-stroke: 1px black;
 }
 
 @keyframes card_rotation {

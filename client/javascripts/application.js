@@ -21,14 +21,14 @@ socket.on('connect', function (data) {
   }
 });
 
-var windowHeight = window.innerHeight - 70;
-var windowWidth = window.innerWidth - 70;
+var windowHeight = window.innerHeight-50;
+var windowWidth = window.innerWidth-50;
 $('.screen').css('height', windowHeight + 'px')
 $('.screen').css('width', windowWidth + 'px')
 
 window.onresize = function(event) {
-	windowHeight = window.innerHeight - 70;
-  windowWidth = window.innerWidth -70;
+	windowHeight = window.innerHeight-50;
+  windowWidth = window.innerWidth-50;
   $('.screen').css('height', windowHeight + 'px')
   $('.screen').css('width', windowWidth + 'px')
 }
