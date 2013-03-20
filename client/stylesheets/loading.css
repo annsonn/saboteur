@@ -17,6 +17,16 @@
   -webkit-transform-style: preserve-3d;
   transition: all 1.0s linear;
   -webkit-transition: all 1.0s linear;
+  
+  animation-name:card_rotation;
+  animation-duration:3s;
+  animation-iteration-count:infinite;
+  animation-timing-function:linear;
+	
+  -webkit-animation-name:card_rotation;
+  -webkit-animation-duration:3s;
+  -webkit-animation-timing-function:linear;
+  -webkit-animation-iteration-count:infinite;
 }
 
 #loading_card img {
@@ -26,10 +36,10 @@
   max-height: 300px;
 }
 
-#card_container:hover #loading_card {
+/*#card_container:hover #loading_card {
   transform: rotateY(180deg);
   -webkit-transform: rotateY(180deg); 
-}
+}*/
 
 .face {
   backface-visibility: hidden;
@@ -55,4 +65,22 @@
   font-size: 40px;
   font-weight: bold;
   -webkit-text-stroke: 1px black;
+}
+
+@keyframes card_rotation {
+    from {
+        transform:rotateY(0deg);    
+    }   
+    to {
+        transform:rotateY(360deg);    
+    }
+}
+
+@-webkit-keyframes card_rotation {
+    from {
+        -webkit-transform:rotateY(0deg);
+    }
+    to {
+        -webkit-transform:rotateY(360deg);    
+    }
 }
