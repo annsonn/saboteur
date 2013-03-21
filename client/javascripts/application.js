@@ -10,16 +10,25 @@ socket.on('news', function (data) {
 // Connect to server
 var socket = io.connect();
 
-var canvas = document.getElementById("canvas");
-      
-var stage = new createjs.Stage(canvas);
-
 // Loading screen
+
 socket.on('connect', function (data) {
   console.log(data);
-  if (window.innerWidth < 767) {
+  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
     $('#game').attr('page', 'lobby-controller');
   } else {
     $('#game').attr('page', 'lobby-view'); 
   }
 });
+
+var windowHeight = window.innerHeight-50;
+var windowWidth = window.innerWidth-50;
+$('.screen').css('height', windowHeight + 'px')
+$('.screen').css('width', windowWidth + 'px')
+
+window.onresize = function(event) {
+	windowHeight = window.innerHeight-50;
+  windowWidth = window.innerWidth-50;
+  $('.screen').css('height', windowHeight + 'px')
+  $('.screen').css('width', windowWidth + 'px')
+}

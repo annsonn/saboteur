@@ -1,38 +1,59 @@
 <!doctype html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <script src="/socket.io/socket.io.js" defer></script>
     <script src="http://code.createjs.com/createjs-2013.02.12.min.js" defer></script>
     <script src="http://code.jquery.com/jquery-1.9.1.min.js" defer></script>
     <script src="/javascripts/application.js" defer></script>
     <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
-    <link rel="stylesheet" type="text/css" href="/stylesheets/loading.css">
   </head>
   <body>
     <article id="game" page="loading">
     	<section id="loading" class="layer">
-        <div id="card_container">
-          <div id="loading_card" class="shadow">
-            <div class="front face">
-              <img src="/images/job-card-back.jpg"/>
-            </div>
-            <div class="back face">
-							<img src="/images/job-saboteur.jpg"/>	
+        <div class="screen">
+          <div id="card_container">
+            <div id="loading_card" class="shadow">
+              <div class="front face">
+                <img src="/images/job-card-back.jpg"/>
+              </div>
+              <div class="back face">
+                <img src="/images/job-saboteur.jpg"/>	
+              </div>
             </div>
           </div>
-        </div>
-        <div class="loading-text center">
-        	Now Loading!
+          <div class="loading-text title center">
+        		Now Loading!
+        	</div>
         </div>
       </section>
       <section id="lobby-view" class="layer">
-        lobby desktop screen!
+        <div class="screen">
+          <div id="title" class="lobby-text title center">
+            Saboteur
+          </div>
+        	<div class="center">
+          	<button class="input create-game" type="button" onclick="socket.emit('create', { type: 'view' });">Create a Game!</button>
+          </div>          
+        </div>
       </section>
       <section id="lobby-controller" class="layer">
-        lobby mobile screen!
+        <div class="screen">
+          <div id="title" class="center">
+            Saboteur
+          </div>
+          <div id="inputs" class="center">
+            <input class="code" type="text" name="code">
+            <input class="input join" type="button" name="Submit" value="Enter">
+          </div>
+        </div>
       </section>
       <section id="choose-role" class="layer">
-        choose role!
+         <div class="screen">
+          <div id="title" class="center">
+            Saboteur
+          </div>
+        </div>
       </section>
     </article>
   </body>
