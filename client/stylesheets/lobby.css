@@ -1,0 +1,27 @@
+.lobby-text {
+  font-size: 65px;
+}
+
+.input {
+  background: yellow;
+  border-color: #fff99f #e2db72 #a59f4b #67632b;
+  border-radius: 50px;
+  border-style: solid;
+  font-weight: bold;
+	text-transform: uppercase;  
+}
+
+.input:active {
+  border-color: #a59f4b #e2db72 #fff99f #67632b;
+}
+
+.create-game {
+  border-width: 10px;
+  font-size: 40px;
+  padding: 10px 40px;
+}
+
+.create-game:active {
+  padding: 13px 37px 7px 43px;
+  box-shadow: 0 0 40px white; 
+}

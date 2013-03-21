@@ -1,3 +1,7 @@
+@import url(http://fonts.googleapis.com/css?family=Rosario:400,700italic);
+@import url(/stylesheets/loading.css);
+@import url(/stylesheets/lobby.css);
+
 #game section {
   display: none;
 }
@@ -9,8 +13,41 @@
   display: block
 }
 
-
 .center {
   margin: auto;
   text-align: center;
+}
+
+body {
+  background-color: black;
+}
+
+.layer {
+	background-image: url(/images/background.jpg);
+  background-size: cover;
+  border: 5px solid;    
+  border-color: white #cccccc #818181 #cccccc;
+  border-radius: 20px;
+	margin: 20px;
+}
+
+.screen {
+  border-radius: 20px;
+  background: -webkit-radial-gradient(circle, transparent, black);
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.title {
+	color: yellow;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+	font-weight: bold;  
+	text-shadow:
+       3px 3px 0 #000,
+     -1px -1px 0 #000,  
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+       1px 1px 0 #000;
+  
+  -webkit-text-stroke: 1px black;
 }
