@@ -10,6 +10,7 @@
   </head>
   <body>
     <article id="game" page="loading">
+      
     	<section id="loading" class="layer">
         <div class="screen">
           <div id="card_container">
@@ -26,6 +27,7 @@
         		Now Loading!
         	</div>
         </div>
+        
       </section>
       <section id="lobby-view" class="layer">
         <div class="screen">
@@ -37,17 +39,19 @@
           </div>          
         </div>
       </section>
+      
       <section id="lobby-controller" class="layer">
         <div class="screen">
-          <div id="title" class="center">
+          <div id="title" class="lobby-text title center">
             Saboteur
           </div>
           <div id="inputs" class="center">
-            <input class="code" type="text" name="code">
-            <input class="input join" type="button" name="Submit" value="Enter">
+            <input id="code" class="code " type="text" name="code">
+            <input class="input join" type="button" onclick="socket.emit('join', { type: 'view', code: $('#code').val() });" name="Submit" value="Enter">
           </div>
         </div>
       </section>
+      
       <section id="choose-role" class="layer">
          <div class="screen">
           <div id="title" class="center">
