@@ -16,10 +16,8 @@ socket.on('connect', function (data) {
   console.log(data);
   if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
     $('#game').attr('page', 'lobby-controller');
-    socket.emit('handshake', { type: 'controller' });
   } else {
     $('#game').attr('page', 'lobby-view');   
-    socket.emit('handshake', { type: 'view' });
   }	
 });
 
