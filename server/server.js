@@ -19,7 +19,7 @@ var Server = function() {
         socket.on('create', function() {
           var gameId = Math.random().toString(20).substr(2, 5);
           socket.set('game', gameId, function() {
-            socket.emit('joined', {name: gameId});
+            socket.emit('created', {name: gameId});
             console.log('Device created game ' + gameId);
             
             // TODO Create new game
