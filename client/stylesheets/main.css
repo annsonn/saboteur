@@ -24,6 +24,7 @@ body {
 
 .layer {
 	background-image: url(/images/background.jpg);
+  background-position:center; 
   background-size: cover;
   border: 5px solid;    
   border-color: white #cccccc #818181 #cccccc;

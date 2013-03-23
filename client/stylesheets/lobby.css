@@ -25,3 +25,22 @@
   padding: 13px 37px 7px 43px;
   box-shadow: 0 0 40px white; 
 }
+
+.code {
+ 	background-color: black;
+  border-radius: 50px;
+  border: 2px solid;
+  border-color: #fff99f #e2db72 #a59f4b #67632b;
+  color: white;
+  font-size: 20px;
+  line-height: 35px;
+  opacity; 0.7;
+  padding: 4px 5px;
+  width: 50%;
+}
+
+.join {
+	font-size: 20px;
+  padding: 10px 15px;
+	text-transform: uppercase;  
+}
