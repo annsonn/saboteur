@@ -22,8 +22,9 @@ socket.on('connect', function (data) {
 });
 
 socket.on('joined', function (data) {
-  $('#game').attr('page', 'joining');
+  $('#game').attr('page', 'join');
   console.log(data.name);
+  $('#gameid').append(data.name);
 });
 
 
