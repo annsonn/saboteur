@@ -18,29 +18,33 @@ var Server = function() {
         console.log('Unknown connection');
         
         socket.on('identity', function (data) {
-          // {name, type}
+          // {type}
           socket.set('identity', data, function() {
-            console.log(data.name + ' connected.');
+            console.log('A ' + data.type + ' connected.');
           });
         });
         
         socket.on('create', function() {
           var gameId = Math.random().toString(20).substr(2, 5);
           socket.set('game', gameId, function() {
-            socket.emit('joined', gameId);
+            socket.emit('joined', {name: gameId, player: 1});
             console.log('Device created game ' + gameId);
             
             // TODO Create new game
-            games[gameId] = {host: socket.id, name: gameId};
+            self.games[gameId] = {host: socket.id, name: gameId};
             socket.join(gameId);
           });
         });
         
         socket.on('join', function(id) {
           // TODO check if already in game
+          // TODO socket.leaveAll();
           socket.set('game', id, function() {
           	socket.join(id);    
             console.log('Device joined game ' + id);
+            console.log(socket.rooms);
+            //socket.emit('joined', {name: id, player: Object.keys(socket.manager.roomClients[id]).length});
+            socket.emit('joined', {name: id, player: 'not implemented'});
           });
         });
         
@@ -67,10 +71,12 @@ var Server = function() {
         });
         
         socket.on('disconnect', function() {
-          socket.get('game', function(id) {
-            if (games[id].host === socket.id) {
+          socket.get('game', function(gameId) {
+            if (games[gameId].host === socket.id) {
               // TODO destroy game
+		          console.log('client in game ' + gameId + ' disconnected')
             } else {
+		          console.log('client disconnected')
             }
           });
         });
