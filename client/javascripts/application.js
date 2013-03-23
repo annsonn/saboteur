@@ -21,12 +21,16 @@ socket.on('connect', function (data) {
   }	
 });
 
-socket.on('joined', function (data) {
+socket.on('created', function (data) {
   $('#game').attr('page', 'join');
   console.log(data.name);
   $('#gameid').append(data.name);
 });
 
+socket.on('joined', function (data) {
+  $('#game').attr('page', 'join-mobile');
+  console.log(data.player);
+});
 
 var windowHeight = window.innerHeight-50;
 var windowWidth = window.innerWidth-50;
