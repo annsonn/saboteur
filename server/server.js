@@ -14,20 +14,12 @@ var Server = function() {
       io.set('log level', 1);	// Debug
       
       io.sockets.on('connection', function (socket) {
-        socket.send('Who are you?');
-        console.log('Unknown connection');
-        
-        socket.on('identity', function (data) {
-          // {type}
-          socket.set('identity', data, function() {
-            console.log('A ' + data.type + ' connected.');
-          });
-        });
+        console.log('Connection established with ' + socket.id);
         
         socket.on('create', function() {
           var gameId = Math.random().toString(20).substr(2, 5);
           socket.set('game', gameId, function() {
-            socket.emit('joined', {name: gameId, player: 1});
+            socket.emit('joined', {name: gameId});
             console.log('Device created game ' + gameId);
             
             // TODO Create new game
@@ -72,11 +64,11 @@ var Server = function() {
         
         socket.on('disconnect', function() {
           socket.get('game', function(gameId) {
-            if (games[gameId].host === socket.id) {
+            if (self.games[gameId].host === socket.id) {
               // TODO destroy game
-		          console.log('client in game ' + gameId + ' disconnected')
+		          console.log('client in game ' + gameId + ' disconnected ' + socket.id);
             } else {
-		          console.log('client disconnected')
+		          console.log('client disconnected ' + socket.id);
             }
           });
         });
