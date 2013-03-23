@@ -21,6 +21,10 @@ socket.on('connect', function (data) {
   }	
 });
 
+socket.on('joined', function (data) {
+  $('#game').attr('page', 'joining');
+  console.log(data.name);
+});
 
 
 var windowHeight = window.innerHeight-50;
@@ -33,4 +37,4 @@ window.onresize = function(event) {
   windowWidth = window.innerWidth-50;
   $('.screen').css('height', windowHeight + 'px')
   $('.screen').css('width', windowWidth + 'px')
-}
+};
