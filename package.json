@@ -2,9 +2,9 @@
   "name": "Saboteur",
   "version": "0.1.0",
   "description": "game",
-  "main": "server",
+  "main": "index",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 0"
   },
   "repository": {
     "type": "git",
