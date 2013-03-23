@@ -4,8 +4,7 @@ var Server = function() {
     games: {},
 
     listen: function() {
-      console.log(self);
-      console.log('Creating server...');
+      //console.log('Creating server...');
       var port = process.env.PORT || 8080;
       
       var app = require('http').createServer(self._handler),
@@ -29,7 +28,7 @@ var Server = function() {
           var gameId = Math.random().toString(20).substr(2, 5);
           socket.set('game', gameId, function() {
             socket.emit('joined', gameId);
-            console.log('Creating game ' + gameId);
+            console.log('Device created game ' + gameId);
             
             // TODO Create new game
             games[gameId] = {host: socket.id, name: gameId};
@@ -41,7 +40,7 @@ var Server = function() {
           // TODO check if already in game
           socket.set('game', id, function() {
           	socket.join(id);    
-            console.log('Device joined ' + id);
+            console.log('Device joined game ' + id);
           });
         });
         
@@ -50,7 +49,7 @@ var Server = function() {
           socket.get('game', function(gameId) {
             socket.set('game', null, function() {
               socket.leave(gameId); 
-              console.log('Device left ' + gameId);
+              console.log('Device left game ' + gameId);
             });
           });
         });
