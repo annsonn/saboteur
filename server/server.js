@@ -89,7 +89,8 @@ var Server = function() {
       var uri = url.parse(request.url).pathname,
           filename = path.join(__dirname, '../client', uri);
       var mime = {
-        js: 'text/javascript'
+        js: 'text/javascript',
+        css: 'text/css'
       };
       fs.exists(filename, function(exists) {
         if(!exists) {
