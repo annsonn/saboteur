@@ -1,3 +1,5 @@
-var server = require('./server/server').createServer();
+var server = require('./server/').createServer()
 
 server.listen();
+
+module.exports = server;
