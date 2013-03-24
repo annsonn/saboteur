@@ -1,6 +1,11 @@
 @import url(http://fonts.googleapis.com/css?family=Rosario:400,700italic);
 @import url(/stylesheets/loading.css);
 @import url(/stylesheets/lobby.css);
+@import url(/stylesheets/join.css);
+
+.debug {
+  outline: 1px solid red;
+}
 
 #game section {
   display: none;
@@ -22,6 +27,7 @@
 
 body {
   background-color: black;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
 }
 
 .layer {
@@ -43,7 +49,6 @@ body {
 
 .title {
 	color: yellow;
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
 	font-weight: bold;  
 	text-shadow:
        3px 3px 0 #000,
