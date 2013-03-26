@@ -1,0 +1,35 @@
+.info {
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 10px;
+  font-size: 25px;
+  margin: 20px auto 40px auto;
+  text-align: center;
+ 	padding: 10px;
+  width: 60%;
+}
+
+#gameid {
+  border: 2px solid black;
+  border-radius: 10px;
+  font-style: italic;
+  margin: 5px auto;
+  padding; 5px;
+  width: 30%;
+}
+
+.players {
+  margin: auto;
+  text-align: center;
+}
+
+.player {
+  background-image: url(/images/job-card-back.jpg);
+  background-size: cover;
+  border-radius: 5px;
+  display: inline-block;
+  height: 150px;
+ 	margin: 0 5px;
+  opacity: .5;
+  width: 95px;
+}
