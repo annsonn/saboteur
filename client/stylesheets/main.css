@@ -20,14 +20,14 @@
   display: block
 }
 
-.center {
-  margin: auto;
-  text-align: center;
-}
-
 body {
   background-color: black;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+}
+
+.center {
+  margin: auto;
+  text-align: center;
 }
 
 .layer {
@@ -35,7 +35,7 @@ body {
   background-position:center; 
   background-size: cover;
   border: 5px solid;    
-  border-color: white #cccccc #818181 #cccccc;
+  
   border-radius: 20px;
 	margin: 20px;
 }
@@ -58,4 +58,12 @@ body {
        1px 1px 0 #000;
   
   -webkit-text-stroke: 1px black;
+}
+
+.yellow-border {
+  border-color: #FFE073 #BF9F30 #A68100 #FFD440;
+}
+
+.white-border {
+  border-color: white #cccccc #818181 #cccccc;
 }

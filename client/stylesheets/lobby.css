@@ -4,7 +4,6 @@
 
 .input {
   background: #FFC600;
-  border-color: #FFE073 #BF9F30 #A68100 #FFD440;
   border-radius: 50px;
   border-style: solid;
   font-weight: bold;
@@ -30,7 +29,6 @@
  	background-color: black;
   border-radius: 50px;
   border: 2px solid;
-  border-color: #FFE073 #BF9F30 #A68100 #FFD440;
   color: white;
   font-size: 20px;
   line-height: 35px;

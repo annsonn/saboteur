@@ -11,7 +11,7 @@
   <body>
     <article id="game" page="loading">
       
-    	<section id="loading" class="layer">
+    	<section id="loading" class="layer white-border">
         <div class="screen">
           <div id="card_container">
             <div id="loading_card" class="shadow">
@@ -29,35 +29,35 @@
         </div>
         
       </section>
-      <section id="lobby-view" class="layer">
+      <section id="lobby-view" class="layer white-border">
         <div class="screen">
           <div id="title" class="lobby-text title center">
             Saboteur
           </div>
         	<div class="center">
-          	<button class="input create-game" type="button" onclick="socket.emit('create', { type: 'view' });">Create a Game!</button>
+          	<button class="input yellow-border create-game" type="button" onclick="socket.emit('create', { type: 'view' });">Create a Game!</button>
           </div>          
         </div>
       </section>
       
-      <section id="lobby-controller" class="layer">
+      <section id="lobby-controller" class="layer white-border">
         <div class="screen">
           <div id="title" class="lobby-text title center">
             Saboteur
           </div>
           <div id="inputs" class="center">
-            <input id="code" class="code " type="text" name="code">
+            <input id="code" class="code yellow-border" type="text" name="code">
             <input class="input join" type="button" onclick="socket.emit('join', { type: 'view', code: $('#code').val() });" name="Submit" value="Enter">
           </div>
         </div>
       </section>
       
-      <section id="join" class="layer">
+      <section id="join" class="layer white-border">
          <div class="screen">
           <div id="title" class="lobby-text title center">
             Saboteur
           </div>
-          <div class="info">
+          <div class="info yellow-border">
             <div class="info-text">
             	Please enter the following code on your mobile device to join the game.
             </div>
@@ -73,7 +73,7 @@
         </div>
       </section>
       
-       <section id="join-mobile" class="layer">
+       <section id="join-mobile" class="layer white-border">
          <div class="screen">
           <div id="title" class="lobby-text title center">
             Saboteur
@@ -82,7 +82,7 @@
         </div>
       </section>
       
-      <section id="choose-role" class="layer">
+      <section id="choose-role" class="layer white-border">
          <div class="screen">
           <div id="title" class="lobby-text title center">
             Saboteur
