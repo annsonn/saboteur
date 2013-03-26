@@ -9,16 +9,23 @@
   width: 60%;
 }
 
-#gameid {
+.code {
   background-color: #FFE073;
   border: 2px solid white;
 	box-shadow: 0 0 25px white;
   border-radius: 10px;
+  color: black;
   font-size: 40px;
   font-style: italic;
   margin: 5px auto;
   padding; 5px;
   width: 30%;
+  -webkit-transition: all 0.5s;
+}
+
+.code:hover {
+  background-color: white;
+  box-shadow: 0 0 30px white;
 }
 
 .players {
@@ -35,4 +42,12 @@
  	margin: 0 5px;
   opacity: .5;
   width: 95px;
+  -webkit-filter: blur(2px);
+  -webkit-transition: all 0.5s;
+}
+
+.player:hover {
+  opacity: 0.8;
+  -webkit-filter: blur(0px);
+  -webkit-transform: scale(1.2, 1.2);
 }

@@ -46,8 +46,8 @@
             Saboteur
           </div>
           <div id="inputs" class="center">
-            <input id="code" class="code yellow-border" type="text" name="code">
-            <input class="input join" type="button" onclick="socket.emit('join', { type: 'view', code: $('#code').val() });" name="Submit" value="Enter">
+            <input id="input-code" class="code yellow-border" type="text" name="code">
+            <input class="input yellow-border join" type="button" onclick="socket.emit('join', { type: 'view', code: $('#code').val() });" name="Submit" value="Enter">
           </div>
         </div>
       </section>
@@ -59,9 +59,9 @@
           </div>
           <div class="info yellow-border">
             <div class="info-text">
-            	Please enter the following code on your mobile device to join the game.
+            	Enter the code below on the mobile site.
             </div>
-            <div id="gameid" class="center">
+            <div id="gameid" class="code center">
             </div>
           </div>
           <div class="players ">
