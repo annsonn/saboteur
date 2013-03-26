@@ -3,8 +3,8 @@
 }
 
 .input {
-  background: yellow;
-  border-color: #fff99f #e2db72 #a59f4b #67632b;
+  background: #FFC600;
+  border-color: #FFE073 #BF9F30 #A68100 #FFD440;
   border-radius: 50px;
   border-style: solid;
   font-weight: bold;
@@ -12,7 +12,7 @@
 }
 
 .input:active {
-  border-color: #a59f4b #e2db72 #fff99f #67632b;
+  border-color: #FFE073 #FFD440 #A68100 #BF9F30;
 }
 
 .create-game {
@@ -30,7 +30,7 @@
  	background-color: black;
   border-radius: 50px;
   border: 2px solid;
-  border-color: #fff99f #e2db72 #a59f4b #67632b;
+  border-color: #FFE073 #BF9F30 #A68100 #FFD440;
   color: white;
   font-size: 20px;
   line-height: 35px;
