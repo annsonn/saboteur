@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <script src="/socket.io/socket.io.js" defer></script>
-    <script src="http://code.createjs.com/createjs-2013.02.12.min.js" defer></script>
+    <!--<script src="http://code.createjs.com/createjs-2013.02.12.min.js" defer></script>-->
     <script src="http://code.jquery.com/jquery-1.9.1.min.js" defer></script>
     <script src="/javascripts/application.js" defer></script>
     <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
@@ -46,7 +46,7 @@
             Saboteur
           </div>
           <div id="inputs" class="center">
-            <input id="input-code" class="code yellow-border" type="text" name="code">
+            <input id="input-code" class="code yellow-border" type="text" x-webkit-speech="x-webkit-speech">
             <input class="input yellow-border join" type="button" onclick="socket.emit('join', { type: 'view', code: $('#code').val() });" name="Submit" value="Enter">
           </div>
         </div>
@@ -75,10 +75,15 @@
       
        <section id="join-mobile" class="layer white-border">
          <div class="screen">
-          <div id="title" class="lobby-text title center">
-            Saboteur
+          <div class="player-title center">
+            Player 1
           </div>
-           waiting screen for mobile
+          <div class="waiting-text center">
+            Waiting for others to join...
+          </div>
+          <div class="ready-button yellow-border center">
+            All Players Ready
+          </div>
         </div>
       </section>
       

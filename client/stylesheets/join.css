@@ -51,3 +51,34 @@
   -webkit-filter: blur(0px);
   -webkit-transform: scale(1.2, 1.2);
 }
+
+.player-title {
+  color: black;
+  text-transform: uppercase;
+  font-weight: bolder;
+  font-size: 20px;
+}
+
+.waiting-text {
+  color: #B5B5B5;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.ready-button {
+  background-color: #FFC600;
+  border-radius: 10px;
+  border: 2px solid;
+  color: grey;
+  text-transform: uppercase;
+  font-weight: bolder;
+  font-size: 40px;
+}
+
+.ready-button:active {
+  border-color: #A68100 #FFD440 #FFE073 #BF9F30;
+  text-shadow: 0 0 10px white;
+}
+
+
+
