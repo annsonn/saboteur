@@ -1,29 +1,29 @@
 var Game = function(sockets, host, name) {
-  this.socket = sockets;
+  this.sockets = sockets;
   this.host = host;
   this.name = name;
-  this.playerCount = 0;
+  this.players = [];
 };
 
 Game.prototype.serialize = function() {
   return {
-    name: this.name
+    name: this.name,
+    players: this.players
   };
 };
 
 Game.prototype.join = function(socket) {
   socket.join(this.name);
-  this.playerCount++;
-  socket.to(this.name).emit('joined', {player: socket.id, game: this.serialize()});
+  this.players.push(socket.id);
+  socket.to(this.name).emit('joined', {playerId: socket.id, game: this.serialize()});
 };
 
 Game.prototype.leave = function(socket) {
   if (socket.id === this.host) {
     socket.to(this.name).emit('host left', this.serialize());
   }
-
-  this.playerCount--;
-  socket.to(this.name).emit('left', {player: socket.id, game: this.serialize()});
+	this.players.splice(this.players.indexOf(socket.id), 1)
+  socket.to(this.name).emit('left', {playerId: socket.id, game: this.serialize()});
   socket.leave(this.name);
 }
 

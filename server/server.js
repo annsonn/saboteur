@@ -62,6 +62,7 @@ var Server = function() {
       
       joinGame: function(socket, callback) {
         return function(id) {
+          id = id.trim();
           (self.handlers.leaveGame(socket, function() {
             socket.set('game', id, function() {
               var game = self.games[id];
