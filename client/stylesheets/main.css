@@ -22,11 +22,13 @@
 
 body {
   background-color: black;
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+  cursor:default;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;   
+  -webkit-user-select: none;
 }
 
 .center {
-  margin: auto;
+  margin: 10px auto;
   text-align: center;
 }
 
@@ -46,6 +48,11 @@ body {
   display: table-cell;
   vertical-align: middle;
 }
+
+#join-mobile .screen {
+  background: -webkit-radial-gradient(circle, transparent, red);
+}
+
 
 .title {
 	color: #FFDD00;

@@ -27,9 +27,29 @@ socket.on('created', function (data) {
   $('#gameid').append(data.name);
 });
 
+function getPlayerCount() {
+  var i = 0; 
+  return function() {
+    i++;
+  }
+}
+
 socket.on('joined', function (data) {
+  var players = getPlayerCount();
+  var playerColours = ( "red", "orange", "yellow", "green", "blue", "purple", "white", "black" );
+  
   $('#game').attr('page', 'join-mobile');
   console.log(data.player);
+                       
+/* 
+ if( !/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+    $('.player:nth-child('+players+')').css({
+      'opacity': '0.8',
+  		'-webkit-filter': "blur(0px)",
+  		'-webkit-transform': "scale(1.2, 1.2)"
+    });
+  }
+*/
 });
 
 var windowHeight = window.innerHeight-50;
