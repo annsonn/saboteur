@@ -1,19 +1,10 @@
-/*
-var socket = io.connect();
-
-socket.on('news', function (data) {
-  console.log(data);
-  socket.emit('my other event', { my: 'data' });
-});
-*/
-
 // Connect to server
 var socket = io.connect();
 var playerId;
 var playerCount = 0;
 var playerColours = new Array ( "", "red", "orange", "yellow", "green", "blue", "purple", "white", "black" );
-// Loading screen
 
+// Loading screen
 socket.on('connect', function (data) {
   if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
     $('#game').attr('page', 'lobby-controller');
@@ -22,13 +13,13 @@ socket.on('connect', function (data) {
   }	
 });
 
+// Getting Player Name
 socket.on('identity', function (data) {
-	console.log(data);
   playerId = data;
 });
 
-socket.on('joined', function (data) {
-  
+// Waiting/Joining Screens
+socket.on('joined', function (data) {  
   console.log(data);
 	playerCount = data.game.players.length - 1;
   console.log("num players: " + playerCount);
@@ -39,6 +30,7 @@ socket.on('joined', function (data) {
       $('#join-mobile .screen').css({
          "background": "-webkit-radial-gradient(circle, transparent, "+playerColours[playerCount]+")"
       });
+      $('.player-text').append(playerCount);
       if (playerCount > 1) {
         $('.ready-button').css({ "display":"none"});
       }
@@ -47,24 +39,20 @@ socket.on('joined', function (data) {
       $('#gameid').append(data.game.name);
     }
   } else {
-    console.log("someone joined");
-    
-    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-      	
-    } else {
-      
-      console.log("changing css");
+    if( !/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {      
       $('.player:nth-child('+playerCount+')').css({
-        "border": "2px solid",
-        "border-color": playerColours[playerCount],
         "opacity":"0.8",
         "-webkit-filter": "blur(0px)",
         "-webkit-transform": "scale(1.2, 1.2)"
+      });
+      $('.player:nth-child('+playerCount+') .colour').css({
+        "background": "-webkit-radial-gradient(circle, transparent, "+playerColours[playerCount]+")"
       });
     }
   }
 });
 
+// Used to adjust borders on mobile
 var windowHeight = window.innerHeight-50;
 var windowWidth = window.innerWidth-50;
 $('.screen').css('height', windowHeight + 'px')

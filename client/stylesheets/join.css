@@ -41,26 +41,40 @@
   height: 150px;
  	margin: 0 10px;
   opacity: .5;
-  width: 95px;
+  width: 94px;
   -webkit-filter: blur(2px);
   -webkit-transition: all 0.5s;
 }
 
 .player:hover {
-  opacity: 0.7;
-  -webkit-filter: blur(0px);
+  opacity: 0.6;
   -webkit-transform: scale(1.1, 1.1);
 }
 
+.colour {
+  border-radius: 5px;
+  display: table-cell;
+  height: 150px;
+	width: 95px;
+	vertical-align: middle;
+}
 
 .player-title {
   background: #cccccc;
   box-shadow: 0 5px black;
+	width: 100%;
+}
+
+.player-text {
   color: black;
   font-size: 30px;
   font-weight: bolder;
   text-transform: uppercase;
-	width: 100%;
+}
+
+.colour .player-text {
+  font-size: 15px;
+  text-shadow: 0 0 5px white;
 }
 
 .waiting-text {
