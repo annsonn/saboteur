@@ -15,15 +15,15 @@ Game.prototype.serialize = function() {
 Game.prototype.join = function(socket) {
   socket.join(this.name);
   this.players.push(socket.id);
-  socket.to(this.name).emit('joined', {playerId: socket.id, game: this.serialize()});
+  this.sockets.to(this.name).emit('joined', {playerId: socket.id, game: this.serialize()});
 };
 
 Game.prototype.leave = function(socket) {
   if (socket.id === this.host) {
-    socket.to(this.name).emit('host left', this.serialize());
+    this.sockets.to(this.name).emit('host left', this.serialize());
   }
 	this.players.splice(this.players.indexOf(socket.id), 1)
-  socket.to(this.name).emit('left', {playerId: socket.id, game: this.serialize()});
+  this.sockets.to(this.name).emit('left', {playerId: socket.id, game: this.serialize()});
   socket.leave(this.name);
 }
 
