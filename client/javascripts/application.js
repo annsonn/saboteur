@@ -6,7 +6,7 @@ var playerColours = new Array ( "", "red", "orange", "yellow", "green", "blue", 
 
 // Loading screen
 socket.on('connect', function (data) {
-  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|Playbook/i.test(navigator.userAgent) ) {
     $('#game').attr('page', 'lobby-controller');
   } else {
     $('#game').attr('page', 'lobby-view');   
@@ -25,7 +25,7 @@ socket.on('joined', function (data) {
   console.log("num players: " + playerCount);
 	
   if (playerId == data.playerId) {
-    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|Playbook/i.test(navigator.userAgent) ) {
       $('#game').attr('page', 'join-mobile');
       $('#join-mobile .screen').css({
          "background": "-webkit-radial-gradient(circle, transparent, "+playerColours[playerCount]+")"
@@ -39,7 +39,7 @@ socket.on('joined', function (data) {
       $('#gameid').append(data.game.name);
     }
   } else {
-    if( !/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {      
+    if( !/Android|webOS|iPhone|iPad|iPod|BlackBerry|Playbook/i.test(navigator.userAgent) ) {      
       $('.player:nth-child('+playerCount+')').css({
         "opacity":"0.8",
         "-webkit-filter": "blur(0px)",
