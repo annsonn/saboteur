@@ -50,11 +50,6 @@ body {
   vertical-align: middle;
 }
 
-#join-mobile .screen {
-  background: -webkit-radial-gradient(circle, transparent, red);
-}
-
-
 .title {
 	color: #FFDD00;
   font-family: "PT+Serif";

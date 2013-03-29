@@ -11,6 +11,7 @@ socket.on('news', function (data) {
 var socket = io.connect();
 var playerId;
 var playerCount = 0;
+var playerColours = new Array ( "", "red", "orange", "yellow", "green", "blue", "purple", "white", "black" );
 // Loading screen
 
 socket.on('connect', function (data) {
@@ -27,25 +28,35 @@ socket.on('identity', function (data) {
 });
 
 socket.on('joined', function (data) {
-  var playerColours = ( "red", "orange", "yellow", "green", "blue", "purple", "white", "black" );
+  
   console.log(data);
-	playerCount = data.game.players.length;
+	playerCount = data.game.players.length - 1;
   console.log("num players: " + playerCount);
 	
   if (playerId == data.playerId) {
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
       $('#game').attr('page', 'join-mobile');
+      $('#join-mobile .screen').css({
+         "background": "-webkit-radial-gradient(circle, transparent, "+playerColours[playerCount]+")"
+      });
+      if (playerCount > 1) {
+        $('.ready-button').css({ "display":"none"});
+      }
     } else {
       $('#game').attr('page', 'join');
       $('#gameid').append(data.game.name);
     }
   } else {
     console.log("someone joined");
+    
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
       	
     } else {
+      
       console.log("changing css");
       $('.player:nth-child('+playerCount+')').css({
+        "border": "2px solid",
+        "border-color": playerColours[playerCount],
         "opacity":"0.8",
         "-webkit-filter": "blur(0px)",
         "-webkit-transform": "scale(1.2, 1.2)"
