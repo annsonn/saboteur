@@ -1,7 +1,7 @@
 var Game = function(sockets, host, name) {
   this.sockets = sockets;
   this.host = host;
-  this.name = name;
+  this.name = Math.random().toString(20).substr(2, 5);
   this.players = [];
 };
 

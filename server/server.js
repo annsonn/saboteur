@@ -46,11 +46,10 @@ var Server = function() {
       createGame: function(socket, callback) {
         return function() {
           (self.handlers.leaveGame(socket, function() {
-            var gameId = Math.random().toString(20).substr(2, 5);
-            socket.set('game', gameId, function() {
-              var game = new Game(self.io.sockets, socket.id, gameId);
-              self.games[gameId] = game;
-              console.log('Device created game ' + gameId);
+            var game = new Game(self.io.sockets, socket.id);
+            socket.set('game', game.name, function() {
+              self.games[game.name] = game;
+              console.log('Device created game ' + game.name);
   
               game.join(socket);
               
@@ -89,7 +88,7 @@ var Server = function() {
                 game.leave(socket); 
                 console.log('Device left game ' + gameId);
                 
-                if (game.playerCount === 0) {
+                if (game.players.length === 0) {
                   delete self.games[gameId];
                 }
               });
