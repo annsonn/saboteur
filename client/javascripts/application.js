@@ -10,6 +10,7 @@ socket.on('news', function (data) {
 // Connect to server
 var socket = io.connect();
 var playerId;
+var playerCount = 0;
 // Loading screen
 
 socket.on('connect', function (data) {
@@ -23,32 +24,32 @@ socket.on('connect', function (data) {
 
 socket.on('identity', function (data) {
 	console.log(data);
-  playerId = data.playerId;
-}
+  playerId = data;
+});
 
 socket.on('joined', function (data) {
   var playerColours = ( "red", "orange", "yellow", "green", "blue", "purple", "white", "black" );
   console.log(data.game.name);
-  console.log(data.playerId);
-
-  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-    $('#game').attr('page', 'join-mobile');
+  console.log(data.player);
+	
+  if (playerId == data.player) {
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+      $('#game').attr('page', 'join-mobile');
+    } else {
+      $('#game').attr('page', 'join');
+      $('#gameid').append(data.game.name);
+    }
   } else {
-  	$('#game').attr('page', 'join');
-		$('#gameid').append(data.game.name);
-    
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+      	
+    } else {
+        $('.player:nth-child('+playerCount+')').css({
+          'opacity': '0.8',
+          '-webkit-filter': "blur(0px)",
+          '-webkit-transform': "scale(1.2, 1.2)"
+        });
+     }
   }
-  
-                       
-/* 
- if( !/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-    $('.player:nth-child('+players+')').css({
-      'opacity': '0.8',
-  		'-webkit-filter': "blur(0px)",
-  		'-webkit-transform': "scale(1.2, 1.2)"
-    });
-  }
-*/
 });
 
 var windowHeight = window.innerHeight-50;

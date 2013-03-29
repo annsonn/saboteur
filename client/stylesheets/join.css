@@ -45,12 +45,13 @@
   -webkit-filter: blur(2px);
   -webkit-transition: all 0.5s;
 }
-
+<!--
 .player:hover {
   opacity: 0.8;
   -webkit-filter: blur(0px);
   -webkit-transform: scale(1.1, 1.1);
 }
+-->
 
 .player-title {
   background: #cccccc;
