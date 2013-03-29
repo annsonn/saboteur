@@ -40,11 +40,7 @@ socket.on('joined', function (data) {
     }
   } else {
     if( !/Android|webOS|iPhone|iPad|iPod|BlackBerry|Playbook/i.test(navigator.userAgent) ) {      
-      $('.player:nth-child('+playerCount+')').css({
-        "opacity":"0.8",
-        "-webkit-filter": "blur(0px)",
-        "-webkit-transform": "scale(1.2, 1.2)"
-      });
+      $('.player:nth-child('+playerCount+')').addClass('player-joined');
       $('.player:nth-child('+playerCount+') .colour').css({
         "background": "-webkit-radial-gradient(circle, transparent, "+playerColours[playerCount]+")"
       });
