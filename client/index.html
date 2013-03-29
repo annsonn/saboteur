@@ -35,7 +35,7 @@
             Saboteur
           </div>
         	<div class="center">
-          	<button class="input yellow-border create-game" type="button" onclick="socket.emit('create', { type: 'view' });">Create a Game!</button>
+          	<button class="input yellow-border create-game" type="button" onclick="socket.emit('create');">Create a Game!</button>
           </div>          
         </div>
       </section>
@@ -47,7 +47,7 @@
           </div>
           <div id="inputs" class="center">
             <input id="input-code" class="code yellow-border" type="text" x-webkit-speech="x-webkit-speech">
-            <input class="input yellow-border join" type="button" onclick="socket.emit('join', { type: 'view', code: $('#code').val() });" name="Submit" value="Enter">
+            <input class="input yellow-border join" type="button" onclick="socket.emit('join', $('#code').val());" name="Submit" value="Enter">
           </div>
         </div>
       </section>

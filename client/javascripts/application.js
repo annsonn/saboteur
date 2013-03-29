@@ -9,7 +9,7 @@ socket.on('news', function (data) {
 
 // Connect to server
 var socket = io.connect();
-
+var playerId;
 // Loading screen
 
 socket.on('connect', function (data) {
@@ -21,25 +21,24 @@ socket.on('connect', function (data) {
   }	
 });
 
-socket.on('created', function (data) {
-  $('#game').attr('page', 'join');
-  console.log(data.name);
-  $('#gameid').append(data.name);
-});
-
-function getPlayerCount() {
-  var i = 0; 
-  return function() {
-    i++;
-  }
+socket.on('identity', function (data) {
+	console.log(data);
+  playerId = data.playerId;
 }
 
 socket.on('joined', function (data) {
-  var players = getPlayerCount();
   var playerColours = ( "red", "orange", "yellow", "green", "blue", "purple", "white", "black" );
+  console.log(data.game.name);
+  console.log(data.playerId);
+
+  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+    $('#game').attr('page', 'join-mobile');
+  } else {
+  	$('#game').attr('page', 'join');
+		$('#gameid').append(data.game.name);
+    
+  }
   
-  $('#game').attr('page', 'join-mobile');
-  console.log(data.player);
                        
 /* 
  if( !/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
