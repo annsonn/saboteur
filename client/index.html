@@ -47,7 +47,7 @@
           </div>
           <div id="inputs" class="center">
             <input id="input-code" class="code yellow-border" type="text" x-webkit-speech="x-webkit-speech">
-            <input class="input yellow-border join" type="button" onclick="socket.emit('join', $('#code').val());" name="Submit" value="Enter">
+            <input class="input yellow-border join" type="button" onclick="socket.emit('join', $('#input-code').val());" name="Submit" value="Enter">
           </div>
         </div>
       </section>
