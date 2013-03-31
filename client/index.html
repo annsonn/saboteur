@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <script src="/socket.io/socket.io.js" defer></script>
-    <script src="http://code.createjs.com/createjs-2013.02.12.min.js" defer></script>
+    <!--<script src="http://code.createjs.com/createjs-2013.02.12.min.js" defer></script>-->
     <script src="http://code.jquery.com/jquery-1.9.1.min.js" defer></script>
     <script src="/javascripts/application.js" defer></script>
     <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
@@ -11,7 +11,7 @@
   <body>
     <article id="game" page="loading">
       
-    	<section id="loading" class="layer">
+    	<section id="loading" class="layer white-border">
         <div class="screen">
           <div id="card_container">
             <div id="loading_card" class="shadow">
@@ -29,32 +29,67 @@
         </div>
         
       </section>
-      <section id="lobby-view" class="layer">
+      <section id="lobby-view" class="layer white-border">
         <div class="screen">
           <div id="title" class="lobby-text title center">
             Saboteur
           </div>
         	<div class="center">
-          	<button class="input create-game" type="button" onclick="socket.emit('create', { type: 'view' });">Create a Game!</button>
+          	<button class="input yellow-border create-game" type="button" onclick="socket.emit('create');">Create a Game!</button>
           </div>          
         </div>
       </section>
       
-      <section id="lobby-controller" class="layer">
+      <section id="lobby-controller" class="layer white-border">
         <div class="screen">
           <div id="title" class="lobby-text title center">
             Saboteur
           </div>
           <div id="inputs" class="center">
-            <input id="code" class="code " type="text" name="code">
-            <input class="input join" type="button" onclick="socket.emit('join', { type: 'view', code: $('#code').val() });" name="Submit" value="Enter">
+            <input id="input-code" class="code yellow-border" type="text" x-webkit-speech="x-webkit-speech">
+            <input class="input yellow-border join" type="button" onclick="socket.emit('join', $('#input-code').val());" name="Submit" value="Enter">
           </div>
         </div>
       </section>
       
-      <section id="choose-role" class="layer">
+      <section id="join" class="layer white-border">
          <div class="screen">
-          <div id="title" class="center">
+          <div id="title" class="lobby-text title center">
+            Saboteur
+          </div>
+          <div class="info yellow-border">
+            <div class="info-text">
+            	Enter the code below on the mobile site.
+            </div>
+            <div id="gameid" class="code center">
+            </div>
+          </div>
+          <div class="players ">
+            <div class="player"><div class="colour"><div class="player-text">Player Joined</div></div></div>
+            <div class="player"><div class="colour"><div class="player-text">Player Joined</div></div></div>
+            <div class="player"><div class="colour"><div class="player-text">Player Joined</div></div></div>
+            <div class="player"><div class="colour"><div class="player-text">Player Joined</div></div></div>
+          </div>
+        </div>
+      </section>
+      
+       <section id="join-mobile" class="layer white-border">
+         <div class="screen">
+          <div class="player-title player-text center">
+            Player
+          </div>
+          <div class="waiting-text center">
+            Waiting for others to join...
+          </div>
+          <div class="ready-button yellow-border center">
+            All Players Ready
+          </div>
+        </div>
+      </section>
+      
+      <section id="choose-role" class="layer white-border">
+         <div class="screen">
+          <div id="title" class="lobby-text title center">
             Saboteur
           </div>
         </div>

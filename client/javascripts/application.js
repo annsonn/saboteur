@@ -1,28 +1,54 @@
-/*
-var socket = io.connect();
-
-socket.on('news', function (data) {
-  console.log(data);
-  socket.emit('my other event', { my: 'data' });
-});
-*/
-
 // Connect to server
 var socket = io.connect();
+var playerId;
+var playerCount = 0;
+var playerColours = new Array ( "", "red", "orange", "yellow", "green", "blue", "purple", "white", "black" );
 
 // Loading screen
-
 socket.on('connect', function (data) {
-  console.log(data);
-  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|Playbook/i.test(navigator.userAgent) ) {
     $('#game').attr('page', 'lobby-controller');
   } else {
     $('#game').attr('page', 'lobby-view');   
   }	
 });
 
+// Getting Player Name
+socket.on('identity', function (data) {
+  playerId = data;
+});
 
+// Waiting/Joining Screens
+socket.on('joined', function (data) {  
+  console.log(data);
+	playerCount = data.game.players.length - 1;
+  console.log("num players: " + playerCount);
+	
+  if (playerId == data.playerId) {
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|Playbook/i.test(navigator.userAgent) ) {
+      $('#game').attr('page', 'join-mobile');
+      $('#join-mobile .screen').css({
+         "background": "-webkit-radial-gradient(circle, transparent, "+playerColours[playerCount]+")"
+      });
+      $('.player-text').append(playerCount);
+      if (playerCount > 1) {
+        $('.ready-button').css({ "display":"none"});
+      }
+    } else {
+      $('#game').attr('page', 'join');
+      $('#gameid').append(data.game.name);
+    }
+  } else {
+    if( !/Android|webOS|iPhone|iPad|iPod|BlackBerry|Playbook/i.test(navigator.userAgent) ) {      
+      $('.player:nth-child('+playerCount+')').addClass('player-joined');
+      $('.player:nth-child('+playerCount+') .colour').css({
+        "background": "-webkit-radial-gradient(circle, transparent, "+playerColours[playerCount]+")"
+      });
+    }
+  }
+});
 
+// Used to adjust borders on mobile
 var windowHeight = window.innerHeight-50;
 var windowWidth = window.innerWidth-50;
 $('.screen').css('height', windowHeight + 'px')
@@ -33,4 +59,4 @@ window.onresize = function(event) {
   windowWidth = window.innerWidth-50;
   $('.screen').css('height', windowHeight + 'px')
   $('.screen').css('width', windowWidth + 'px')
-}
+};

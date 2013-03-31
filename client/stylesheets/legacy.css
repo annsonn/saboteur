@@ -1,0 +1,15 @@
+/* For small screen sizes like Nexus S*/
+
+@media only screen and (max-width : 500px) {
+  .lobby-text, .loading-text {
+    font-size: 40px;
+  }
+  
+  #input-code  {
+    width: 30%;
+  }
+  
+  .ready-button {
+    width: 90%;
+  }
+}

@@ -3,16 +3,15 @@
 }
 
 .input {
-  background: yellow;
-  border-color: #fff99f #e2db72 #a59f4b #67632b;
-  border-radius: 50px;
+  background: #FFC600;
+  border-radius: 20px;
   border-style: solid;
   font-weight: bold;
 	text-transform: uppercase;  
 }
 
 .input:active {
-  border-color: #a59f4b #e2db72 #fff99f #67632b;
+  border-color: #A68100 #FFD440 #FFE073 #BF9F30;
 }
 
 .create-game {
@@ -26,17 +25,11 @@
   box-shadow: 0 0 40px white; 
 }
 
-.code {
- 	background-color: black;
-  border-radius: 50px;
-  border: 2px solid;
-  border-color: #fff99f #e2db72 #a59f4b #67632b;
-  color: white;
-  font-size: 20px;
-  line-height: 35px;
-  opacity; 0.7;
-  padding: 4px 5px;
-  width: 50%;
+#input-code {
+	font-size: 20px;
+  padding: 5px;
+  text-align: center;
+  width:50%;
 }
 
 .join {
