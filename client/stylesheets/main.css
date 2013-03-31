@@ -3,6 +3,7 @@
 @import url(/stylesheets/loading.css);
 @import url(/stylesheets/lobby.css);
 @import url(/stylesheets/join.css);
+@import url(/stylesheets/legacy.css);
 
 .debug {
   outline: 1px solid red;
@@ -72,3 +73,6 @@ body {
 .white-border {
   border-color: white #cccccc #818181 #cccccc;
 }
+
+
+
