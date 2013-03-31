@@ -1,6 +1,13 @@
-@import url(http://fonts.googleapis.com/css?family=Rosario:400,700italic);
+@import url(http://fonts.googleapis.com/css?family=Roboto);
+@import url(http://fonts.googleapis.com/css?family=PT+Serif:400,700);
 @import url(/stylesheets/loading.css);
 @import url(/stylesheets/lobby.css);
+@import url(/stylesheets/join.css);
+@import url(/stylesheets/legacy.css);
+
+.debug {
+  outline: 1px solid red;
+}
 
 #game section {
   display: none;
@@ -9,17 +16,22 @@
 #game[page=loading] #loading, 
 #game[page=lobby-view] #lobby-view,
 #game[page=lobby-controller] #lobby-controller, 
+#game[page=join] #join,
+#game[page=join-mobile] #join-mobile,
 #game[page=choose-role] #choose-role {
   display: block
 }
 
-.center {
-  margin: auto;
-  text-align: center;
-}
-
 body {
   background-color: black;
+  cursor:default;
+  font-family: "Roboto", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;   
+  -webkit-user-select: none;
+}
+
+.center {
+  margin: 10px auto;
+  text-align: center;
 }
 
 .layer {
@@ -27,7 +39,7 @@ body {
   background-position:center; 
   background-size: cover;
   border: 5px solid;    
-  border-color: white #cccccc #818181 #cccccc;
+  
   border-radius: 20px;
 	margin: 20px;
 }
@@ -40,8 +52,9 @@ body {
 }
 
 .title {
-	color: yellow;
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+	color: #FFDD00;
+  font-family: "PT+Serif";
+  font-style: italic;
 	font-weight: bold;  
 	text-shadow:
        3px 3px 0 #000,
@@ -52,3 +65,14 @@ body {
   
   -webkit-text-stroke: 1px black;
 }
+
+.yellow-border {
+  border-color: #FFE073 #BF9F30 #A68100 #FFD440;
+}
+
+.white-border {
+  border-color: white #cccccc #818181 #cccccc;
+}
+
+
+
