@@ -4,7 +4,7 @@
   "description": "game",
   "main": "index",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "test": "nodeunit test"
   },
   "repository": {
     "type": "git",
@@ -14,5 +14,8 @@
     "game"
   ],
   "author": "anson",
-  "license": "BSD"
+  "license": "BSD",
+  "dependencies": {
+    "socket.io": "0.9.x"
+  }
 }
