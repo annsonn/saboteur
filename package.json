@@ -14,5 +14,8 @@
     "game"
   ],
   "author": "anson",
-  "license": "BSD"
+  "license": "BSD",
+  "dependencies": {
+    "socket.io": "0.9.x"
+  }
 }
