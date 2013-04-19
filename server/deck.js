@@ -1,6 +1,5 @@
 var Deck = function() {
-  this.cards = [];
-  
+  this.cards = [];  
   this.reset();
   this.shuffle();
 };
@@ -11,7 +10,6 @@ var Deck = function() {
 Deck.prototype.reset = function() {
   var standardCards = require('./decks/standard');
   this.cards = standardCards.slice(0);
-  this.shuffle();
 };
 
 //+ Jonas Raoni Soares Silva
