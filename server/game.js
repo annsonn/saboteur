@@ -18,6 +18,22 @@ Game.prototype.join = function(socket) {
   this.sockets.to(this.name).emit('joined', {playerId: socket.id, game: this.serialize()});
 };
 
+Game.prototype.start = function(socket) {
+  socket.start(this.name);
+  //shuffle roles
+
+  //reset deck
+  //shuffle deck
+  
+  //reset board
+  //shuffle gold
+  
+  //deal roles
+  //deal deck
+  //send board
+  
+};
+
 Game.prototype.leave = function(socket) {
   if (socket.id === this.host) {
     this.sockets.to(this.name).emit('host left', this.serialize());

@@ -24,6 +24,7 @@ var Server = function() {
         socket.on('create', self.handlers.createGame(socket));
         socket.on('join', self.handlers.joinGame(socket));
         socket.on('leave', self.handlers.leaveGame(socket));
+        socket.on('start', self.handlers.startGame(socket));
         
         socket.on('message', function(message) {
           socket.get('game', function(x, gameId) {
@@ -77,6 +78,22 @@ var Server = function() {
           }))();	// Call leave game
         }
       },
+      
+      startGame: function(socket, callback) {
+        return function(id) {          
+          socket.set('game', id, function() {
+            var game = self.games[id];
+            if (game) {
+              game.start(socket);
+              console.log('Game ' + id + ' has started');
+            } else {
+              console.log('Device tried to start non-existing game ' + id);
+              socket.emit('error', {code: 404, message: 'Failed to join game ' + id});
+            }
+            if (callback) callback.call(self);
+          });     
+        }
+      }, 
       
       leaveGame: function(socket, callback) {
         return function() {
