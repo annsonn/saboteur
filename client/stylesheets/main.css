@@ -1,9 +1,3 @@
-@import url(http://fonts.googleapis.com/css?family=Roboto);
-@import url(http://fonts.googleapis.com/css?family=PT+Serif:400,700);
-@import url(/stylesheets/loading.css);
-@import url(/stylesheets/lobby.css);
-@import url(/stylesheets/join.css);
-@import url(/stylesheets/legacy.css);
 
 .debug {
   outline: 1px solid red;

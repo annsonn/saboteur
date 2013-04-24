@@ -6,7 +6,16 @@
     <!--<script src="http://code.createjs.com/createjs-2013.02.12.min.js" defer></script>-->
     <script src="http://code.jquery.com/jquery-1.9.1.min.js" defer></script>
     <script src="/javascripts/application.js" defer></script>
-    <link rel="stylesheet" type="text/css" href="/stylesheets/main.css">
+    <script src="/javascripts/boardView.js" defer></script>
+    <script src="/javascripts/handView.js" defer></script>
+    
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto" />
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Serif:400,700" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/loading.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/lobby.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/join.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/legacy.css" />
   </head>
   <body>
     <article id="game" page="loading">
@@ -35,7 +44,7 @@
             Saboteur
           </div>
         	<div class="center">
-          	<button class="input yellow-border create-game" type="button" onclick="socket.emit('create');">Create a Game!</button>
+          	<button id="create-game" class="input yellow-border create-game" type="button">Create a Game!</button>
           </div>          
         </div>
       </section>
@@ -47,7 +56,7 @@
           </div>
           <div id="inputs" class="center">
             <input id="input-code" class="code yellow-border" type="text" x-webkit-speech="x-webkit-speech">
-            <input class="input yellow-border join" type="button" onclick="socket.emit('join', $('#input-code').val());" name="Submit" value="Enter">
+            <input id="join-game" class="input yellow-border join" type="button" name="Submit" value="Enter">
           </div>
         </div>
       </section>
