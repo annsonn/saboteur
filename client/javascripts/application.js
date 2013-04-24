@@ -13,19 +13,17 @@ var Application = function() {
 
   // Getting Player Name
   app.socket.on('identity', function (data) {
-    playerId = data;
+    app.player.id = data;
   });
 
   // Loading screen
   app.socket.on('connect', function (data) {
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|Playbook/i.test(navigator.userAgent) ) {
-      new BoardView(app);
-    } else {
       new HandView(app);
+    } else {
+      new BoardView(app);
     }	
   });
-
-
 
   return app;
 }
