@@ -8,7 +8,7 @@ var Deck = function() {
  * Reset cards in deck and shuffles
  */
 Deck.prototype.reset = function() {
-  var standardCards = require('./decks/standard');
+  var standardCards = require('./decks/standard-cards');
   this.cards = standardCards.slice(0);
 };
 

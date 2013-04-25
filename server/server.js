@@ -83,7 +83,7 @@ var Server = function() {
         return function(id) {          
           socket.set('game', id, function() {
             var game = self.games[id];
-            if (game) {
+            if (game) {  
               game.start(socket);
               console.log('Game ' + id + ' has started');
             } else {

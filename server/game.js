@@ -21,7 +21,7 @@ Game.prototype.join = function(socket) {
 Game.prototype.start = function(socket) {
   socket.start(this.name);
   //shuffle roles
-
+	this.players.length;	
   //reset deck
   //shuffle deck
   
