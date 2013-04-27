@@ -1,5 +1,5 @@
 var Deck = require('../server/deck');
-var StandardDeck = require('../server/decks/standard');
+var StandardDeck = require('../server/decks/standard-cards');
 
 exports.testDeckShuffle = function(test) {
   var deck = new Deck();
