@@ -3,11 +3,18 @@ var Board = function() {
   this.reset();
 }
 
-Deck.prototype.reset = function() {
+Board.prototype.reset = function() {
   this.board = [];
 }
 
-Deck.protoype.place = function( location, card ) {
+Board.prototype.placeCard = function( location, card ) {
 }
+
+Board.prototype.removeCard = function( location ) {
+}
+
+Board.prototype.flipGold = function ( location ) {  
+}
+
 
 module.exports = Board;

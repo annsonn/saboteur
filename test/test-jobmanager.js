@@ -1,7 +1,6 @@
 var JobManager = require('../server/job-manager');
 var JobRules = require('../server/decks/standard-jobs');
 
-
 exports.testGetJobsThreePlayers = function(test) {
   var jobManager = new JobManager();
     
@@ -21,7 +20,6 @@ exports.testGetJobsTenPlayers = function(test) {
   test.equals(jobManager.numMiners, '7');
   test.done();
 }
-
 
 exports.testMakeJobStackFivePlayers = function(test) {
   var jobManager = new JobManager();

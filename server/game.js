@@ -1,8 +1,14 @@
+var JobManager = require('job-manager');
+var Deck = require('deck');
+
 var Game = function(sockets, host, name) {
   this.sockets = sockets;
   this.host = host;
   this.name = Math.random().toString(20).substr(2, 5);
   this.players = [];
+  
+  this.jobManager = new JobManager();
+  this.deck = new Deck();
 };
 
 Game.prototype.serialize = function() {
@@ -20,11 +26,11 @@ Game.prototype.join = function(socket) {
 
 Game.prototype.start = function(socket) {
   socket.start(this.name);
-  //shuffle roles
-	this.players.length;	
-  //reset deck
-  //shuffle deck
   
+  this.jobManager.getNumJobs(this.players.length);
+  this.jobManager.makeJobStack();
+  this.jobManager.shuffle();
+   
   //reset board
   //shuffle gold
   
