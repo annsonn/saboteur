@@ -30,7 +30,7 @@ Game.prototype.start = function(socket) {
   this.jobManager.makeJobStack();
   this.jobManager.shuffle();
    
-  this.deck.reset();
+  this.deck.reset(this.players.length);
   this.deck.shuffle();
   
   //NEED TO KNOW HOW MANY CARDS TO DEAL BASED ON NUMBER OF PLAYERS
@@ -43,7 +43,7 @@ Game.prototype.start = function(socket) {
   // FOR EACH PLAYER Send job/hand/board?
   for (var i; i < this.players.length; i++) {
     // is this how you call this???? no idea....
-  	// this.sockets.to(this.players[i].playerId).emit('job', jobManager.deal(), deck.deal(jobManager.handsize));
+  	// this.sockets.to(this.players[i].playerId).emit('init', jobManager.dealJob(), deck.deal(deck.handsize));
   }
   
 };
