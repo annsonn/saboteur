@@ -1,15 +1,17 @@
 var Deck = function() {
   this.cards = [];  
-  this.reset();
-  this.shuffle();
+  this.handSize;
 };
 
 /**
  * Reset cards in deck and shuffles
  */
-Deck.prototype.reset = function() {
+Deck.prototype.reset = function(numPlayers) {
   var standardCards = require('./decks/standard-cards');
   this.cards = standardCards.slice(0);
+  
+  var gameRules = require('./decks/standard-rules');
+  this.handSize = gameRules[numPlayers].hand;
 };
 
 //+ Jonas Raoni Soares Silva

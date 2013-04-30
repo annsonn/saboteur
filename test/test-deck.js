@@ -3,6 +3,8 @@ var StandardDeck = require('../server/decks/standard-cards');
 
 exports.testDeckShuffle = function(test) {
   var deck = new Deck();
+  
+  deck.reset(3);
   test.equal(deck.cards.length, StandardDeck.length);
 
   var cards1 = deck.cards.slice(0);
@@ -16,6 +18,8 @@ exports.testDeckShuffle = function(test) {
 
 exports.testDeckDeal = function(test) {
 	var deck = new Deck();
+  
+  deck.reset(3);
   test.equal(deck.cards.length, StandardDeck.length);
   
 	var cards2 = deck.cards.slice(0);
@@ -28,12 +32,16 @@ exports.testDeckDeal = function(test) {
   
 exports.testDeckReset = function(test) {  
 	var deck = new Deck();
+  
+  deck.reset(3);
   test.equal(deck.cards.length, StandardDeck.length);
+  test.equal(deck.handSize, 6);
   
   var cards3 = deck.cards.slice(0);
-  deck.reset();
+  deck.reset(10);
   
   test.equal(deck.cards.length, StandardDeck.length);
+  test.equal(deck.handSize, 4);
   
   test.done();
 }
