@@ -4,20 +4,22 @@ var JobRules = require('../server/decks/standard-jobs');
 exports.testGetJobsThreePlayers = function(test) {
   var jobManager = new JobManager();
     
-  jobManager.setNumJobs('3');
+  jobManager.setJobManagerConstants('3');
   
   test.equals(jobManager.numSaboteurs, 1);
   test.equals(jobManager.numMiners, 3);
+  test.equals(jobManager.handSize, 6);
   test.done();
 }
 
 exports.testGetJobsTenPlayers = function(test) {
   var jobManager = new JobManager();
   
-  jobManager.setNumJobs('10');
+  jobManager.setJobManagerConstants('10');
   
   test.equals(jobManager.numSaboteurs, 4);
   test.equals(jobManager.numMiners, 7);
+  test.equals(jobManager.handSize, 4);
   test.done();
 }
 
