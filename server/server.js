@@ -84,7 +84,7 @@ var Server = function() {
           socket.set('game', id, function() {
             var game = self.games[id];
             if (game) {  
-              // to do start the game. 
+              game.start(socket);
               console.log('Game ' + id + ' has started');
             } else {
               console.log('Device tried to start non-existing game ' + id);

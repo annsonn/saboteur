@@ -1,5 +1,5 @@
-var JobManager = require('job-manager');
-var Deck = require('deck');
+var JobManager = require('../server/job-manager');
+var Deck = require('../server/deck');
 
 var Game = function(sockets, host, name) {
   this.sockets = sockets;
@@ -26,16 +26,25 @@ Game.prototype.join = function(socket) {
 
 Game.prototype.start = function(socket) {
   
-  this.jobManager.getNumJobs(this.players.length);
+  this.jobManager.setNumJobs(this.players.length);
   this.jobManager.makeJobStack();
   this.jobManager.shuffle();
    
+  this.deck.reset();
+  this.deck.shuffle();
+  
+  //NEED TO KNOW HOW MANY CARDS TO DEAL BASED ON NUMBER OF PLAYERS
+  
   //reset board
   //shuffle gold
   
-  //deal roles
-  //deal deck
   //send board
+  
+  // FOR EACH PLAYER Send job/hand/board?
+  for (var i; i < this.players.length; i++) {
+    // is this how you call this???? no idea....
+  	//this.sockets.to(this.players[i].playerId).emit('job', jobManager.deal(), deck.deal(handsize));
+  }
   
 };
 

@@ -24,7 +24,7 @@ var Application = function() {
       new BoardView(app);
     }	
   });
-
+ 
   return app;
 }
 
