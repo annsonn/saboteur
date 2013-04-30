@@ -27,5 +27,9 @@ JobManager.prototype.shuffle = function() {
   for(var j, x, i = this.jobs.length; i; j = parseInt(Math.random() * i), x = this.jobs[--i], this.jobs[i] = this.jobs[j], this.jobs[j] = x);
 }
 
+JobManager.prototype.deal = function() {
+  return this.jobs.splice(0, 1);
+}
+
 module.exports = JobManager;
 
