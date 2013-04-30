@@ -4,7 +4,7 @@ var JobManager = function() {
   this.jobs = [];
 };
 
-JobManager.prototype.getNumJobs = function(numPlayers) {
+JobManager.prototype.setNumJobs = function(numPlayers) {
   var jobRules = require('./decks/standard-jobs');
   
   this.numSaboteurs = jobRules[numPlayers].saboteurs;
