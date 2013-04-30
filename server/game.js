@@ -25,7 +25,6 @@ Game.prototype.join = function(socket) {
 };
 
 Game.prototype.start = function(socket) {
-  socket.start(this.name);
   
   this.jobManager.getNumJobs(this.players.length);
   this.jobManager.makeJobStack();
