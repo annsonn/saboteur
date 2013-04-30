@@ -6,8 +6,8 @@ exports.testGetJobsThreePlayers = function(test) {
     
   jobManager.getNumJobs('3');
   
-  test.equals(jobManager.numSaboteurs, '1');
-  test.equals(jobManager.numMiners, '3');
+  test.equals(jobManager.numSaboteurs, 1);
+  test.equals(jobManager.numMiners, 3);
   test.done();
 }
 
@@ -16,18 +16,15 @@ exports.testGetJobsTenPlayers = function(test) {
   
   jobManager.getNumJobs('10');
   
-  test.equals(jobManager.numSaboteurs, '4');
-  test.equals(jobManager.numMiners, '7');
+  test.equals(jobManager.numSaboteurs, 4);
+  test.equals(jobManager.numMiners, 7);
   test.done();
 }
 
 exports.testMakeJobStackFivePlayers = function(test) {
   var jobManager = new JobManager();
   
-  jobManager.numSaboteurs = '2';
-  jobManager.numMiners = '4';
-  
-	jobManager.makeJobStack();
+	jobManager.makeJobStack(2, 4);
   
   test.equals(jobManager.jobs.length, '6');
   test.done();
@@ -36,10 +33,7 @@ exports.testMakeJobStackFivePlayers = function(test) {
 exports.testJobShuffle = function(test) {
   var jobManager = new JobManager();
   
-  jobManager.numSaboteurs = '3';
-  jobManager.numMiners = '5';
-  
-  jobManager.makeJobStack();
+  jobManager.makeJobStack(3, 5);
   var originJobStack = jobManager.jobs.slice(0);
   
   jobManager.shuffle();
