@@ -43,3 +43,16 @@ exports.testJobShuffle = function(test) {
   
   test.done();
 }
+
+exports.testJobDeal = function(test) {
+	var jobManager = new JobManager();
+ 	
+  jobManager.makeJobStack(1, 3);
+ 	var originJobStack = jobManager.jobs.slice(0);
+  
+  for (var i; i < jobManager.jobs.length; i++) {
+  	 test.equals(jobManager.deal(), originJobStack.splice(0, 1));
+  }
+    
+	test.done(); 
+}
