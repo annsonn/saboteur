@@ -1,6 +1,5 @@
 var Board = function() {
-  this.board = [];
-  this.reset();
+  this.board = []; 
 }
 
 Board.prototype.reset = function() {
@@ -16,5 +15,7 @@ Board.prototype.removeCard = function( location ) {
 Board.prototype.flipGold = function ( location ) {  
 }
 
+Board.prototype.shuffleGold = function ( location ) {  
+}
 
 module.exports = Board;

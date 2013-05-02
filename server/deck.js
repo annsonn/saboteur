@@ -1,7 +1,5 @@
 var Deck = function() {
   this.cards = [];  
-  this.reset();
-  this.shuffle();
 };
 
 /**
