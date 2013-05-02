@@ -1,14 +1,5 @@
 var JobManager = function() {
-  this.numSaboteurs;  
-  this.numMiners;
   this.jobs = [];
-};
-
-JobManager.prototype.setNumJobs = function(numPlayers) {
-  var jobRules = require('./decks/standard-jobs');
-  
-  this.numSaboteurs = jobRules[numPlayers].saboteurs;
-  this.numMiners = jobRules[numPlayers].miners;
 };
 
 JobManager.prototype.makeJobStack = function(saboteurs, miners){
