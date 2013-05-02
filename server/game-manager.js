@@ -13,6 +13,8 @@ var GameManager = function() {
 GameManager.prototype.setup = function(numPlayers) {
 	var gameRules = require('./decks/standard-rules');
   this.handSize = gameRules[numPlayers].hand;
+  
+  this.deck.reset();
   this.jobManager.makeJobStack(gameRules[numPlayers].saboteurs, gameRules[numPlayers].miners);
 }
 
