@@ -1,25 +1,5 @@
 var JobManager = require('../server/job-manager');
 
-exports.testGetJobsThreePlayers = function(test) {
-  var jobManager = new JobManager();
-    
-  jobManager.setJobNums('3');
-  
-  test.equals(jobManager.numSaboteurs, 1);
-  test.equals(jobManager.numMiners, 3);
-  test.done();
-}
-
-exports.testGetJobsTenPlayers = function(test) {
-  var jobManager = new JobManager();
-  
-  jobManager.setJobNums('10');
-  
-  test.equals(jobManager.numSaboteurs, 4);
-  test.equals(jobManager.numMiners, 7);
-  test.done();
-}
-
 exports.testMakeJobStackFivePlayers = function(test) {
   var jobManager = new JobManager();
   
@@ -35,7 +15,7 @@ exports.testJobShuffle = function(test) {
   jobManager.makeJobStack(3, 5);
   var originJobStack = jobManager.jobs.slice(0);
   
-  jobManager.shuffle();
+  jobManager.shuffleJobs();
   
   test.equals(originJobStack.length, jobManager.jobs.length);  
   test.notDeepEqual(jobManager.jobs, originJobStack);

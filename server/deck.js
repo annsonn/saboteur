@@ -1,22 +1,18 @@
 var Deck = function() {
   this.cards = [];  
-  this.handSize;
 };
 
 /**
  * Reset cards in deck and shuffles
  */
-Deck.prototype.reset = function(numPlayers) {
+Deck.prototype.reset = function() {
   var standardCards = require('./decks/standard-cards');
   this.cards = standardCards.slice(0);
-  
-  var gameRules = require('./decks/standard-rules');
-  this.handSize = gameRules[numPlayers].hand;
 };
 
 //+ Jonas Raoni Soares Silva
 //@ http://jsfromhell.com/array/shuffle [v1.0]
-Deck.prototype.shuffle = function() {
+Deck.prototype.shuffleDeck = function() {
   for(var j, x, i = this.cards.length; i; j = parseInt(Math.random() * i), x = this.cards[--i], this.cards[i] = this.cards[j], this.cards[j] = x);
 }
 
