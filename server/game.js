@@ -25,12 +25,7 @@ Game.prototype.join = function(socket) {
 Game.prototype.start = function(socket) {
   
 	this.gameManager.setupGame(this.players.length);
-
 	this.gameManager.shuffleDecks();
-  
-  //reset board
-  
-  //send board
   
   // FOR EACH PLAYER Send job/hand/board?
   for (var i; i < this.players.length; i++) {

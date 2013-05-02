@@ -1,5 +1,6 @@
-var JobManager = require('../server/job-manager');
+//var BoardManager = require('../server/board-manager');
 var Deck = require('../server/deck');
+var JobManager = require('../server/job-manager');
 
 var GameManager = function() {
   this.handSize;
