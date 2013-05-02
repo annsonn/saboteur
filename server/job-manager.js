@@ -14,11 +14,11 @@ JobManager.prototype.makeJobStack = function(saboteurs, miners){
 
 //+ Jonas Raoni Soares Silva
 //@ http://jsfromhell.com/array/shuffle [v1.0]
-JobManager.prototype.shuffleJobs = function() {
+JobManager.prototype.shuffle = function() {
   for(var j, x, i = this.jobs.length; i; j = parseInt(Math.random() * i), x = this.jobs[--i], this.jobs[i] = this.jobs[j], this.jobs[j] = x);
 }
 
-JobManager.prototype.dealJob = function() {
+JobManager.prototype.deal = function() {
   return this.jobs.splice(0, 1);
 }
 

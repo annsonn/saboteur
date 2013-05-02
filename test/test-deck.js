@@ -8,7 +8,7 @@ exports.testDeckShuffle = function(test) {
   test.equal(deck.cards.length, StandardDeck.length);
 
   var cards1 = deck.cards.slice(0);
-  deck.shuffleDeck();
+  deck.shuffle();
   
   test.notDeepEqual(deck.cards, cards1);
   test.equal(deck.cards.length, cards1.length);
@@ -37,7 +37,7 @@ exports.testDeckReset = function(test) {
   test.equal(deck.cards.length, StandardDeck.length);
   
   var cards3 = deck.cards.slice(0);
-  deck.shuffleDeck();
+  deck.shuffle();
   deck.reset();
   
   test.equal(deck.cards.length, StandardDeck.length);

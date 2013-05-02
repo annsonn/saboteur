@@ -15,7 +15,7 @@ exports.testJobShuffle = function(test) {
   jobManager.makeJobStack(3, 5);
   var originJobStack = jobManager.jobs.slice(0);
   
-  jobManager.shuffleJobs();
+  jobManager.shuffle();
   
   test.equals(originJobStack.length, jobManager.jobs.length);  
   test.notDeepEqual(jobManager.jobs, originJobStack);
@@ -30,7 +30,7 @@ exports.testJobDeal = function(test) {
  	var originJobStack = jobManager.jobs.slice(0);
   
   for (var i; i < jobManager.jobs.length; i++) {
-  	 test.equals(jobManager.dealJob(), originJobStack.splice(0, 1));
+  	 test.equals(jobManager.deal(), originJobStack.splice(0, 1));
   }
     
 	test.done(); 
