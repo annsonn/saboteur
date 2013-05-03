@@ -4,7 +4,8 @@ var Application = function() {
   var app = {
     socket: io.connect(), // Connect to server
     player: {
-      id: null
+      id: null,
+      isHost: false
     },
     game: {
       playerCount: 0
@@ -41,4 +42,4 @@ window.onresize = function(event) {
   $('.screen').css('width', windowWidth + 'px')
 };
 
-new Application();
+var application = new Application();
