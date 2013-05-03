@@ -4,11 +4,14 @@ var Board = function() {
 }
 
 Board.prototype.reset = function() {
-  this.board = [];
-  this.board.placeCard( 0, 0, 'start' );
-	this.board.placeCard( 2, 8, this.board.dealGoal() );
-  this.board.placeCard( 0, 8, this.board.dealGoal() );
-  this.board.placeCard( -2, 8, this.board.dealGoal() );
+  this.board[0] = [];
+  this.board[2] = [];
+  this.board[-2] = [];
+  
+  this.board[0][0] = 'start';
+  this.board[0][8] = dealGoal(this.goal);
+  this.board[2][8] = dealGoal(this.goal);
+  this.board[-2][8] = dealGoal(this.goal);
 }
 
 Board.prototype.placeCard = function( locationX, locationY, card ) {
@@ -34,8 +37,8 @@ Board.prototype.shuffleGoal = function() {
   for(var j, x, i = this.goal.length; i; j = parseInt(Math.random() * i), x = this.goal[--i], this.goal[i] = this.goal[j], this.goal[j] = x);
 }
 
-Board.prototype.dealGoal = function () {  
- return this.goal.splice(0, 1);
+var dealGoal = function ( goalCards ) {  
+	return goalCards.splice(0, 1);
 }
 
 module.exports = Board;
