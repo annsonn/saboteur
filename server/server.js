@@ -81,17 +81,17 @@ var Server = function() {
       
       startGame: function(socket, callback) {
         return function(id) {          
-          socket.set('game', id, function() {
-            var game = self.games[id];
+          socket.get('game', function(x, gameId) {
+            var game = self.games[gameId];
             if (game) {  
               game.start(socket);
-              console.log('Game ' + id + ' has started');
+              console.log('Game ' + gameId + ' has started');
             } else {
               console.log('Device tried to start non-existing game ' + id);
               socket.emit('error', {code: 404, message: 'Failed to join game ' + id});
             }
             if (callback) callback.call(self);
-          });     
+          });
         }
       }, 
       
