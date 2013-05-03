@@ -5,6 +5,13 @@ var HandView = function(app) {
   $('#join-game').click(function(event) {
     app.socket.emit('join', $('#input-code').val());
   })
+  $('.ready-button').click(function(event) {
+    if (app.game.playerCount >= 3) {
+      $('.ready-button').hide();
+      console.log('triggered start game');
+      app.socket.emit('start');
+    }
+  });
 
   // Joining Screens
   app.socket.on('joined', function (data) {  
@@ -19,9 +26,18 @@ var HandView = function(app) {
       });
       $('.player-text').append(app.game.playerCount);
       if (app.game.playerCount > 1) {
-        $('.ready-button').css({ "display":"none"});
+        $('.ready-button').hide();
+      } else {
+        app.player.isHost = true;
       }
     }
+    if (app.player.isHost && app.game.playerCount >= 3) {
+      $('.ready-button').text('Start Game');
+    }
+  });
+
+  app.socket.on('start', function(data) {
+    console.log('game started', data);
   });
   
 };
