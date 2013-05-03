@@ -1,4 +1,4 @@
-//var BoardManager = require('../server/board-manager');
+//var BoardManager = require('../server/board');
 var Deck = require('../server/deck');
 var JobManager = require('../server/job-manager');
 
