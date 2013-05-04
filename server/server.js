@@ -102,11 +102,13 @@ var Server = function() {
             if (gameId) {
               socket.set('game', null, function() {
 	              var game = self.games[gameId];
-                game.leave(socket); 
-                console.log('Device left game ' + gameId);
-                
-                if (game.players.length === 0) {
-                  delete self.games[gameId];
+                if (game) {
+                  game.leave(socket); 
+                  console.log('Device left game ' + gameId);
+                  
+                  if (game.players.length === 0) {
+                    delete self.games[gameId];
+                  }
                 }
               });
             }

@@ -24,13 +24,26 @@ Game.prototype.join = function(socket) {
 
 Game.prototype.start = function(socket) {
   
-	this.gameManager.setupGame(this.players.length);
-	this.gameManager.shuffleDecks();
+	this.gameManager.setup(this.players.length);
+	this.gameManager.shuffle();
+  console.log('game manager has been setup');
   
   // FOR EACH PLAYER Send job/hand/board?
-  for (var i; i < this.players.length; i++) {
-    // is this how you call this???? no idea....
-  	// this.sockets.to(this.players[i].playerId).emit('init', jobManager.dealJob(), deck.deal(deck.handsize));
+  for (var i = 0; i < this.players.length; i++) {
+    var playerId = this.players[i]
+    console.log('sending to ' + playerId);
+    if (i === 0){
+      // Board
+      //this.sockets.sockets[playerId].emit('start', this.gameManager.board.serialize());
+      console.log('sent start to board')
+      this.sockets.sockets[playerId].emit('start', []);
+      // TODO anson do this
+    } else {
+      // Hand
+      console.log('sent start to hand ' + i)
+      this.sockets.sockets[playerId].emit('start', {job: 'miner', cards: this.gameManager.deck.deal(2)});
+      // TODO anson do this
+    }
   }
   
 };
