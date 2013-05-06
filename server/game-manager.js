@@ -1,13 +1,13 @@
-var BoardManager = require('../server/board');
+var Board = require('../server/board');
 var Deck = require('../server/deck');
 var JobManager = require('../server/job-manager');
 
 var GameManager = function() {
   this.handSize;
   
-  this.board = new Board;
-  this.deck = new Deck;
-  this.jobManager = new JobManager;
+  this.board = new Board();
+  this.deck = new Deck();
+  this.jobManager = new JobManager();
   this.players = [];
 }
 
