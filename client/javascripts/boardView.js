@@ -23,4 +23,7 @@ var BoardView = function(app) {
     }
   });
 
+  app.socket.on('start', function(data) {
+    console.log('game started', data);
+  });
 };
