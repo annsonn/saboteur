@@ -38,6 +38,17 @@ var HandView = function(app) {
 
   app.socket.on('start', function(data) {
     console.log('game started', data);
+    
+    if (data.job == "miner") {
+      console.log('player is a miner');
+      $('.flip-card-back').append('<img src="/images/job-miner.jpg"/>');  
+    }
+    if (data.job == "saboteur") {
+      console.log('player is a saboteur');
+       $('.flip-card-back').append('<img src="/images/job-saboteur.jpg"/>'); 
+    }
+    
+    $('#game').attr('page', 'choose-role');
   });
   
 };
