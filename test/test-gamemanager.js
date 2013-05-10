@@ -29,3 +29,13 @@ exports.testGameManagerShuffle = function(test) {
 
   test.done();
 }
+
+exports.testGameManagerAddPlayer = function(test) {
+  var gameManager = new GameManager;
+  
+  gameManager.addPlayer('testId');
+  
+  test.equal(gameManager.players.length, 1);
+  test.done();
+  
+}

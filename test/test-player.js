@@ -8,14 +8,3 @@ exports.testSetJob = function(test) {
   test.equal(player.job, 'saboteur');
   test.done();
 }
-
-exports.testReset = function(test) {
-  var player = new Player();
-  
-  player.setJob('saboteur');
-  
-  player.reset();
-  
-  test.equal(player.job, null);
-  test.done();
-}
