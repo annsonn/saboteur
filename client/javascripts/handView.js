@@ -40,15 +40,18 @@ var HandView = function(app) {
     console.log('game started', data);
     
     if (data.job == "miner") {
-      console.log('player is a miner');
       $('.flip-card-back').append('<img src="/images/job-miner.jpg"/>');  
     }
     if (data.job == "saboteur") {
-      console.log('player is a saboteur');
        $('.flip-card-back').append('<img src="/images/job-saboteur.jpg"/>'); 
     }
     
     $('#game').attr('page', 'choose-role');
+  });
+  
+  $('.job-card').click(function() {
+    // flip cards
+    alert('you flipped the card');
   });
   
 };

@@ -1,0 +1,37 @@
+#choose-role .title {
+  font-size: 40px;
+}
+
+.job-card {
+  margin: 20px auto;
+  width: 220px;
+  height: 351px;
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  
+  
+  backface-visibility: hidden;
+  -webkit-backface-visibility:hidden;
+  
+  transform-style: preserve-3d;
+  transition: all 1.0s linear;
+  
+  -webkit-transform-style: preserve-3d;
+  -webkit-transition: all 1.0s linear;
+}
+
+.flip-card-front img, .flip-card-back img {
+  border-radius: 20px;
+  border: 2px solid black;
+  width: 220px;
+}
+
+.flip-card-front {
+  z-index: 10;
+}
+
+.flip-card-back {
+  transform:rotateY(360deg);  
+}
