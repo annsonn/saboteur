@@ -25,7 +25,7 @@ Game.prototype.join = function(socket) {
 
 Game.prototype.start = function(socket) {
   this.state = 'start game';
-  this.gameManager = new GameManager(this.sockets, this.players);
+  this.gameManager = new GameManager(this.sockets, this.name, this.players);
   this.gameManager.shuffle();
   this.gameManager.start();
   console.log('game manager is ready');
@@ -36,7 +36,16 @@ Game.prototype.start = function(socket) {
   });
 
   this.gameManager.board.socket.emit('start', this.gameManager.board.serialize());
-  
+};
+
+Game.prototype.play(socket, card, target) {
+  if (socket.id === this.gameManager.getCurrentPlayer().socket.id) {
+    socket.emit('error', 'not your turn');
+  } else if (this.gameManager.playCard(card, target)) {
+    this.sockets.to(this.name).emit('next player', this.gameManager.getCurrentPlayer().socket.id);
+  } else {
+    socket.emit('error', 'invalid play');
+  }
 };
 
 Game.prototype.leave = function(socket) {

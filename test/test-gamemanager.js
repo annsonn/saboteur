@@ -18,7 +18,7 @@ exports.testMakeFixture = function(test) {
 };
 
 exports.testCreate = function(test) {
-  var gameManager = new GameManager(fixtureThreePlayers.sockets, fixtureThreePlayers.players);
+  var gameManager = new GameManager(fixtureThreePlayers.sockets, 'name', fixtureThreePlayers.players);
   
   test.ok(gameManager);
   test.equal(gameManager.handSize, 6);
@@ -30,7 +30,7 @@ exports.testCreate = function(test) {
 };
 
 exports.testShuffle = function(test) {
-  var gameManager = new GameManager(fixtureTenPlayers.sockets, fixtureTenPlayers.players);
+  var gameManager = new GameManager(fixtureTenPlayers.sockets, 'name', fixtureTenPlayers.players);
   
   var jobstack = gameManager.jobManager.jobs.slice(0);
   var deck = gameManager.deck.cards.slice(0);
@@ -46,7 +46,7 @@ exports.testShuffle = function(test) {
 };
 
 exports.testStart = function(test) {
-  var gameManager = new GameManager(fixtureThreePlayers.sockets, fixtureThreePlayers.players);
+  var gameManager = new GameManager(fixtureThreePlayers.sockets, 'name', fixtureThreePlayers.players);
   
   var jobStack = gameManager.jobManager.jobs.slice(0);
 

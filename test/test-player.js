@@ -26,4 +26,21 @@ exports.testAddToHand = function(test) {
     test.deepEqual(player.hand, ['card', 'one', 'two']);
 
     test.done();
-}
+};
+
+exports.testApplyAndIsBlocked = function(test) {
+  var player = new Player();
+
+  test.ok(!player.isBlocked());
+
+  test.ok(player.applyCard('block light'));
+  test.ok(player.isBlocked());
+  test.ok(player.blocks.light);
+  test.ok(!player.blocks.pickaxe);
+
+  test.ok(player.applyCard('free light'));
+  test.ok(!player.isBlocked());
+
+  test.ok(!player.applyCard('invalid'));
+  test.done();
+};
