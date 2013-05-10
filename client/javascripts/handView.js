@@ -51,7 +51,10 @@ var HandView = function(app) {
   
   $('.job-card').click(function() {
     // flip cards
-    alert('you flipped the card');
+
+    $('.flip-card-front').css('transform', 'rotateY(360deg)');
+    $('.flip-card-front').css('z-index', '-10');
+    $('.flip-card-back').css('transform', 'rotateY(0deg)');
   });
   
 };

@@ -16,10 +16,10 @@
   -webkit-backface-visibility:hidden;
   
   transform-style: preserve-3d;
-  transition: all 1.0s linear;
+  transition: all 2.0s linear;
   
   -webkit-transform-style: preserve-3d;
-  -webkit-transition: all 1.0s linear;
+  -webkit-transition: all 2.0s linear;
 }
 
 .flip-card-front img, .flip-card-back img {
