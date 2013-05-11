@@ -1,5 +1,5 @@
-var Deck = function() {
-  this.cards = [];  
+var Deck = function(defaultCards) {
+  this.cards = defaultCards || [];  
 };
 
 /**

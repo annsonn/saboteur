@@ -5,8 +5,9 @@ var Game = function(sockets, host, name) {
   this.host = host;
   this.name = Math.random().toString(20).substr(2, 5);
   this.players = [];
-  
-  this.gameManager = new GameManager();
+
+  this.state = 'waiting';
+
 };
 
 Game.prototype.serialize = function() {
@@ -23,36 +24,35 @@ Game.prototype.join = function(socket) {
 };
 
 Game.prototype.start = function(socket) {
-  
-	this.gameManager.setup(this.players.length);
-	this.gameManager.shuffle();
-  console.log('game manager has been setup');
-  
-  // FOR EACH PLAYER Send job/hand/board?
-  for (var i = 0; i < this.players.length; i++) {
-    var playerId = this.players[i]
-    console.log('sending to ' + playerId);
-    if (i === 0){
-      // Board
-      //this.sockets.sockets[playerId].emit('start', this.gameManager.board.serialize());
-      console.log('sent start to board')
-      this.sockets.sockets[playerId].emit('start', []);
-      // TODO anson do this
-    } else {
-      // Hand
-      console.log('sent start to hand ' + i)
-      this.sockets.sockets[playerId].emit('start', {job: 'miner', cards: this.gameManager.deck.deal(2)});
-      // TODO anson do this
-    }
+  this.state = 'start game';
+  this.gameManager = new GameManager(this.sockets, this.name, this.players);
+  this.gameManager.shuffle();
+  this.gameManager.start();
+  console.log('game manager is ready');
+
+  this.gameManager.eachPlayer(function(player) {
+    console.log('sending to ' + player.socket.id);
+    player.socket.emit('start', player.serialize());
+  });
+
+  this.gameManager.board.socket.emit('start', this.gameManager.board.serialize());
+};
+
+Game.prototype.play(socket, card, target) {
+  if (socket.id === this.gameManager.getCurrentPlayer().socket.id) {
+    socket.emit('error', 'not your turn');
+  } else if (this.gameManager.playCard(card, target)) {
+    this.sockets.to(this.name).emit('next player', this.gameManager.getCurrentPlayer().socket.id);
+  } else {
+    socket.emit('error', 'invalid play');
   }
-  
 };
 
 Game.prototype.leave = function(socket) {
   if (socket.id === this.host) {
     this.sockets.to(this.name).emit('host left', this.serialize());
   }
-	this.players.splice(this.players.indexOf(socket.id), 1)
+  this.players.splice(this.players.indexOf(socket.id), 1)
   this.sockets.to(this.name).emit('left', {playerId: socket.id, game: this.serialize()});
   socket.leave(this.name);
 }
