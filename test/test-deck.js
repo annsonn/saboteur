@@ -1,6 +1,13 @@
 var Deck = require('../server/deck');
 var StandardDeck = require('../server/decks/standard-cards');
 
+exports.testCreate = function(test) {
+  var deck = new Deck(['one', 'two']);
+
+  test.deepEqual(deck.cards, ['one', 'two']);
+  test.done();
+};
+
 exports.testDeckShuffle = function(test) {
   var deck = new Deck();
   

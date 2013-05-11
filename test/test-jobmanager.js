@@ -17,7 +17,7 @@ exports.testJobShuffle = function(test) {
   
   jobManager.shuffle();
   
-  test.equals(originJobStack.length, jobManager.jobs.length);  
+  test.equals(originJobStack.length, jobManager.jobs.length);
   test.notDeepEqual(jobManager.jobs, originJobStack);
   
   test.done();
