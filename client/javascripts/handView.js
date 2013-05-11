@@ -39,12 +39,15 @@ var HandView = function(app) {
   app.socket.on('start', function(data) {
     console.log('game started', data);
     
-    if (data.job == "miner") {
+    if (data.job == "gold-digger") {
       $('.flip-card-back').append('<img src="/images/job-miner.jpg"/>');  
     }
     if (data.job == "saboteur") {
        $('.flip-card-back').append('<img src="/images/job-saboteur.jpg"/>'); 
     }
+    
+    // To Do:
+    //append the hand to the next screen
     
     $('#game').attr('page', 'choose-role');
   });
@@ -52,6 +55,9 @@ var HandView = function(app) {
   $('.job-card').click(function() {
     // flip cards
     $('.job-card').addClass('flip');
+    
+    // To Do:
+    // change click function so that once they click again the screen will change to their hand
   });
   
 };

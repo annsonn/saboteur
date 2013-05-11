@@ -38,7 +38,7 @@ Game.prototype.start = function(socket) {
   this.gameManager.board.socket.emit('start', this.gameManager.board.serialize());
 };
 
-Game.prototype.play(socket, card, target) {
+Game.prototype.play = function(socket, card, target) {
   if (socket.id === this.gameManager.getCurrentPlayer().socket.id) {
     socket.emit('error', 'not your turn');
   } else if (this.gameManager.playCard(card, target)) {
