@@ -16,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/lobby.css" />
     <link rel="stylesheet" type="text/css" href="/stylesheets/join.css" />
     <link rel="stylesheet" type="text/css" href="/stylesheets/legacy.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/chooserole.css" />
   </head>
   <body>
     <article id="game" page="loading">
@@ -97,9 +98,17 @@
       </section>
       
       <section id="choose-role" class="layer white-border">
-         <div class="screen">
-          <div id="title" class="lobby-text title center">
-            Saboteur
+        <div class="screen">
+          <div id="title" class="title center">
+            You are a ...
+          </div>
+          <div class="job-card">
+            <div class="flip-card-front">
+              <img src="/images/job-card-back.jpg"/>
+            </div>
+            <div class="flip-card-back">
+              <!-- image is added in with javascript -->  
+            </div>
           </div>
         </div>
       </section>
