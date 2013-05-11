@@ -45,7 +45,7 @@
 }
 
 .flip .flip-card-back {
-  transform:rotateY(0deg);  
-  -webkit-transform: rotateY(0deg);
+  transform:rotateY(360deg);  
+  -webkit-transform: rotateY(360deg);
 }
 
