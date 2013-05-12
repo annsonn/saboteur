@@ -48,6 +48,15 @@ var HandView = function(app) {
     
     // To Do:
     //append the hand to the next screen
+    var hand = [];
+    hand.push('<ul>');
+    
+    for (var i = 0; i < data.hand.length; i++) {
+      hand.push('<li><span></span></li>');
+    }
+    hand.push('</ul>');
+    
+    $('.hand').append(hand.s
     
     $('#game').attr('page', 'choose-role');
   });
@@ -56,8 +65,9 @@ var HandView = function(app) {
     // flip cards
     $('.job-card').addClass('flip');
     
-    // To Do:
-    // change click function so that once they click again the screen will change to their hand
+    $('.job-card').click(function() {
+       $('#game').attr('page', 'hand');
+    }
   });
   
 };
