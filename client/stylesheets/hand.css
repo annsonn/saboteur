@@ -1,0 +1,9 @@
+.hand li {
+   display: inline-block;
+}
+
+.hand li img {
+  border-radius: 10px;
+  max-width: 150px;
+  margin: 0 5px;
+} 

@@ -52,7 +52,7 @@ var HandView = function(app) {
     hand.push('<ul>');
     
     for (var i = 0; i < data.hand.length; i++) {
-      hand.push('<li><span>' + data.hand[i] + '</span></li>');
+      hand.push('<li><img src="/images/'+data.hand[i]+'.jpg"/></li>');
     }
     hand.push('</ul>');
     
