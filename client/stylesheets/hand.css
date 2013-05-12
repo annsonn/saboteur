@@ -1,3 +1,13 @@
+.hand {  
+  height: 260px
+}
+
+.hand ul {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  width: 1000px;
+}
+
 .hand li {
    display: inline-block;
 }
