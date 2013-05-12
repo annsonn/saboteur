@@ -52,11 +52,11 @@ var HandView = function(app) {
     hand.push('<ul>');
     
     for (var i = 0; i < data.hand.length; i++) {
-      hand.push('<li><span></span></li>');
+      hand.push('<li><span>' + data.hand[i] + '</span></li>');
     }
     hand.push('</ul>');
     
-    $('.hand').append(hand.s
+    $('.hand').append( hand.join('') );
     
     $('#game').attr('page', 'choose-role');
   });
@@ -67,7 +67,7 @@ var HandView = function(app) {
     
     $('.job-card').click(function() {
        $('#game').attr('page', 'hand');
-    }
+    });
   });
   
 };
