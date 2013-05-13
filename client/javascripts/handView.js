@@ -57,7 +57,8 @@ var HandView = function(app) {
     hand.push('</ul>');
     
     $('.hand').append( hand.join('') );
-    $('.hand').css('width', window.innerWidth-50);
+    $('.hand').css('width', window.innerWidth-65);
+    $('.hand ul').css('width', window.innerWidth-65);
     $('#game').attr('page', 'choose-role');
   });
   

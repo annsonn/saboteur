@@ -1,15 +1,21 @@
-.hand {  
-  height: 260px
+.hand {
+  overflow: hidden;
 }
 
 .hand ul {
-  overflow-x: scroll;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
   overflow-y: hidden;
-  width: 1000px;
+  white-space: nowrap;
 }
 
 .hand li {
-   display: inline-block;
+  display: inline;
+  list-style: none;
+  max-width: 150px;
+  height: 260px;
 }
 
 .hand li img {
@@ -17,3 +23,10 @@
   max-width: 150px;
   margin: 0 5px;
 } 
+
+
+ul.images {
+  width: 900px;
+  overflow-x: auto;
+  background-color: #ddd;
+}
