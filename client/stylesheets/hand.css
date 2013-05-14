@@ -19,10 +19,3 @@
   width: 150px;
   height: 240px;
 }
-
-
-ul.images {
-  width: 900px;
-  overflow-x: auto;
-  background-color: #ddd;
-}
