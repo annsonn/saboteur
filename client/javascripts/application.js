@@ -40,6 +40,8 @@ window.onresize = function(event) {
   windowWidth = window.innerWidth-50;
   $('.screen').css('height', windowHeight + 'px')
   $('.screen').css('width', windowWidth + 'px')
+  $('.hand').css('width', window.innerWidth-65);
+  $('.hand ul').css('width', window.innerWidth-65);
 };
 
 var application = new Application();
