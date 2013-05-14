@@ -12,17 +12,13 @@
 }
 
 .hand li {
-  display: inline;
-  list-style: none;
-  max-width: 150px;
-  height: 260px;
-}
-
-.hand li img {
   border-radius: 10px;
-  max-width: 150px;
+  display: inline-block;
+  list-style: none;
   margin: 0 5px;
-} 
+  width: 150px;
+  height: 240px;
+}
 
 
 ul.images {

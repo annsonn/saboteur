@@ -44,21 +44,18 @@ var HandView = function(app) {
     }
     if (data.job == "saboteur") {
        $('.flip-card-back').append('<img src="/images/job-saboteur.jpg"/>'); 
-    }
+    } 
     
-    // To Do:
-    //append the hand to the next screen
-    var hand = [];
-    hand.push('<ul>');
+    var list = $('<ul />');
+    data.hand.forEach(function(card) {
+      list.append($('<li />').addClass(card + ' playing-card'));
+    });
     
-    for (var i = 0; i < data.hand.length; i++) {
-      hand.push('<li><img src="/images/'+data.hand[i]+'.jpg"/></li>');
-    }
-    hand.push('</ul>');
+    $('.hand').html(list); // or $('.hand').append(list) to add to existing cards    
     
-    $('.hand').append( hand.join('') );
     $('.hand').css('width', window.innerWidth-65);
     $('.hand ul').css('width', window.innerWidth-65);
+    
     $('#game').attr('page', 'choose-role');
   });
   

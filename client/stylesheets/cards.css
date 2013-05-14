@@ -1,0 +1,112 @@
+.playing-card {
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.connected-top-bottom { 
+  background-image: url('/images/map/connected-top-bottom.jpg');
+}
+
+.connected-right-left {
+  background-image: url('/images/map/connected-right-left.jpg');
+}
+
+.connected-top-right {
+  background-image: url('/images/map/connected-top-right.jpg');
+}
+
+.connected-top-left {
+  background-image: url('/images/map/connected-top-left.jpg');
+}
+
+.connected-top-right-bottom {
+  background-image: url('/images/map/connected-top-right-bottom.jpg');
+}
+
+.connected-top-right-left {
+  background-image: url('/images/map/connected-top-right-left.jpg');
+}
+
+.connected-cross   {
+  background-image: url('/images/map/connected-cross.jpg');
+}
+
+.deadend-top {
+  background-image: url('/images/map/deadend-top.jpg');
+}
+
+.deadend-right {
+  background-image: url('/images/map/deadend-right.jpg');
+}
+
+.deadend-top-right {
+  background-image: url('/images/map/deadend-top-right.jpg');
+}
+
+.deadend-top-left {
+  background-image: url('/images/map/deadend-top-left.jpg');
+}
+
+.deadend-top-bottom {
+  background-image: url('/images/map/deadend-top-bottom.jpg');
+}
+
+.deadend-right-left {
+  background-image: url('/images/map/deadend-right-left.jpg');
+}
+
+.deadend-top-right-bottom {
+  background-image: url('/images/map/deadend-top-right-bottom.jpg');
+}
+
+.deadend-top-right-left {
+  background-image: url('/images/map/deadend-top-right-left.jpg');
+}
+
+.deadend-cross {
+  background-image: url('/images/map/deadend-cross.jpg');
+}
+
+.free-pickaxe {
+  background-image: url('/images/action/free-pickaxe.jpg');
+}
+
+.free-lamp {
+  background-image: url('/images/action/free-lamp.jpg');
+}
+
+.free-cart {
+  background-image: url('/images/action/free-cart.jpg');
+}
+
+.free-pickaxe-lamp {
+  background-image: url('/images/action/free-pickaxe-lamp.jpg');
+}
+
+.free-pickaxe-cart {
+  background-image: url('/images/action/free-pickaxe-cart.jpg');
+}
+
+.free-lamp-cart {
+  background-image: url('/images/action/free-lamp-cart.jpg');
+}
+
+.block-pickaxe {
+  background-image: url('/images/action/block-pickaxe.jpg');
+}
+
+.block-lamp {
+  background-image: url('/images/action/block-lamp.jpg');
+}
+
+.block-cart {
+  background-image: url('/images/action/block-cart.jpg');
+}
+
+.avalanche {
+  background-image: url('/images/action/avalanche.jpg');
+}
+
+.map {
+  background-image: url('/images/action/map.jpg');
+}
