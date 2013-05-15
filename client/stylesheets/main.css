@@ -12,7 +12,8 @@
 #game[page=lobby-controller] #lobby-controller, 
 #game[page=join] #join,
 #game[page=join-mobile] #join-mobile,
-#game[page=choose-role] #choose-role {
+#game[page=choose-role] #choose-role, 
+#game[page=hand] #hand {
   display: block
 }
 

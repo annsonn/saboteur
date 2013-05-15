@@ -44,10 +44,17 @@ var HandView = function(app) {
     }
     if (data.job == "saboteur") {
        $('.flip-card-back').append('<img src="/images/job-saboteur.jpg"/>'); 
-    }
+    } 
     
-    // To Do:
-    //append the hand to the next screen
+    var list = $('<ul />');
+    data.hand.forEach(function(card) {
+      list.append($('<li />').addClass(card + ' playing-card'));
+    });
+    
+    $('.hand').html(list); // or $('.hand').append(list) to add to existing cards    
+    
+    $('.hand').css('width', window.innerWidth-65);
+    $('.hand ul').css('width', window.innerWidth-65);
     
     $('#game').attr('page', 'choose-role');
   });
@@ -56,8 +63,9 @@ var HandView = function(app) {
     // flip cards
     $('.job-card').addClass('flip');
     
-    // To Do:
-    // change click function so that once they click again the screen will change to their hand
+    $('.job-card').click(function() {
+       $('#game').attr('page', 'hand');
+    });
   });
   
 };
