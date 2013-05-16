@@ -25,5 +25,17 @@ var BoardView = function(app) {
 
   app.socket.on('start', function(data) {
     console.log('game started', data);
+      
+    for (var i in data) {
+      var boardRow = $('<ul />');
+      
+      for (var j in data[i]) {
+        boardRow.append($('<li />').addClass(data[i][j] + ' board-card'));
+      };
+      $('.board').html(boardRow);
+    };
+    
+    $('#game').attr('page', 'board');
+    
   });
 };

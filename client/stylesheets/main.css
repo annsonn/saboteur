@@ -13,7 +13,8 @@
 #game[page=join] #join,
 #game[page=join-mobile] #join-mobile,
 #game[page=choose-role] #choose-role, 
-#game[page=hand] #hand {
+#game[page=hand] #hand,
+#game[page=board] #board {
   display: block
 }
 
