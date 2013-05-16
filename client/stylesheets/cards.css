@@ -110,3 +110,23 @@
 .map {
   background-image: url('/images/action/map.jpg');
 }
+
+.start {
+  background-image: url('/images/map-start.jpg');
+}
+
+.coal-left, .coal-right, .gold {
+  background-image: url('/images/map-back-end.jpg');
+}
+
+.coal-left + .flipped {
+  background-image: url('/images/map-end-coal-left.jpg');
+}
+
+.coal-right + .flipped {
+  background-image: url('/images/map-end-coal-right.jpg');
+}
+
+.gold + .flipped {
+  background-image: url('/images/map-end-coal-gold.jpg');
+}

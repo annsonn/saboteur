@@ -6,7 +6,7 @@ var Board = function(socket) {
 };
 
 Board.prototype.reset = function() {
-  var goal = new Deck(['gold', 'coal', 'coal']);
+  var goal = new Deck(['gold', 'coal-left', 'coal-right']);
   goal.shuffle();
   this.placeCard(0, 0, 'start');
   this.placeCard(0, 8, goal.deal());
