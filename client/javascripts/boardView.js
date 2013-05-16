@@ -36,6 +36,11 @@ var BoardView = function(app) {
     };
     
     $('#game').attr('page', 'board');
-    
+    $('.board').delay(500).queue( function(next){ 
+      $(this).css('transform', 'scale(1,1)');
+      $(this).css('-webkit-transform', 'scale(1,1)');
+      next(); 
+    });
+   
   });
 };

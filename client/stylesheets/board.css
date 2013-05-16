@@ -20,3 +20,10 @@
   background-color: #fff;
   opacity:0.2;
 }
+
+.board {
+  transform: scale(5,5);
+  -webkit-transform: scale(5,5);
+  transition: all 5s;
+  -webkit-transition: all 5s; 
+}
