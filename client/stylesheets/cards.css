@@ -1,4 +1,4 @@
-.playing-card {
+.playing-card, .board-card {
   background-repeat: no-repeat;
   background-size: contain;
 }
