@@ -1,5 +1,9 @@
 .hand {
+  left: 100%;
+  position: relative;
   overflow: hidden;
+  transition: all 2s ease-out;
+  -webkit-transition: all 2s ease-out;
 }
 
 .hand ul {
