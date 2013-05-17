@@ -44,6 +44,7 @@ body {
   border-radius: 20px;
   background: -webkit-radial-gradient(circle, transparent, black);
   display: table-cell;
+  overflow: hidden;
   vertical-align: middle;
 }
 

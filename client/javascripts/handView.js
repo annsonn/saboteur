@@ -57,6 +57,8 @@ var HandView = function(app) {
     $('.hand ul').css('width', window.innerWidth-65);
     
     $('#game').attr('page', 'choose-role');
+    
+    
   });
   
   $('.job-card').click(function() {
@@ -64,7 +66,11 @@ var HandView = function(app) {
     $('.job-card').addClass('flip');
     
     $('.job-card').click(function() {
-       $('#game').attr('page', 'hand');
+      $('#game').attr('page', 'hand');
+      $('.hand').fadeIn(400).delay(300).queue( function(next){ 
+        $(this).css('left', '0');
+        next(); 
+      });
     });
   });
   
