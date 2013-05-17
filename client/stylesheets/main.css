@@ -13,7 +13,8 @@
 #game[page=join] #join,
 #game[page=join-mobile] #join-mobile,
 #game[page=choose-role] #choose-role, 
-#game[page=hand] #hand {
+#game[page=hand] #hand,
+#game[page=board] #board {
   display: block
 }
 
@@ -43,6 +44,7 @@ body {
   border-radius: 20px;
   background: -webkit-radial-gradient(circle, transparent, black);
   display: table-cell;
+  overflow: hidden;
   vertical-align: middle;
 }
 
