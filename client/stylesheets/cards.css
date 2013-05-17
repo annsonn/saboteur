@@ -119,14 +119,14 @@
   background-image: url('/images/map-back-end.jpg');
 }
 
-.coal-left + .flipped {
+.coal-left.flipped {
   background-image: url('/images/map-end-coal-left.jpg');
 }
 
-.coal-right + .flipped {
+.coal-right.flipped {
   background-image: url('/images/map-end-coal-right.jpg');
 }
 
-.gold + .flipped {
+.gold.flipped {
   background-image: url('/images/map-end-coal-gold.jpg');
 }
