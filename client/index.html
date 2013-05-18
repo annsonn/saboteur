@@ -77,7 +77,7 @@
             <div id="gameid" class="code center">
             </div>
           </div>
-          <div class="players ">
+          <div class="players">
             <div class="player"><div class="colour"><div class="player-text">Player Joined</div></div></div>
             <div class="player"><div class="colour"><div class="player-text">Player Joined</div></div></div>
             <div class="player"><div class="colour"><div class="player-text">Player Joined</div></div></div>
@@ -120,6 +120,30 @@
         <div class="screen">
           <div class="hand">
             <!-- hand is added in with javascript -->  
+          </div>
+        </div>
+      </section>
+      
+      <section id="play-card" class="layer white-border">
+        <div class="screen">
+          <div class="column-1 card">
+            <!-- card is added in with javascript 
+                  when the player is ready the click on the card again to play it
+                  need to tell the server to remove from hand and add to board
+            -->  
+            <span class="opacity-20 center">Play!</span>
+          </div>
+          <div class="column-2">
+            <div class="row">
+              <!-- TODO rotates the button, but only is enabled for path cards -->              
+              <span class="rotate-button"></span>
+              <!-- TODO allows the user to go back to their hand -->
+              <span class="back-button"></span>
+            </div>
+            <div class="row">
+              <!-- TODO moves the card around the board or through list of players -->
+              <span class="d-pad-button"></span>
+            </div>
           </div>
         </div>
       </section>
