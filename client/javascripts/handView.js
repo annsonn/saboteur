@@ -58,7 +58,11 @@ var HandView = function(app) {
     
     $('#game').attr('page', 'choose-role');
     
-    
+    $('.playing-card').click(function() {
+      $('#play-card .column-1 > div').removeClass();
+      $('#play-card .column-1 > div').addClass($(this).attr('class'));
+      $('#game').attr('page', 'play-card')
+    });  
   });
   
   $('.job-card').click(function() {
@@ -73,5 +77,7 @@ var HandView = function(app) {
       });
     });
   });
+  
+  
   
 };
