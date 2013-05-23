@@ -78,6 +78,8 @@ var HandView = function(app) {
     });
   });
   
-  
+  $('.back-button').click(function() {
+    $('#game').attr('page', 'hand');
+  });
   
 };
