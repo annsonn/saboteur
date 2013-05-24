@@ -18,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/chooserole.css" />
     <link rel="stylesheet" type="text/css" href="/stylesheets/hand.css" />
     <link rel="stylesheet" type="text/css" href="/stylesheets/cards.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/play-card.css" />
     <link rel="stylesheet" type="text/css" href="/stylesheets/board.css" />
     <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
   </head>
@@ -126,23 +127,23 @@
       
       <section id="play-card" class="layer white-border">
         <div class="screen">
-          <div class="column-1">
-            <div class="card">
-            <!-- card is added in with javascript 
-                  when the player is ready the click on the card again to play it
-                  need to tell the server to remove from hand and add to board
-            -->  
-            <span class="opacity-20 center">Play!</span>
-            </div>  
-          </div>
-          <div class="column-2">
-            <div class="row">
+           <div class="grid-25 center">
+            <div class="play-card">
+              <div class="selected-card">
+                <!-- card is added in with javascript 
+                when the player is ready the click on the card again to play it
+                need to tell the server to remove from hand and add to board
+                -->  
+                <span class="opacity-20 center">Play!</span>
+              </div>  
+            </div> 
+            <div class="block">
               <!-- TODO rotates the button, but only is enabled for path cards -->              
               <span class="rotate-button">rotate</span>
               <!-- TODO allows the user to go back to their hand -->
               <span class="back-button">back</span>
             </div>
-            <div class="row">
+            <div class="block">
               <!-- TODO moves the card around the board or through list of players -->
               <span class="d-pad-button"></span>
             </div>

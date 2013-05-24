@@ -72,5 +72,8 @@ body {
   border-color: white #cccccc #818181 #cccccc;
 }
 
-
+.grid-25 {
+  min-width: 300px;
+  width: 25%;
+}
 
