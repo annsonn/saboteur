@@ -1,9 +1,14 @@
-var GameManager = require('../server/game-manager');
+var Names = require('./names');
+var GameManager = require('./game-manager');
 
 var Game = function(sockets, host, name) {
   this.sockets = sockets;
   this.host = host;
-  this.name = Math.random().toString(20).substr(2, 5);
+  //this.name = Math.random().toString(20).substr(2, 5);
+  var rand1 = Math.floor(Math.random() * Names.colors.length);
+  var rand2 = Math.floor(Math.random() * Names.adjectives.length);
+  var rand3 = Math.floor(Math.random() * Names.nouns.length);
+  this.name = Names.adjectives[rand2] + ' ' + Names.colors[rand1] + ' ' + Names.nouns[rand3];
   this.players = [];
 
   this.state = 'waiting';
