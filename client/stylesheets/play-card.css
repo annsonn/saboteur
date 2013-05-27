@@ -1,0 +1,133 @@
+.selected-card {
+  border-radius: 10px;
+  border: 2px solid black;
+  height: 240px;
+  width: 150px;
+}
+
+.play-card {
+  float: left;
+}
+
+.buttons {
+  float: left;
+  margin: 20px 40px;
+}
+
+.back-button, .rotate-button {
+  background-color: orange;
+  background-size: contain;
+  border: 3px solid black;
+  border-radius: 10px;
+  display: inline-block;
+  height: 50px;
+  width: 50px;
+}
+
+.back-button {
+  background-image: url('/images/icons/back-icon.png'); 
+}
+
+.rotate-button {
+  background-image: url('/images/icons/rotate-icon.png'); 
+}
+
+.rotated {
+  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+}
+
+.rotated .play-button {
+  transform: rotate(-180deg);
+  -webkit-transform: rotate(-180deg);
+}
+
+.play-button {
+  color: white;
+  font-weight: bold;
+  font-size: 35px;
+  margin: 100px auto;
+  text-shadow: 2px 2px black;
+  text-align: center
+}
+
+
+.d-pad {
+  font-size: 0;
+  float: left;
+  margin-left: 35px;
+  height: 120px;
+  width: 120px;  
+}
+
+.box {
+  height: 35px;
+  width: 35px;
+}
+
+.d-pad ul, li {
+  margin: 0;
+  padding: 0;
+}
+
+.d-pad li {
+  display: inline-block;
+}
+
+.d-pad ul {
+  display: block;
+}
+
+.left-button, .right-button, .up-button, .down-button, .center-button {
+  background-color: orange;
+  border: 3px solid black;
+  border-radius: 5px;
+}
+
+.left-button {
+  border-right: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.center-button {
+  border-color: orange;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+}
+
+.up-button {
+  border-bottom: none;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.right-button {
+  border-left: none;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0
+}
+
+.down-button {
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0
+}
+
+
+.left-button:active {
+  background: linear-gradient(to right, white 0%, orange 100%);
+}
+
+.right-button:active {
+  background: linear-gradient(to left, white 0%, orange 100%);
+}
+
+.up-button:active {
+  background: linear-gradient(to bottom, white 0%, orange 100%);
+}
+
+.down-button:active {
+  background: linear-gradient(to top, white 0%, orange 100%);
+}

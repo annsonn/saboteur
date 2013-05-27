@@ -3,14 +3,12 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <script src="/socket.io/socket.io.js" defer></script>
-    <!--<script src="http://code.createjs.com/createjs-2013.02.12.min.js" defer></script>-->
-    <script src="http://code.jquery.com/jquery-1.9.1.min.js" defer></script>
+    
+    <script src="/javascripts/jquery-2.0.1.min.js" defer></script>
     <script src="/javascripts/application.js" defer></script>
     <script src="/javascripts/boardView.js" defer></script>
     <script src="/javascripts/handView.js" defer></script>
     
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto" />
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Serif:400,700" />    
     <link rel="stylesheet" type="text/css" href="/stylesheets/loading.css" />
     <link rel="stylesheet" type="text/css" href="/stylesheets/lobby.css" />
     <link rel="stylesheet" type="text/css" href="/stylesheets/join.css" />
@@ -18,6 +16,7 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/chooserole.css" />
     <link rel="stylesheet" type="text/css" href="/stylesheets/hand.css" />
     <link rel="stylesheet" type="text/css" href="/stylesheets/cards.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/play-card.css" />
     <link rel="stylesheet" type="text/css" href="/stylesheets/board.css" />
     <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
   </head>
@@ -77,7 +76,7 @@
             <div id="gameid" class="code center">
             </div>
           </div>
-          <div class="players ">
+          <div class="players">
             <div class="player"><div class="colour"><div class="player-text">Player Joined</div></div></div>
             <div class="player"><div class="colour"><div class="player-text">Player Joined</div></div></div>
             <div class="player"><div class="colour"><div class="player-text">Player Joined</div></div></div>
@@ -120,6 +119,47 @@
         <div class="screen">
           <div class="hand">
             <!-- hand is added in with javascript -->  
+          </div>
+        </div>
+      </section>
+      
+      <section id="play-card" class="layer white-border">
+        <div class="screen">
+           <div class="grid-25 center">
+            <div class="play-card">
+              <div class="selected-card">
+                <!-- card is added in with javascript 
+                when the player is ready the click on the card again to play it
+                need to tell the server to remove from hand and add to board
+                -->  
+                <div class="play-button">Play!</div>
+              </div>  
+            </div> 
+            <div class="buttons">
+              <!-- TODO rotates the button, but only is enabled for path cards -->              
+              <div class="rotate-button"></div>
+              <!-- TODO allows the user to go back to their hand -->
+              <div class="back-button"></div>
+            </div>
+         
+            <div class="d-pad">
+              <ul>
+                <li class="box"></li>
+                <li class="box up-button"></li>
+                <li class="box"></li>
+              </ul>
+              <ul>
+                <li class="box left-button"></li>
+                <li class="box center-button"></li>
+                <li class="box right-button"></li>
+              </ul>
+              <ul>
+                <li class="box"></li>
+                <li class="box down-button"></li>
+                <li class="box"></li>
+              </ul> 
+            </div>
+             
           </div>
         </div>
       </section>

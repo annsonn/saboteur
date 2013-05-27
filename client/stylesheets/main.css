@@ -14,6 +14,7 @@
 #game[page=join-mobile] #join-mobile,
 #game[page=choose-role] #choose-role, 
 #game[page=hand] #hand,
+#game[page=play-card] #play-card,
 #game[page=board] #board {
   display: block
 }
@@ -71,5 +72,8 @@ body {
   border-color: white #cccccc #818181 #cccccc;
 }
 
-
+.grid-25 {
+  min-width: 300px;
+  width: 25%;
+}
 
