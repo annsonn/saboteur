@@ -44,7 +44,7 @@ exports.adjectives = [
 	'glowing',
 	'floating',
 	'flying',
-	'swiming',
+	'swimming',
 	'diving',
 	'gyrating',
 	'prickly',

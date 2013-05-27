@@ -58,7 +58,16 @@ var HandView = function(app) {
     
     $('#game').attr('page', 'choose-role');
     
-    
+    $('.playing-card').click(function() {
+      $('.play-card > div').removeClass();
+      $('.play-card > div').addClass($(this).attr('class') + ' selected-card');
+      
+      if ($('.selected-card[class*=connected]').length == 0 && $('.selected-card[class*=deadend]').length == 0) {
+        $('.rotate-button').css('background-color', 'grey');
+      }
+      
+      $('#game').attr('page', 'play-card')
+    });  
   });
   
   $('.job-card').click(function() {
@@ -73,5 +82,19 @@ var HandView = function(app) {
       });
     });
   });
+  
+  $('.back-button').click(function() {
+    $('#game').attr('page', 'hand');
+    
+    if ($('.selected-card[class*=connected]').length == 0 && $('.selected-card[class*=deadend]').length == 0) {
+      $('.rotate-button').css('background-color', '');
+    }
+    
+  });
+  
+  $('.rotate-button').click(function() {
+    $('.selected-card').toggleClass('rotated');    
+  });
+  
   
 };
