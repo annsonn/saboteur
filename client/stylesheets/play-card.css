@@ -32,11 +32,21 @@
   background-image: url('/images/icons/rotate-icon.png'); 
 }
 
+.rotated {
+  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+}
+
+.rotated .play-button {
+  transform: rotate(-180deg);
+  -webkit-transform: rotate(-180deg);
+}
+
 .play-button {
   color: white;
   font-weight: bold;
   font-size: 35px;
-  margin: 85px auto;
+  margin: 100px auto;
   text-shadow: 2px 2px black;
   text-align: center
 }

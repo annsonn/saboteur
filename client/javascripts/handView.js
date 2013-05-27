@@ -92,5 +92,9 @@ var HandView = function(app) {
     
   });
   
+  $('.rotate-button').click(function() {
+    $('.selected-card').toggleClass('rotated');    
+  });
+  
   
 };
