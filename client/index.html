@@ -3,14 +3,12 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <script src="/socket.io/socket.io.js" defer></script>
-    <!--<script src="http://code.createjs.com/createjs-2013.02.12.min.js" defer></script>-->
-    <script src="http://code.jquery.com/jquery-1.9.1.min.js" defer></script>
+    
+    <script src="/javascripts/jquery-2.0.1.min.js" defer></script>
     <script src="/javascripts/application.js" defer></script>
     <script src="/javascripts/boardView.js" defer></script>
     <script src="/javascripts/handView.js" defer></script>
     
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto" />
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Serif:400,700" />    
     <link rel="stylesheet" type="text/css" href="/stylesheets/loading.css" />
     <link rel="stylesheet" type="text/css" href="/stylesheets/lobby.css" />
     <link rel="stylesheet" type="text/css" href="/stylesheets/join.css" />
@@ -134,7 +132,7 @@
                 when the player is ready the click on the card again to play it
                 need to tell the server to remove from hand and add to board
                 -->  
-                <span class="opacity-20 center">Play!</span>
+                <div class="play-button">Play!</div>
               </div>  
             </div> 
             <div class="buttons">

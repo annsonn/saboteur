@@ -32,6 +32,15 @@
   background-image: url('/images/icons/rotate-icon.png'); 
 }
 
+.play-button {
+  color: white;
+  font-weight: bold;
+  font-size: 35px;
+  margin: 85px auto;
+  text-shadow: 2px 2px black;
+  text-align: center
+}
+
 
 .d-pad {
   font-size: 0;
