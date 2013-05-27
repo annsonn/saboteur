@@ -9,17 +9,34 @@
   float: left;
 }
 
+.buttons {
+  float: left;
+  margin: 20px 40px;
+}
+
 .back-button, .rotate-button {
   background-color: orange;
+  background-size: contain;
+  border: 3px solid black;
   border-radius: 10px;
-  padding: 10px;
+  display: inline-block;
+  height: 50px;
+  width: 50px;
 }
+
+.back-button {
+  background-image: url('/images/icons/back-icon.png'); 
+}
+
+.rotate-button {
+  background-image: url('/images/icons/rotate-icon.png'); 
+}
+
 
 .d-pad {
   font-size: 0;
   float: left;
-  padding-top: 75px;
-  padding-left: 25px;
+  margin-left: 35px;
   height: 120px;
   width: 120px;  
 }
@@ -44,7 +61,7 @@
 
 .left-button, .right-button, .up-button, .down-button, .center-button {
   background-color: orange;
-  border: 1px solid black;
+  border: 3px solid black;
   border-radius: 5px;
 }
 
