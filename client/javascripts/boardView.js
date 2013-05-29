@@ -28,10 +28,21 @@ var BoardView = function(app) {
       
     for (var i = 0; i < data.length; i++) {
       var boardRow = $('<ul />');
+      var emptyRowCount = 0;
       
       for (var j in data[i]) {
         boardRow.append($('<li />').addClass(data[i][j] + ' board-card'));
+        
+        if ( data[i][j] === null && (i === 0 || i === 6 ) ){
+          emptyRowCount++;
+        }        
       };
+      
+      if (emptyRowCount === 11) {
+        boardRow.css('display', 'none');
+      }
+      
+      
       $(boardRow).appendTo('.board');
     };
     
