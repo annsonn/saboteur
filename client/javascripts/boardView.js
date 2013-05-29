@@ -26,9 +26,6 @@ var BoardView = function(app) {
   app.socket.on('start', function(data) {
     console.log('game started', data);
     
-    var cardHeight = (windowHeight-50)/7;
-    var cardWidth = cardHeight*0.6275;
-    
     for (var i = 0; i < data.length; i++) {
       var boardRow = $('<ul />');
       
