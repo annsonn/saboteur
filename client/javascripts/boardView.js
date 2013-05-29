@@ -25,23 +25,16 @@ var BoardView = function(app) {
 
   app.socket.on('start', function(data) {
     console.log('game started', data);
-      
+    
+    var cardHeight = (windowHeight-50)/7;
+    var cardWidth = cardHeight*0.6275;
+    
     for (var i = 0; i < data.length; i++) {
       var boardRow = $('<ul />');
-      var emptyRowCount = 0;
       
       for (var j in data[i]) {
-        boardRow.append($('<li />').addClass(data[i][j] + ' board-card'));
-        
-        if ( data[i][j] === null && (i === 0 || i === 6 ) ){
-          emptyRowCount++;
-        }        
+        boardRow.append($('<li />').addClass(data[i][j] + ' board-card').css({height: cardHeight, width: cardWidth}));        
       };
-      
-      if (emptyRowCount === 11) {
-        boardRow.css('display', 'none');
-      }
-      
       
       $(boardRow).appendTo('.board');
     };
