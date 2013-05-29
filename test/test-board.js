@@ -13,6 +13,9 @@ exports.testBoardReset = function(test) {
   }
   
   test.equal(board.board[3][1], 'start');
+  test.notEqual(board.board[1][9], null);
+  test.notEqual(board.board[3][9], null);
+  test.notEqual(board.board[5][9], null);
   
   test.done();
 }
