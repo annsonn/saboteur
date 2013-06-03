@@ -25,22 +25,36 @@ var BoardView = function(app) {
 
   app.socket.on('start', function(data) {
     console.log('game started', data);
-      
+    
+    var visbleRows = data.length;
+    
     for (var i = 0; i < data.length; i++) {
       var boardRow = $('<ul />');
       
       for (var j in data[i]) {
-        boardRow.append($('<li />').addClass(data[i][j] + ' board-card'));
+        boardRow.append($('<li />').addClass(data[i][j] + ' board-card'));        
       };
+       
       $(boardRow).appendTo('.board');
+      
+      if ( (i==0 || i==(data.length-1) ) && $('.board ul:nth-child('+(i + 1)+') .null').length == data[i].length) {
+        boardRow.css('display', 'none');
+        visbleRows--;
+      }
     };
+    
+    var cardHeight = (windowHeight-50)/visbleRows;
+    var cardWidth = cardHeight*0.6275; 
+    
+    $('.board ul li').css({height: cardHeight, width: cardWidth});  
     
     $('#game').attr('page', 'board');
     $('.board').delay(300).queue( function(next){ 
       $(this).css('transform', 'scale(1,1)');
       $(this).css('-webkit-transform', 'scale(1,1)');
       next(); 
-    });
-   
+    });   
+    
+    
   });
 };

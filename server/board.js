@@ -1,26 +1,52 @@
 var Deck = require('./deck');
+var boardHeight = 7;
+var boardWidth = 11;
+
+/* How the grid will work
+
+[][][][][][][][][][][10,6]
+[][][][][][][][][][9,5][]
+[][][][][][][][][][][]
+[][1,3][][][][][][][][9,3][]
+[][][][][][][][][][][]
+[][][][][][][][][][9,1][]
+[0,0][][][][][][][][][][]
+
+*/
+
 
 var Board = function(socket) {
   this.socket = socket;
   this.board = []; 
+  
 };
 
 Board.prototype.reset = function() {
   var goal = new Deck(['gold', 'coal-left', 'coal-right']);
   goal.shuffle();
-  this.placeCard(0, 0, 'start');
-  this.placeCard(0, 8, goal.deal());
-  this.placeCard(2, 8, goal.deal());
-  this.placeCard(-2, 8, goal.deal());
+  this.initBoard();
+  this.placeCard(3, 1, 'start');
+  this.placeCard(1, 9, goal.deal());
+  this.placeCard(3, 9, goal.deal());
+  this.placeCard(5, 9, goal.deal());
 };
 
-Board.prototype.placeCard = function( locationX, locationY, card ) {
-  if ( !this.board[locationX] ) {
-    this.board[locationX] = [];
+Board.prototype.initBoard = function() {
+  for (var i = 0; i < boardHeight; i++) {
+    this.board[i] = [];
+    for (var j = 0; j < boardWidth; j++) {
+      this.board[i][j] = null;
+    }
+  }
+}
+
+Board.prototype.placeCard = function( locationY, locationX, card ) {
+  if ( !this.board[locationY] ) {
+    this.board[locationY] = [];
   } 
   
-  if ( !this.board[locationX][locationY] ) {
-    this.board[locationX][locationY] = card;
+  if ( !this.board[locationY][locationX] ) {
+    this.board[locationY][locationX] = card;
   }
 };
 
