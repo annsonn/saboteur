@@ -4,7 +4,7 @@ var HandView = function(app) {
   $('#game').attr('page', 'lobby-controller');
   $('#join-game').click(function(event) {
     app.socket.emit('join', $('#input-code').val());
-  })
+  });
   $('.ready-button').click(function(event) {
     if (app.game.playerCount >= 3) {
       $('.ready-button').hide();
@@ -62,11 +62,11 @@ var HandView = function(app) {
       $('.play-card > div').removeClass();
       $('.play-card > div').addClass($(this).attr('class') + ' selected-card');
       
-      if ($('.selected-card[class*=connected]').length == 0 && $('.selected-card[class*=deadend]').length == 0) {
+      if ($('.selected-card[class*=connected]').length === 0 && $('.selected-card[class*=deadend]').length === 0) {
         $('.rotate-button').css('background-color', 'grey');
       }
       
-      $('#game').attr('page', 'play-card')
+      $('#game').attr('page', 'play-card');
     });  
   });
   
@@ -86,7 +86,7 @@ var HandView = function(app) {
   $('.back-button').click(function() {
     $('#game').attr('page', 'hand');
     
-    if ($('.selected-card[class*=connected]').length == 0 && $('.selected-card[class*=deadend]').length == 0) {
+    if ($('.selected-card[class*=connected]').length === 0 && $('.selected-card[class*=deadend]').length === 0) {
       $('.rotate-button').css('background-color', '');
     }
     

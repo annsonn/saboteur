@@ -1,5 +1,4 @@
 .board ul {
-  display: inline-block;
   margin: 0;
   padding: 0;
   overflow-x: auto;
@@ -12,8 +11,6 @@
   display: inline-block;
   list-style: none;
   margin: 0;
-  width: 91px;
-  height: 145px;
 }
 
 .board .null {
@@ -26,4 +23,8 @@
   -webkit-transform: scale(5,5);
   transition: all 5s;
   -webkit-transition: all 5s; 
+}
+
+.board ul:first-child .null, .board ul:last-child .null, .board ul li:first-child, .board ul li:last-child{
+  background-color: transparent;
 }

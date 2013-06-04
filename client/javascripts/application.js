@@ -38,6 +38,7 @@ $('.screen').css('width', windowWidth + 'px')
 window.onresize = function(event) {
   windowHeight = window.innerHeight-50;
   windowWidth = window.innerWidth-50;
+  
   $('.screen').css('height', windowHeight + 'px')
   $('.screen').css('width', windowWidth + 'px')
   $('.hand').css('width', window.innerWidth-65);
