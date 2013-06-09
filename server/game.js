@@ -10,7 +10,7 @@ var Game = function(sockets, host, name) {
   var rand3 = Math.floor(Math.random() * Names.nouns.length);
   this.name = Names.adjectives[rand2] + ' ' + Names.colors[rand1] + ' ' + Names.nouns[rand3];
   this.players = [];
-
+  this.playerLimit = 10;
   this.state = 'waiting';
 
 };
