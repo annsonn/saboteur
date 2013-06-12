@@ -35,6 +35,10 @@ var HandView = function(app) {
       $('.ready-button').text('Start Game');
     }
   });
+  
+  app.socket.on('game-full', function(data) {
+      console.log(data);
+  });
 
   app.socket.on('start', function(data) {
     console.log('game started', data);
