@@ -28,6 +28,14 @@ Game.prototype.join = function(socket) {
   this.sockets.to(this.name).emit('joined', {playerId: socket.id, game: this.serialize()});
 };
 
+Game.prototype.isGameFull = function(socket) {
+  if (this.players[this.playerLimit]) {
+    socket.emit('game-full', 'Game is Full');
+    return true;
+  };
+  return false;
+};
+  
 Game.prototype.start = function(socket) {
   this.state = 'start game';
   this.gameManager = new GameManager(this.sockets, this.name, this.players);
