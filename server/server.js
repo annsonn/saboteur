@@ -64,7 +64,7 @@ var Server = function() {
       
       joinGame: function(socket, callback) {
         return function(id) {
-          id = id.trim();
+          id = id.trim().toLowerCase();
           var game = self.games[id];
           if (!game) {
             console.log('Device tried to join non-existing game ' + id);
