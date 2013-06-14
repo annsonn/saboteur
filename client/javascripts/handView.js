@@ -12,6 +12,12 @@ var HandView = function(app) {
       app.socket.emit('start');
     }
   });
+  $('#input-code').keydown(function(event) {
+    if (event.keyCode === 13) {
+      console.log('pressed enter');
+      $('#join-game').click();
+    }
+  });
 
   // Joining Screens
   app.socket.on('joined', function (data) {  
