@@ -24,7 +24,7 @@ var HandView = function(app) {
       $('#join-mobile .screen').css({
          "background": "-webkit-radial-gradient(circle, transparent, " + playerColours[app.game.playerCount] + ")"
       });
-      $('.player-text').append(app.game.playerCount);
+      $('.player-text').html('Player ' + app.game.playerCount);
       if (app.game.playerCount > 1) {
         $('.ready-button').hide();
       } else {
