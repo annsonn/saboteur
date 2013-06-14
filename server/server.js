@@ -63,19 +63,23 @@ var Server = function() {
       joinGame: function(socket, callback) {
         return function(id) {
           id = id.trim();
-          (self.handlers.leaveGame(socket, function() {
-            socket.set('game', id, function() {
-              var game = self.games[id];
-              if (game) {
+          var game = self.games[id];
+          if (!game) {
+            console.log('Device tried to join non-existing game ' + id);
+            socket.emit('error', {code: 404, message: 'Failed to join game ' + id});
+            return;
+          } else if (game.players[game.playerLimit]) {
+            console.log('Device attempted to join but game is full ' + id);
+            socket.emit('game-full', 'Game is Full');
+            socket.emit('error', {code: 404, message: 'Failed to join game ' + id});
+          } else {
+            (self.handlers.leaveGame(socket, function() {
+              socket.set('game', id, function() {
                 game.join(socket);
-                console.log('Device joined game ' + id);
-              } else {
-                console.log('Device tried to join non-existing game ' + id);
-                socket.emit('error', {code: 404, message: 'Failed to join game ' + id});
-              }
-              if (callback) callback.call(self);
-            });
-          }))();	// Call leave game
+                if (callback) callback.call(self);
+              });
+            }))();	// Call leave game
+          }
         }
       },
       
