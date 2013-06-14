@@ -10,7 +10,7 @@ var Game = function(sockets, host, name) {
   var rand3 = Math.floor(Math.random() * Names.nouns.length);
   this.name = Names.adjectives[rand2] + ' ' + Names.colors[rand1] + ' ' + Names.nouns[rand3];
   this.players = [];
-  this.playerLimit = 2;
+  this.playerLimit = 10;
   this.state = 'waiting';
 
 };
@@ -26,14 +26,6 @@ Game.prototype.join = function(socket) {
   socket.join(this.name);
   this.players.push(socket.id);
   this.sockets.to(this.name).emit('joined', {playerId: socket.id, game: this.serialize()});
-};
-
-Game.prototype.isGameFull = function(socket) {
-  if (this.players[this.playerLimit]) {
-    socket.emit('game-full', 'Game is Full');
-    return true;
-  };
-  return false;
 };
   
 Game.prototype.start = function(socket) {

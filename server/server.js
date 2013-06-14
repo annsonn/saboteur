@@ -68,8 +68,9 @@ var Server = function() {
             console.log('Device tried to join non-existing game ' + id);
             socket.emit('error', {code: 404, message: 'Failed to join game ' + id});
             return;
-          } else if (game.isGameFull(socket)) {
+          } else if (game.players[game.playerLimit]) {
             console.log('Device attempted to join but game is full ' + id);
+            socket.emit('game-full', 'Game is Full');
             socket.emit('error', {code: 404, message: 'Failed to join game ' + id});
           } else {
             (self.handlers.leaveGame(socket, function() {
