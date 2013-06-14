@@ -98,13 +98,17 @@ var HandView = function(app) {
     
     if ($('.selected-card[class*=connected]').length === 0 && $('.selected-card[class*=deadend]').length === 0) {
       $('.rotate-button').css('background-color', '');
+       $('.rotate-button').unbind('click');
+    }
+    else {
+      $('.rotate-button').click(function() {
+        $('.selected-card').toggleClass('rotated');    
+      });
     }
     
   });
   
-  $('.rotate-button').click(function() {
-    $('.selected-card').toggleClass('rotated');    
-  });
+  
   
   
 };
