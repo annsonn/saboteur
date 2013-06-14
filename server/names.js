@@ -83,5 +83,4 @@ exports.nouns = [
     'mango',
     'kiwi',
     'apple',
-    'ironman',
 ];
