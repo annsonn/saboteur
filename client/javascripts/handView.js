@@ -12,13 +12,14 @@ var HandView = function(app) {
       app.socket.emit('start');
     }
   });
+
   $('#input-code').keydown(function(event) {
     if (event.keyCode === 13) {
       console.log('pressed enter');
       $('#join-game').click();
     }
   });
-
+  
   // Joining Screens
   app.socket.on('joined', function (data) {  
     console.log(data);
@@ -30,7 +31,7 @@ var HandView = function(app) {
       $('#join-mobile .screen').css({
          "background": "-webkit-radial-gradient(circle, transparent, " + playerColours[app.game.playerCount] + ")"
       });
-      $('.player-text').html('Player ' + app.game.playerCount);
+      $('.player-text').append(app.game.playerCount);
       if (app.game.playerCount > 1) {
         $('.ready-button').hide();
       } else {
@@ -46,6 +47,7 @@ var HandView = function(app) {
       console.log(data);
   });
 
+  // Game Screens
   app.socket.on('start', function(data) {
     console.log('game started', data);
     
@@ -67,18 +69,31 @@ var HandView = function(app) {
     $('.hand ul').css('width', window.innerWidth-65);
     
     $('#game').attr('page', 'choose-role');
-    
-    $('.playing-card').click(function() {
-      $('.play-card > div').removeClass();
-      $('.play-card > div').addClass($(this).attr('class') + ' selected-card');
       
-      if ($('.selected-card[class*=connected]').length === 0 && $('.selected-card[class*=deadend]').length === 0) {
-        $('.rotate-button').css('background-color', 'grey');
-      }
-      
-      $('#game').attr('page', 'play-card');
-    });  
   });
+  
+  $('.playing-card').click(function() {
+    $('.play-card > div').removeClass();
+    $('.play-card > div').addClass($(this).attr('class') + ' selected-card');
+    
+    if ($('.selected-card[class*=connected]').length === 0 && $('.selected-card[class*=deadend]').length === 0) {
+      $('.rotate-button').css('background-color', 'grey');
+      $('.rotate-button').unbind('click');
+    }
+    else {
+      $('.rotate-button').click(function() {    
+        $('.selected-card').toggleClass('rotated');            
+        console.log('emit rotate');
+        app.socket.emit('rotate');  
+      });
+    }
+    
+    console.log('emit card-selected');
+    app.socket.emit('card-selected', $(this).attr('class'));
+    
+    $('#game').attr('page', 'play-card');
+  });
+  
   
   $('.job-card').click(function() {
     // flip cards
@@ -91,24 +106,40 @@ var HandView = function(app) {
         next(); 
       });
     });
-  });
+  });  
   
   $('.back-button').click(function() {
     $('#game').attr('page', 'hand');
     
     if ($('.selected-card[class*=connected]').length === 0 && $('.selected-card[class*=deadend]').length === 0) {
       $('.rotate-button').css('background-color', '');
-       $('.rotate-button').unbind('click');
+      $('.rotate-button').unbind('click');
     }
     else {
-      $('.rotate-button').click(function() {
-        $('.selected-card').toggleClass('rotated');    
+      $('.rotate-button').click(function() {    
+        if ($('rotated')) {
+          $('.selected-card').toggleClass('rotated');  
+        }
       });
     }
-    
+    app.socket.emit('back');
   });
   
-  
-  
+  $('.left-button').click(function() {
+    console.log('emit left');
+    app.socket.emit('left');
+  });
+  $('.right-button').click(function() {
+    console.log('emit right');
+    app.socket.emit('right');
+  });
+  $('.up-button').click(function() {
+    console.log('emit up');
+    app.socket.emit('up');
+  });
+  $('.down-button').click(function() {
+    console.log('emit down');
+    app.socket.emit('down');
+  });  
   
 };
