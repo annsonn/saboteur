@@ -79,11 +79,10 @@ var Server = function() {
       createGame: function(socket, callback) {
         return function() {
           (self.handlers.leaveGame(socket, function() {
-            var game = new Game(self.io.sockets, socket.id);
+            var game = new Game(self.io.sockets, socket);
             socket.set('game', game.name, function() {
               self.games[game.name] = game;
               console.log('Device created game ' + game.name);
-              game.host = socket;
               game.join(socket);
               
               if (callback) callback.call(self);
