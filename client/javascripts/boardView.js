@@ -55,6 +55,13 @@ var BoardView = function(app) {
       next(); 
     });   
     
-    
+  });
+  
+  app.socket.on('card-action', function (data) {  
+    console.log('card-action', data);
+  });
+  
+  app.socket.on('player-action', function (data) {  
+    console.log('player-action', data);
   });
 };

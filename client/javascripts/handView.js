@@ -68,10 +68,13 @@ var HandView = function(app) {
     $('.hand').css('width', window.innerWidth-65);
     $('.hand ul').css('width', window.innerWidth-65);
     
+    
+    // handling what happens when you click card from hand view
     $('.playing-card').click(function() {
       $('.play-card > div').removeClass();
       $('.play-card > div').addClass($(this).attr('class') + ' selected-card');
       
+      // disables rotate if not a map card
       if ($('.selected-card[class*=connected]').length === 0 && $('.selected-card[class*=deadend]').length === 0) {
         $('.rotate-button').css('background-color', 'grey');
         $('.rotate-button').unbind('click');
@@ -82,7 +85,14 @@ var HandView = function(app) {
         });
       }
       
-      app.socket.emit('player-action', {card: $(this).attr('class'), type: 'preview'});
+      // updates play button based on card picked
+      $('.play-button').click(function() {
+        var card = $('.selected-card').clone().removeClass('playing-card selected-card').attr('class');
+        app.socket.emit('player-action', {card: card, type: 'submit'});            
+      });
+      
+      var card = $(this).clone().removeClass('playing-card').attr('class');
+      app.socket.emit('player-action', {card: card, type: 'preview'});
       
       $('#game').attr('page', 'play-card');
     });
@@ -116,7 +126,7 @@ var HandView = function(app) {
         }
       });
     }
-    app.socket.emit('card-action', {type: 'back'});
+    app.socket.emit('player-action', {type: 'back'});
   });
   
   $('.left-button').click(function() {
@@ -132,9 +142,6 @@ var HandView = function(app) {
     app.socket.emit('card-action', {type: 'down'});
   });  
   
-  $('.play-button').click(function() {
-    var card = $('.playing-card').clone().removeClass('playing-card selected-card').attr('class');
-    app.socket.emit('player-action', {card: card, type: 'submit'});            
-  });
+  
   
 };

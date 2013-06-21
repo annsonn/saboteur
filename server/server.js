@@ -67,6 +67,7 @@ var Server = function() {
           socket.get('game', function(x, gameId) {
             var game = self.games[gameId];
             if (game) {  
+              // sending to host
               game.host.emit('player-action', {card: data.card, type: data.type});
             }
           });
@@ -80,7 +81,7 @@ var Server = function() {
             socket.set('game', game.name, function() {
               self.games[game.name] = game;
               console.log('Device created game ' + game.name);
-  
+              game.host = socket;
               game.join(socket);
               
               if (callback) callback.call(self);

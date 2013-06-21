@@ -1,9 +1,9 @@
 var Names = require('./names');
 var GameManager = require('./game-manager');
 
-var Game = function(sockets, host, name) {
+var Game = function(sockets, name) {
   this.sockets = sockets;
-  this.host = host;
+  this.host = null;
   //this.name = Math.random().toString(20).substr(2, 5);
   var rand1 = Math.floor(Math.random() * Names.colors.length);
   var rand2 = Math.floor(Math.random() * Names.adjectives.length);
