@@ -14,6 +14,7 @@ var Server = function() {
           io = require('socket.io').listen(app);
       self.io = io;
       self.fileServer = new static.Server('./client');
+      self.commonFileServer = new static.Server('./common');
       
       app.listen(parseInt(port, 10));
       io.set('log level', 1);	// Debug
@@ -136,7 +137,12 @@ var Server = function() {
       },
       
       httpRequest: function (request, response) {
-        self.fileServer.serve(request, response);
+        if (request.url.search(/\/common\/.+/) === 0) {
+          request.url = request.url.replace(/\/common/, '');
+          self.commonFileServer.serve(request, response);
+        } else {
+          self.fileServer.serve(request, response);
+        }
       } // httpRequest
     } // Handlers
   };
