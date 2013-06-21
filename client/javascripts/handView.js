@@ -78,12 +78,10 @@ var HandView = function(app) {
       } else {
         $('.rotate-button').click(function() {    
           $('.selected-card').toggleClass('rotated');            
-          console.log('emit rotate');
           app.socket.emit('card-action', {type: 'rotate'});  
         });
       }
       
-      console.log('emit card-selected');
       app.socket.emit('player-action', {card: $(this).attr('class'), type: 'preview'});
       
       $('#game').attr('page', 'play-card');
@@ -122,20 +120,21 @@ var HandView = function(app) {
   });
   
   $('.left-button').click(function() {
-    console.log('emit left');
     app.socket.emit('card-action', {type: 'left'});
   });
   $('.right-button').click(function() {
-    console.log('emit right');
     app.socket.emit('card-action', {type: 'right'});
   });
   $('.up-button').click(function() {
-    console.log('emit up');
     app.socket.emit('card-action', {type: 'up'});
   });
   $('.down-button').click(function() {
-    console.log('emit down');
     app.socket.emit('card-action', {type: 'down'});
   });  
+  
+  $('.play-button').click(function() {
+    var card = $('.playing-card').clone().removeClass('playing-card selected-card').attr('class');
+    app.socket.emit('player-action', {card: card, type: 'submit'});            
+  });
   
 };

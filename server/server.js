@@ -55,8 +55,7 @@ var Server = function() {
           socket.get('game', function(x, gameId) {
             var game = self.games[gameId];
             if (game) {  
-              console.log(data.type);
-              console.log('Need to emit to host:' + game.host);
+              game.host.emit('card-action', {type: data.type});
             }
           });
         }
@@ -65,6 +64,12 @@ var Server = function() {
       playerAction: function(socket, callback) {
         return function(data) {
           console.log(data);
+          socket.get('game', function(x, gameId) {
+            var game = self.games[gameId];
+            if (game) {  
+              game.host.emit('player-action', {card: data.card, type: data.type});
+            }
+          });
         }
       },
       
