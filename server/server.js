@@ -1,3 +1,4 @@
+var static = require('node-static');
 var Game = require('./game').Game;
 
 // Server module
@@ -11,8 +12,8 @@ var Server = function() {
       
       var app = require('http').createServer(self.handlers.httpRequest),
           io = require('socket.io').listen(app);
-
       self.io = io;
+      self.fileServer = new static.Server('./client');
       
       app.listen(parseInt(port, 10));
       io.set('log level', 1);	// Debug
@@ -135,49 +136,7 @@ var Server = function() {
       },
       
       httpRequest: function (request, response) {
-        var url = require("url"),
-            path = require("path"),
-            fs = require('fs');
-        var uri = url.parse(request.url).pathname,
-            filename = path.join(__dirname, '../client', uri);
-        var mime = {
-          js: 'text/javascript',
-          css: 'text/css'
-        };
-        fs.exists(filename, function(exists) {
-          if(!exists) {
-            response.writeHead(404, {"Content-Type": "text/plain"});
-            response.write("404 Not Found\n");
-            response.end();
-            return;
-          }
-        
-          if (fs.statSync(filename).isDirectory()) filename += '/index.html';
-        
-          fs.readFile(filename, "binary", function(err, file) {
-            if(err) {
-              response.writeHead(500, {"Content-Type": "text/plain"});
-              response.write(err + "\n");
-              response.end();
-              return;
-            }
-  
-            // TODO need MIME type mappings
-            var changedMimeType = false;
-            for (var type in mime) {
-              if (filename.match(type + '$') == type) {
-                response.writeHead(200, {'Content-Type': mime[type]});
-                changedMimeType = true;
-                break;
-              }
-            }
-            if (!changedMimeType) {
-              response.writeHead(200);
-            }
-            response.write(file, "binary");
-            response.end();
-          }); // fs.readFile
-        }); // fs.exists
+        self.fileServer.serve(request, response);
       } // httpRequest
     } // Handlers
   };
