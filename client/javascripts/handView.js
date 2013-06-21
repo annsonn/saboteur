@@ -85,13 +85,13 @@ var HandView = function(app) {
         });
       }
       
+      var card = $(this).clone().removeClass('playing-card').attr('class');
+      
       // updates play button based on card picked
       $('.play-button').click(function() {
-        var card = $('.selected-card').clone().removeClass('playing-card selected-card').attr('class');
         app.socket.emit('player-action', {card: card, type: 'submit'});            
       });
       
-      var card = $(this).clone().removeClass('playing-card').attr('class');
       app.socket.emit('player-action', {card: card, type: 'preview'});
       
       $('#game').attr('page', 'play-card');
@@ -115,17 +115,17 @@ var HandView = function(app) {
   
   $('.back-button').click(function() {
     $('#game').attr('page', 'hand');
-     $('.rotate-button').unbind('click');
+    $('.rotate-button').unbind('click');
     
     if ($('.selected-card[class*=connected]').length === 0 && $('.selected-card[class*=deadend]').length === 0) {
       $('.rotate-button').css('background-color', '');
-    } else {
-      $('.rotate-button').click(function() {    
-        if ($('rotated')) {
-          $('.selected-card').toggleClass('rotated');  
-        }
-      });
+    } else {       
+      if ($('rotated')) {
+        $('.selected-card').toggleClass('rotated');  
+      }
     }
+    
+    // telling server that the card needs to be removed from board view
     app.socket.emit('player-action', {type: 'back'});
   });
   
@@ -141,7 +141,5 @@ var HandView = function(app) {
   $('.down-button').click(function() {
     app.socket.emit('card-action', {type: 'down'});
   });  
-  
-  
   
 };
