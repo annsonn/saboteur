@@ -27,6 +27,8 @@ var Server = function() {
         socket.on('join', self.handlers.joinGame(socket));
         socket.on('leave', self.handlers.leaveGame(socket));
         socket.on('start', self.handlers.startGame(socket));
+        socket.on('card-action', self.handlers.cardAction(socket));
+        socket.on('player-action', self.handlers.playerAction(socket));
         
         socket.on('message', function(message) {
           socket.get('game', function(x, gameId) {
@@ -46,6 +48,26 @@ var Server = function() {
     },
     
     handlers: {
+      
+      cardAction: function(socket, callback) {
+        return function(data) {
+          console.log(data);
+          socket.get('game', function(x, gameId) {
+            var game = self.games[gameId];
+            if (game) {  
+              console.log(data.type);
+              console.log('Need to emit to host:' + game.host);
+            }
+          });
+        }
+      },
+      
+      playerAction: function(socket, callback) {
+        return function(data) {
+          console.log(data);
+        }
+      },
+      
       createGame: function(socket, callback) {
         return function() {
           (self.handlers.leaveGame(socket, function() {
