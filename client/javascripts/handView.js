@@ -60,7 +60,7 @@ var HandView = function(app) {
     
     var list = $('<ul />');
     data.hand.forEach(function(card) {
-      list.append($('<li />').addClass(card + ' playing-card'));
+      list.append($('<li />').attr('card', card).addClass('card'));
     });
     
     $('.hand').html(list); // or $('.hand').append(list) to add to existing cards    
@@ -70,12 +70,12 @@ var HandView = function(app) {
     
     
     // handling what happens when you click card from hand view
-    $('.playing-card').click(function() {
-      $('.play-card > div').removeClass();
-      $('.play-card > div').addClass($(this).attr('class') + ' selected-card');
+    $('.card').click(function() {
+      $('.play-card > div').removeAttr('card').removeClass();
+      $('.play-card > div').attr('card', $(this).attr('card')).addClass('selected-card');
       
       // disables rotate if not a map card
-      if ($('.selected-card[class*=connected]').length === 0 && $('.selected-card[class*=deadend]').length === 0) {
+      if ($('.selected-card[card*=connected]').length === 0 && $('.selected-card[card*=deadend]').length === 0) {
         $('.rotate-button').css('background-color', 'grey');
         $('.rotate-button').unbind('click');
       } else {
@@ -85,7 +85,7 @@ var HandView = function(app) {
         });
       }
       
-      var card = $(this).clone().removeClass('playing-card').attr('class');
+      var card = $(this).attr('card');
       
       // updates play button based on card picked
       $('.play-button').click(function() {
@@ -117,7 +117,7 @@ var HandView = function(app) {
     $('#game').attr('page', 'hand');
     $('.rotate-button').unbind('click');
     
-    if ($('.selected-card[class*=connected]').length === 0 && $('.selected-card[class*=deadend]').length === 0) {
+    if ($('.selected-card[card*=connected]').length === 0 && $('.selected-card[card*=deadend]').length === 0) {
       $('.rotate-button').css('background-color', '');
     } else {       
       if ($('rotated')) {
