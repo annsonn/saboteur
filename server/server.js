@@ -1,3 +1,4 @@
+var static = require('node-static');
 var Game = require('./game').Game;
 
 // Server module
@@ -11,8 +12,9 @@ var Server = function() {
       
       var app = require('http').createServer(self.handlers.httpRequest),
           io = require('socket.io').listen(app);
-
       self.io = io;
+      self.fileServer = new static.Server('./client');
+      self.commonFileServer = new static.Server('./common');
       
       app.listen(parseInt(port, 10));
       io.set('log level', 1);	// Debug
@@ -25,6 +27,8 @@ var Server = function() {
         socket.on('join', self.handlers.joinGame(socket));
         socket.on('leave', self.handlers.leaveGame(socket));
         socket.on('start', self.handlers.startGame(socket));
+        socket.on('card-action', self.handlers.cardAction(socket));
+        socket.on('player-action', self.handlers.playerAction(socket));
         
         socket.on('message', function(message) {
           socket.get('game', function(x, gameId) {
@@ -44,14 +48,41 @@ var Server = function() {
     },
     
     handlers: {
+      
+      cardAction: function(socket, callback) {
+        return function(data) {
+          console.log(data);
+          socket.get('game', function(x, gameId) {
+            var game = self.games[gameId];
+            if (game) {  
+              // sending to host
+              game.host.emit('card-action', {type: data.type});
+            }
+          });
+        }
+      },
+      
+      playerAction: function(socket, callback) {
+        return function(data) {
+          console.log(data);
+          socket.get('game', function(x, gameId) {
+            var game = self.games[gameId];
+            if (game) {  
+              // sending to host
+              game.host.emit('player-action', {card: data.card, type: data.type});
+              // if is submitted, then trigger turn ending event (deal new card and move to next player)
+            }
+          });
+        }
+      },
+      
       createGame: function(socket, callback) {
         return function() {
           (self.handlers.leaveGame(socket, function() {
-            var game = new Game(self.io.sockets, socket.id);
+            var game = new Game(self.io.sockets, socket);
             socket.set('game', game.name, function() {
               self.games[game.name] = game;
               console.log('Device created game ' + game.name);
-  
               game.join(socket);
               
               if (callback) callback.call(self);
@@ -62,7 +93,7 @@ var Server = function() {
       
       joinGame: function(socket, callback) {
         return function(id) {
-          id = id.trim();
+          id = id.trim().toLowerCase();
           var game = self.games[id];
           if (!game) {
             console.log('Device tried to join non-existing game ' + id);
@@ -135,49 +166,12 @@ var Server = function() {
       },
       
       httpRequest: function (request, response) {
-        var url = require("url"),
-            path = require("path"),
-            fs = require('fs');
-        var uri = url.parse(request.url).pathname,
-            filename = path.join(__dirname, '../client', uri);
-        var mime = {
-          js: 'text/javascript',
-          css: 'text/css'
-        };
-        fs.exists(filename, function(exists) {
-          if(!exists) {
-            response.writeHead(404, {"Content-Type": "text/plain"});
-            response.write("404 Not Found\n");
-            response.end();
-            return;
-          }
-        
-          if (fs.statSync(filename).isDirectory()) filename += '/index.html';
-        
-          fs.readFile(filename, "binary", function(err, file) {
-            if(err) {
-              response.writeHead(500, {"Content-Type": "text/plain"});
-              response.write(err + "\n");
-              response.end();
-              return;
-            }
-  
-            // TODO need MIME type mappings
-            var changedMimeType = false;
-            for (var type in mime) {
-              if (filename.match(type + '$') == type) {
-                response.writeHead(200, {'Content-Type': mime[type]});
-                changedMimeType = true;
-                break;
-              }
-            }
-            if (!changedMimeType) {
-              response.writeHead(200);
-            }
-            response.write(file, "binary");
-            response.end();
-          }); // fs.readFile
-        }); // fs.exists
+        if (request.url.search(/\/common\/.+/) === 0) {
+          request.url = request.url.replace(/\/common/, '');
+          self.commonFileServer.serve(request, response);
+        } else {
+          self.fileServer.serve(request, response);
+        }
       } // httpRequest
     } // Handlers
   };

@@ -1,17 +1,23 @@
+#play-card .view-wrapper {
+  max-width: 375px;
+  margin: auto;
+}
+
 .selected-card {
   border-radius: 10px;
   border: 2px solid black;
   height: 240px;
+  margin: 0 auto;
   width: 150px;
 }
 
 .play-card {
-  float: left;
+  
 }
 
 .buttons {
-  float: left;
-  margin: 20px 40px;
+  margin: 20px auto;
+  text-align: center;
 }
 
 .back-button, .rotate-button {
@@ -46,7 +52,8 @@
   color: white;
   font-weight: bold;
   font-size: 35px;
-  margin: 100px auto;
+  margin: 0 auto;
+  padding: 100px 0;
   text-shadow: 2px 2px black;
   text-align: center
 }
@@ -54,8 +61,7 @@
 
 .d-pad {
   font-size: 0;
-  float: left;
-  margin-left: 35px;
+  margin: 0 auto;
   height: 120px;
   width: 120px;  
 }

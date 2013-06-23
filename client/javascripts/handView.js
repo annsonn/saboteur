@@ -13,6 +13,13 @@ var HandView = function(app) {
     }
   });
 
+  $('#input-code').keydown(function(event) {
+    if (event.keyCode === 13) {
+      console.log('pressed enter');
+      $('#join-game').click();
+    }
+  });
+  
   // Joining Screens
   app.socket.on('joined', function (data) {  
     console.log(data);
@@ -40,6 +47,7 @@ var HandView = function(app) {
       console.log(data);
   });
 
+  // Game Screens
   app.socket.on('start', function(data) {
     console.log('game started', data);
     
@@ -52,7 +60,7 @@ var HandView = function(app) {
     
     var list = $('<ul />');
     data.hand.forEach(function(card) {
-      list.append($('<li />').addClass(card + ' playing-card'));
+      list.append($('<li />').attr('card', card).addClass('card'));
     });
     
     $('.hand').html(list); // or $('.hand').append(list) to add to existing cards    
@@ -60,20 +68,38 @@ var HandView = function(app) {
     $('.hand').css('width', window.innerWidth-65);
     $('.hand ul').css('width', window.innerWidth-65);
     
-    $('#game').attr('page', 'choose-role');
     
-    $('.playing-card').click(function() {
-      $('.play-card > div').removeClass();
-      $('.play-card > div').addClass($(this).attr('class') + ' selected-card');
+    // handling what happens when you click card from hand view
+    $('.card').click(function() {
+      $('.play-card > div').removeAttr('card').removeClass();
+      $('.play-card > div').attr('card', $(this).attr('card')).addClass('selected-card');
       
-      if ($('.selected-card[class*=connected]').length === 0 && $('.selected-card[class*=deadend]').length === 0) {
+      // disables rotate if not a map card
+      if ($('.selected-card[card*=connected]').length === 0 && $('.selected-card[card*=deadend]').length === 0) {
         $('.rotate-button').css('background-color', 'grey');
+        $('.rotate-button').unbind('click');
+      } else {
+        $('.rotate-button').click(function() {    
+          $('.selected-card').toggleClass('rotated');            
+          app.socket.emit('card-action', {type: 'rotate'});  
+        });
       }
       
+      var card = $(this).attr('card');
+      
+      // updates play button based on card picked
+      $('.play-button').click(function() {
+        app.socket.emit('player-action', {card: card, type: 'submit'});            
+      });
+      
+      app.socket.emit('player-action', {card: card, type: 'preview'});
+      
       $('#game').attr('page', 'play-card');
-    });  
+    });
+    
+    $('#game').attr('page', 'choose-role');
   });
-  
+    
   $('.job-card').click(function() {
     // flip cards
     $('.job-card').addClass('flip');
@@ -85,20 +111,35 @@ var HandView = function(app) {
         next(); 
       });
     });
-  });
+  });  
   
   $('.back-button').click(function() {
     $('#game').attr('page', 'hand');
+    $('.rotate-button').unbind('click');
     
-    if ($('.selected-card[class*=connected]').length === 0 && $('.selected-card[class*=deadend]').length === 0) {
+    if ($('.selected-card[card*=connected]').length === 0 && $('.selected-card[card*=deadend]').length === 0) {
       $('.rotate-button').css('background-color', '');
+    } else {       
+      if ($('rotated')) {
+        $('.selected-card').toggleClass('rotated');  
+      }
     }
     
+    // telling server that the card needs to be removed from board view
+    app.socket.emit('player-action', {type: 'back'});
   });
   
-  $('.rotate-button').click(function() {
-    $('.selected-card').toggleClass('rotated');    
+  $('.left-button').click(function() {
+    app.socket.emit('card-action', {type: 'left'});
   });
-  
+  $('.right-button').click(function() {
+    app.socket.emit('card-action', {type: 'right'});
+  });
+  $('.up-button').click(function() {
+    app.socket.emit('card-action', {type: 'up'});
+  });
+  $('.down-button').click(function() {
+    app.socket.emit('card-action', {type: 'down'});
+  });  
   
 };
