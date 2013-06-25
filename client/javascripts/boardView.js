@@ -23,6 +23,7 @@ var BoardView = function(app) {
     }
   });
 
+  // Once the game start the board is loaded
   app.socket.on('start', function(data) {
     console.log('game started', data);
     
@@ -32,7 +33,11 @@ var BoardView = function(app) {
       var boardRow = $('<ul />');
       
       for (var j in data[i]) {
-        boardRow.append($('<li />').addClass(data[i][j] + ' board-card'));        
+		if (data[i][j] == null) {
+			boardRow.append($('<li />').addClass('board-card null'));
+		} else {
+			boardRow.append($('<li />').attr('card', data[i][j]).addClass('board-card'));        
+		}
       };
        
       $(boardRow).appendTo('.board');
@@ -55,6 +60,13 @@ var BoardView = function(app) {
       next(); 
     });   
     
-    
+  });
+  
+  app.socket.on('card-action', function (data) {  
+    console.log('card-action', data);
+  });
+  
+  app.socket.on('player-action', function (data) {  
+    console.log('player-action', data);
   });
 };
