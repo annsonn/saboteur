@@ -90,6 +90,8 @@ var HandView = function(app) {
       // updates play button based on card picked
       $('.play-button').click(function() {
         app.socket.emit('player-action', {card: card, type: 'submit'});            
+				$('.play-button').unbind('click');
+				$('#game').attr('page', 'hand');
       });
       
       app.socket.emit('player-action', {card: card, type: 'preview'});
@@ -114,9 +116,9 @@ var HandView = function(app) {
   });  
   
   $('.back-button').click(function() {
-    $('#game').attr('page', 'hand');
     $('.rotate-button').unbind('click');
-    
+    $('.play-button').unbind('click');
+		
     if ($('.selected-card[card*=connected]').length === 0 && $('.selected-card[card*=deadend]').length === 0) {
       $('.rotate-button').css('background-color', '');
     } else {       
@@ -127,11 +129,12 @@ var HandView = function(app) {
     
     // telling server that the card needs to be removed from board view
     app.socket.emit('player-action', {type: 'back'});
+    $('#game').attr('page', 'hand');
   });
   
 	$('.discard-button').click(function() {
-		$('#game').attr('page', 'hand');
     $('.rotate-button').unbind('click');
+		$('.play-button').unbind('click');
     
     if ($('.selected-card[card*=connected]').length === 0 && $('.selected-card[card*=deadend]').length === 0) {
       $('.rotate-button').css('background-color', '');
@@ -143,6 +146,7 @@ var HandView = function(app) {
     
     // telling server that the card needs to be removed from board view
     app.socket.emit('player-action', {card: $('.selected-card').attr('card'), type: 'discard'});
+		$('#game').attr('page', 'hand');
 	});
 	
   $('.left-button').click(function() {

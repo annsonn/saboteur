@@ -45,13 +45,14 @@
 	position: relative;
 }
 
-.discard-button:active, .back-button:active, .rotate-button:active {
-	box-shadow: 0 0 black;
-	top: 3px;
-}
-.discard-button:hover, .back-button:hover, .rotate-button:hover {
+.back-button:hover, .rotate-button:hover, .discard-button:hover {
 	box-shadow: 0 4px black;
 	top: -1px;
+}
+
+.back-button:active, .rotate-button:active, .discard-button:active {
+	box-shadow: 0 0 black;
+	top: 3px;
 }
 
 .back-button {
