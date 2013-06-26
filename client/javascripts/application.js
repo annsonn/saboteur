@@ -30,19 +30,19 @@ var Application = function() {
 }
 
 // Used to adjust borders on mobile
-var windowHeight = window.innerHeight-50;
-var windowWidth = window.innerWidth-50;
+var windowHeight = window.innerHeight-40;
+var windowWidth = window.innerWidth-40;
 $('.screen').css('height', windowHeight + 'px')
 $('.screen').css('width', windowWidth + 'px')
 
 window.onresize = function(event) {
-  windowHeight = window.innerHeight-50;
-  windowWidth = window.innerWidth-50;
+  windowHeight = window.innerHeight-40;
+  windowWidth = window.innerWidth-40;
   
   $('.screen').css('height', windowHeight + 'px')
   $('.screen').css('width', windowWidth + 'px')
-  $('.hand').css('width', window.innerWidth-65);
-  $('.hand ul').css('width', window.innerWidth-65);
+  $('.hand').css('width', window.innerWidth-45);
+  $('.hand ul').css('width', window.innerWidth-45);
 };
 
 var application = new Application();

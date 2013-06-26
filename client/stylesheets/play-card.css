@@ -16,18 +16,42 @@
 }
 
 .buttons {
-  margin: 20px auto;
+  margin: 10px auto;
   text-align: center;
 }
 
 .back-button, .rotate-button {
-  background-color: orange;
-  background-size: contain;
-  border: 3px solid black;
+  background-size: contain;  
   border-radius: 10px;
   display: inline-block;
   height: 50px;
   width: 50px;
+}
+
+.discard-button {
+	border-radius: 5px;
+	margin: 0 30px;
+	padding: 5px;
+}
+
+.back-button, .rotate-button, .discard-button {
+	background-color: orange;
+	border: 2px solid black;
+	box-shadow: 0 3px black;
+	color: white;
+	font-size: 21px;
+	font-weight: bold;
+	text-shadow: black 2px 2px;
+	position: relative;
+}
+
+.discard-button:active, .back-button:active, .rotate-button:active {
+	box-shadow: 0 0 black;
+	top: 3px;
+}
+.discard-button:hover, .back-button:hover, .rotate-button:hover {
+	box-shadow: 0 4px black;
+	top: -1px;
 }
 
 .back-button {

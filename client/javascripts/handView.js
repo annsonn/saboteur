@@ -65,8 +65,8 @@ var HandView = function(app) {
     
     $('.hand').html(list); // or $('.hand').append(list) to add to existing cards    
     
-    $('.hand').css('width', window.innerWidth-65);
-    $('.hand ul').css('width', window.innerWidth-65);
+    $('.hand').css('width', window.innerWidth-45);
+    $('.hand ul').css('width', window.innerWidth-45);
     
     
     // handling what happens when you click card from hand view
@@ -129,6 +129,22 @@ var HandView = function(app) {
     app.socket.emit('player-action', {type: 'back'});
   });
   
+	$('.discard-button').click(function() {
+		$('#game').attr('page', 'hand');
+    $('.rotate-button').unbind('click');
+    
+    if ($('.selected-card[card*=connected]').length === 0 && $('.selected-card[card*=deadend]').length === 0) {
+      $('.rotate-button').css('background-color', '');
+    } else {       
+      if ($('rotated')) {
+        $('.selected-card').toggleClass('rotated');  
+      }
+    }
+    
+    // telling server that the card needs to be removed from board view
+    app.socket.emit('player-action', {card: $('.selected-card').attr('card'), type: 'discard'});
+	});
+	
   $('.left-button').click(function() {
     app.socket.emit('card-action', {type: 'left'});
   });
