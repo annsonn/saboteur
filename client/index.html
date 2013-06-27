@@ -124,49 +124,53 @@
         </div>
       </section>
       
-      <section id="play-card" class="layer white-border">
-        <div class="screen">
-          <div class="view-wrapper">
-             <div class="grid-50 left">
-              <div class="play-card">
-                <div class="selected-card">
-                  <!-- card is added in with javascript 
-                  when the player is ready the click on the card again to play it
-                  need to tell the server to remove from hand and add to board
-                  -->  
-                  <div class="play-button">Play!</div>
-                </div>  
-              </div> 
-            </div>
-            <div class="grid-50 right">
-              <div class="buttons">
-                <!-- TODO rotates the button, but only is enabled for path cards -->              
-                <div class="rotate-button"></div>
-                <!-- TODO allows the user to go back to their hand -->
-                <div class="back-button"></div>
-              </div>
-           
-              <div class="d-pad">
-                <ul>
-                  <li class="box"></li>
-                  <li class="box up-button"></li>
-                  <li class="box"></li>
-                </ul>
-                <ul>
-                  <li class="box left-button"></li>
-                  <li class="box center-button"></li>
-                  <li class="box right-button"></li>
-                </ul>
-                <ul>
-                  <li class="box"></li>
-                  <li class="box down-button"></li>
-                  <li class="box"></li>
-                </ul> 
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+			<section id="play-card" class="layer white-border">
+				<div class="screen">
+					<div class="view-wrapper">
+						<div class="grid-50 left">
+							<div class="play-card">
+								<div class="selected-card">
+									<!-- card is added in with javascript 
+									when the player is ready the click on the card again to play it
+									need to tell the server to remove from hand and add to board
+									-->  
+									<div class="play-button">Play!</div>
+								</div>  
+							</div> 
+						</div>
+						<div class="grid-50 right">
+							<div class="buttons">
+								<!-- TODO rotates the button, but only is enabled for path cards -->              
+								<div class="rotate-button"></div>
+								<!-- TODO allows the user to go back to their hand -->
+								<div class="back-button"></div>
+								<!-- TODO allows the user to discard the card to pass -->
+								<div class="discard-button">
+									Discard
+								</div>
+							</div>
+					 
+							<div class="d-pad">
+								<ul>
+									<li class="box"></li>
+									<li class="box up-button"></li>
+									<li class="box"></li>
+								</ul>
+								<ul>
+									<li class="box left-button"></li>
+									<li class="box center-button"></li>
+									<li class="box right-button"></li>
+								</ul>
+								<ul>
+									<li class="box"></li>
+									<li class="box down-button"></li>
+									<li class="box"></li>
+								</ul> 
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
       
       <section id="board" class="layer white-border">
         <div class="screen">
