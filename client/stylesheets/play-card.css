@@ -85,13 +85,14 @@
 
 .d-pad {
   font-size: 0;
-  height: 200px;
-  width: 200px;  
+	height: 125px;
+	width: 125px;
+	margin: 0 auto;
 }
 
 .box {
-  height: 50px;
-  width: 50px;
+  height: 40px;
+  width: 40px;
 }
 
 ul, li {
@@ -107,24 +108,24 @@ ul {
   display: block;
 }
 
-.left, .right, .up, .down, .center {
+.left-button, .right-button, .up-button, .down-button, .center-button {
   background-color: orange;
   border: 2px solid black;
   border-radius: 15px;
   position: relative;
 }
 
-.left, .right, .down {
+.left-button, .right-button, .down-button {
   box-shadow: 0px 5px black;
 }
 
-.left {
+.left-button {
   border-right: none;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.center {
+.center-button {
   border-color: orange;
   border-left: none;
   border-right: none;
@@ -132,52 +133,52 @@ ul {
   z-index: 100;
 }
 
-.up {
+.up-button {
   border-bottom: none;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.right {
+.right-button {
   border-left: none;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0
 }
 
-.down {
+.down-button {
   border-top: none;
   border-top-left-radius: 0;
   border-top-right-radius: 0
 }
 
 
-.left:active {
+.left-button:active {
   background: linear-gradient(to right, white 0%, #FF9900 100%);
   box-shadow: 0 2px black;
   left: 3px;
 }
 
-.right:active {
+.right-button:active {
   background: linear-gradient(to left, white 0%, #FF9900 100%);
   box-shadow: 0 2px black;
   right: 3px;
 }
 
-.up:active {
+.up-button:active {
   background: linear-gradient(to bottom, white 0%, #FF9900 100%);
   top: 3px;
 }
 
-.down:active {
+.down-button:active {
   background: linear-gradient(to top, white 0%, #FF9900 100%);
   box-shadow: 0 0 black; 
 }
 
-.d-pad:active .up, .d-pad:active .down, .d-pad:active .left, .d-pad:active .right {
+.d-pad:active .up-button, .d-pad:active .down-button, .d-pad:active .left-button, .d-pad:active .right-button {
   background-color: #FF9900;  
 }
 
-.d-pad:active .center {
+.d-pad:active .center-button {
   background-color: #FF9900;  
   border-color: #FF9900;
 }
