@@ -83,82 +83,101 @@
   text-align: center
 }
 
-
 .d-pad {
   font-size: 0;
-  margin: 0 auto;
-  height: 120px;
-  width: 120px;  
+  height: 200px;
+  width: 200px;  
 }
 
 .box {
-  height: 35px;
-  width: 35px;
+  height: 50px;
+  width: 50px;
 }
 
-.d-pad ul, li {
+ul, li {
   margin: 0;
   padding: 0;
 }
 
-.d-pad li {
+li {
   display: inline-block;
 }
 
-.d-pad ul {
+ul {
   display: block;
 }
 
-.left-button, .right-button, .up-button, .down-button, .center-button {
+.left, .right, .up, .down, .center {
   background-color: orange;
-  border: 3px solid black;
-  border-radius: 5px;
+  border: 2px solid black;
+  border-radius: 15px;
+  position: relative;
 }
 
-.left-button {
+.left, .right, .down {
+  box-shadow: 0px 5px black;
+}
+
+.left {
   border-right: none;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.center-button {
+.center {
   border-color: orange;
   border-left: none;
   border-right: none;
   border-radius: 0;
+  z-index: 100;
 }
 
-.up-button {
+.up {
   border-bottom: none;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.right-button {
+.right {
   border-left: none;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0
 }
 
-.down-button {
+.down {
   border-top: none;
   border-top-left-radius: 0;
   border-top-right-radius: 0
 }
 
 
-.left-button:active {
-  background: linear-gradient(to right, white 0%, orange 100%);
+.left:active {
+  background: linear-gradient(to right, white 0%, #FF9900 100%);
+  box-shadow: 0 2px black;
+  left: 3px;
 }
 
-.right-button:active {
-  background: linear-gradient(to left, white 0%, orange 100%);
+.right:active {
+  background: linear-gradient(to left, white 0%, #FF9900 100%);
+  box-shadow: 0 2px black;
+  right: 3px;
 }
 
-.up-button:active {
-  background: linear-gradient(to bottom, white 0%, orange 100%);
+.up:active {
+  background: linear-gradient(to bottom, white 0%, #FF9900 100%);
+  top: 3px;
 }
 
-.down-button:active {
-  background: linear-gradient(to top, white 0%, orange 100%);
+.down:active {
+  background: linear-gradient(to top, white 0%, #FF9900 100%);
+  box-shadow: 0 0 black; 
+}
+
+.d-pad:active .up, .d-pad:active .down, .d-pad:active .left, .d-pad:active .right {
+  background-color: #FF9900;  
+}
+
+.d-pad:active .center {
+  background-color: #FF9900;  
+  border-color: #FF9900;
 }
