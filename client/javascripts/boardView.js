@@ -48,7 +48,7 @@ var BoardView = function(app) {
       }
     };
     
-    var cardHeight = (windowHeight-50)/visbleRows;
+    var cardHeight = (windowHeight-40)/visbleRows;
     var cardWidth = cardHeight*0.6275; 
     
     $('.board ul li').css({height: cardHeight, width: cardWidth});  

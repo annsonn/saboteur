@@ -17,9 +17,10 @@
 
 .hand li {
   border-radius: 10px;
+	box-shadow: 5px 5px 5px black;
   display: inline-block;
+	height: 240px;
   list-style: none;
   margin: 0 5px;
   width: 150px;
-  height: 240px;
 }
