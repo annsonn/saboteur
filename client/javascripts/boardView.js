@@ -66,6 +66,7 @@ var BoardView = function(app) {
 	// Stuff to deal with play cards onto the board
 	var defaultRow = 3;
 	var defaultColumn = 3;
+  
 	var maxRow = 7;
 	var maxColumn = 11;
 	
@@ -88,6 +89,7 @@ var BoardView = function(app) {
 		// Moving the card left
 		if (data.type === 'left' && currentColumn!=0 && isSpaceEmpty(currentRow, currentColumn-1)) {
 			displayCard(currentRow, currentColumn, 'null');
+      //  turn off rotate and rotate the next one if rotated
 			currentColumn--;					
 			displayCard(currentRow, currentColumn, currentCard);
 		};
@@ -95,6 +97,7 @@ var BoardView = function(app) {
 		// Moving the card right
 		if (data.type === 'right' && currentColumn!=maxColumn && isSpaceEmpty(currentRow, currentColumn+1)) {
 			displayCard(currentRow, currentColumn, 'null');
+      //  turn off rotate and rotate the next one if rotated
 			currentColumn++;					
 			displayCard(currentRow, currentColumn, currentCard);
 		};
@@ -102,6 +105,7 @@ var BoardView = function(app) {
 		// Move card up
 		if (data.type === 'up' && currentColumn!=0 && isSpaceEmpty(currentRow-1, currentColumn)) {
 			displayCard(currentRow, currentColumn, 'null');
+      //  turn off rotate and rotate the next one if rotated
 			currentRow--;					
 			displayCard(currentRow, currentColumn, currentCard);
 		};
@@ -109,6 +113,7 @@ var BoardView = function(app) {
 		// Move card down
 		if (data.type === 'down' && currentColumn!=maxColumn && isSpaceEmpty(currentRow+1, currentColumn)) {
 			displayCard(currentRow, currentColumn, 'null');
+      //  turn off rotate and rotate the next one if rotated
 			currentRow++;					
 			displayCard(currentRow, currentColumn, currentCard);
 		};
@@ -116,15 +121,25 @@ var BoardView = function(app) {
 		if (data.type === 'rotate') {
 			$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').toggleClass('rotated');
 		};
-		
   });
   
   app.socket.on('player-action', function (data) {  		
 		if (data.type === 'preview') {
 			currentCard = data.card;
-			currentRow = defaultRow;
+			currentRow = defaultRow; // place the card in the first 'null' slot found
 			currentColumn = defaultColumn;
 			displayCard(currentRow, currentColumn, currentCard);
+      // add a new type call 'preview' to indicate that this card is not placed on the board yet
 		}
+    
+    if (data.type === 'submit') {
+      console.log('card was submitted');
+      // remove the 'preview' type;
+    }
+    
+    if (data.type === 'back' || data.type === 'discard') {
+      $('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').removeClass('rotated');
+      displayCard(currentRow, currentColumn, 'null');
+    }
   });
 };
