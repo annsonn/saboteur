@@ -34,7 +34,7 @@ var BoardView = function(app) {
       
       for (var j in data[i]) {
 		if (data[i][j] == null) {
-			boardRow.append($('<li />').addClass('board-card null'));
+			boardRow.append($('<li />').attr('card', 'null').addClass('board-card'));
 		} else {
 			boardRow.append($('<li />').attr('card', data[i][j]).addClass('board-card'));        
 		}
@@ -42,7 +42,7 @@ var BoardView = function(app) {
        
       $(boardRow).appendTo('.board');
       
-      if ( (i==0 || i==(data.length-1) ) && $('.board ul:nth-child('+(i + 1)+') .null').length == data[i].length) {
+      if ( (i==0 || i==(data.length-1) ) && $('.board ul:nth-child('+(i + 1)+') [card=null]').length == data[i].length) {
         boardRow.css('display', 'none');
         visbleRows--;
       }
@@ -62,11 +62,69 @@ var BoardView = function(app) {
     
   });
   
-  app.socket.on('card-action', function (data) {  
-    console.log('card-action', data);
+	
+	// Stuff to deal with play cards onto the board
+	var defaultRow = 3;
+	var defaultColumn = 3;
+	var maxRow = 7;
+	var maxColumn = 11;
+	
+	var currentRow;
+	var currentColumn;
+	var currentCard;
+	
+	var isSpaceEmpty = function(row, column) {
+		if ($('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').attr('card') == 'null') {
+			return true;
+		}
+		return false;
+	}
+	
+	var displayCard = function(row, column, card) {
+		$('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').attr('card', card);
+	};
+	
+  app.socket.on('card-action', function (data) {  		
+		// Moving the card left
+		if (data.type === 'left' && currentColumn!=0 && isSpaceEmpty(currentRow, currentColumn-1)) {
+			displayCard(currentRow, currentColumn, 'null');
+			currentColumn--;					
+			displayCard(currentRow, currentColumn, currentCard);
+		};
+		
+		// Moving the card right
+		if (data.type === 'right' && currentColumn!=maxColumn && isSpaceEmpty(currentRow, currentColumn+1)) {
+			displayCard(currentRow, currentColumn, 'null');
+			currentColumn++;					
+			displayCard(currentRow, currentColumn, currentCard);
+		};
+		
+		// Move card up
+		if (data.type === 'up' && currentColumn!=0 && isSpaceEmpty(currentRow-1, currentColumn)) {
+			displayCard(currentRow, currentColumn, 'null');
+			currentRow--;					
+			displayCard(currentRow, currentColumn, currentCard);
+		};
+		
+		// Move card down
+		if (data.type === 'down' && currentColumn!=maxColumn && isSpaceEmpty(currentRow+1, currentColumn)) {
+			displayCard(currentRow, currentColumn, 'null');
+			currentRow++;					
+			displayCard(currentRow, currentColumn, currentCard);
+		};
+		
+		if (data.type === 'rotate') {
+			$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').toggleClass('rotated');
+		};
+		
   });
   
-  app.socket.on('player-action', function (data) {  
-    console.log('player-action', data);
+  app.socket.on('player-action', function (data) {  		
+		if (data.type === 'preview') {
+			currentCard = data.card;
+			currentRow = defaultRow;
+			currentColumn = defaultColumn;
+			displayCard(currentRow, currentColumn, currentCard);
+		}
   });
 };

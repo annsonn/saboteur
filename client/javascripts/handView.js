@@ -91,6 +91,8 @@ var HandView = function(app) {
       $('.play-button').click(function() {
 				unbindButtons();
 			
+				// removing card from hand
+				$('.hand [card='+$('.selected-card').attr('card')+']').first().remove();
         app.socket.emit('player-action', {card: card, type: 'submit'});            
 				$('#game').attr('page', 'hand');
       });
