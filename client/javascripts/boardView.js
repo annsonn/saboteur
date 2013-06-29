@@ -33,19 +33,14 @@ var BoardView = function(app) {
       var boardRow = $('<ul />');
       
       for (var j in data[i]) {
-		if (data[i][j] == null) {
-			boardRow.append($('<li />').attr('card', 'null').addClass('board-card'));
-		} else {
-			boardRow.append($('<li />').attr('card', data[i][j]).addClass('board-card'));        
-		}
+				if (data[i][j] == null) {
+					boardRow.append($('<li />').attr('card', 'null').attr('type', 'preview').addClass('board-card'));
+				} else {
+					boardRow.append($('<li />').attr('card', data[i][j]).addClass('board-card'));        
+				}
       };
        
       $(boardRow).appendTo('.board');
-      
-      /*if ( (i==0 || i==(data.length-1) ) && $('.board ul:nth-child('+(i + 1)+') [card=null]').length == data[i].length) {
-        boardRow.css('display', 'none');
-        visbleRows--;
-      }*/
     };
     
     var cardHeight = (windowHeight-40)/visbleRows;
@@ -55,8 +50,9 @@ var BoardView = function(app) {
     
     $('#game').attr('page', 'board');
     $('.board').delay(300).queue( function(next){ 
-      $(this).css('transform', 'scale(1,1)');
-      $(this).css('-webkit-transform', 'scale(1,1)');
+      $(this).css('transform', 'scale(1.3, 0.8) rotateX(10deg)');
+      $(this).css('-webkit-transform', 'scale(1.3, 0.8) rotateX(10deg)');
+			$(this).css('top', cardHeight*(-0.8));
       next(); 
     });   
     
@@ -150,12 +146,13 @@ var BoardView = function(app) {
 			currentRow = getEmptySpace().row; 
 			currentColumn = getEmptySpace().column;
 			displayCard(currentRow, currentColumn, currentCard);
-      // add a new type call 'preview' to indicate that this card is not placed on the board yet
 		}
     
     if (data.type === 'submit') {
       console.log('card was submitted');
-      // remove the 'preview' type;
+			console.log($('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')'));
+			$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').attr('type','submitted');	
+			console.log($('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')'));
     }
     
     if (data.type === 'back' || data.type === 'discard') {

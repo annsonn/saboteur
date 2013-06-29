@@ -25,6 +25,29 @@
   -webkit-transition: all 5s; 
 }
 
-.board ul:first-child .null, .board ul:last-child .null, .board ul li:first-child, .board ul li:last-child{
-  background-color: transparent;
+[type=preview] {
+	-webkit-animation-name: bluePulse;
+	-webkit-animation-duration: 2s;
+	-webkit-animation-iteration-count: infinite;
+}
+
+[card=null][type=preview] {
+	-webkit-animation-name: initial;
+}
+
+@-webkit-keyframes bluePulse {
+	from { box-shadow: 0 0 9px #2daebf; -webkit-filter: brightness(1.0); }
+	50% { box-shadow: 0 0 18px #92E5F0; -webkit-filter: brightness(1.15);}
+	to { box-shadow: 0 0 9px #2daebf; -webkit-filter: brightness(1.0);}
+}
+
+#board .screen {
+	-webkit-perspective: 400px;
+	-webkit-perspective-origin-x: 50%;
+	-webkit-perspective-origin-y: 10%;
+}
+
+.board {
+	-webkit-perspective: 100px;
+	position: relative;
 }
