@@ -42,10 +42,10 @@ var BoardView = function(app) {
        
       $(boardRow).appendTo('.board');
       
-      if ( (i==0 || i==(data.length-1) ) && $('.board ul:nth-child('+(i + 1)+') [card=null]').length == data[i].length) {
+      /*if ( (i==0 || i==(data.length-1) ) && $('.board ul:nth-child('+(i + 1)+') [card=null]').length == data[i].length) {
         boardRow.css('display', 'none');
         visbleRows--;
-      }
+      }*/
     };
     
     var cardHeight = (windowHeight-40)/visbleRows;
@@ -63,10 +63,7 @@ var BoardView = function(app) {
   });
   
 	
-	// Stuff to deal with play cards onto the board
-	var defaultRow = 3;
-	var defaultColumn = 3;
-  
+	// Stuff to deal with play cards onto the board 
 	var maxRow = 7;
 	var maxColumn = 11;
 	
@@ -79,43 +76,67 @@ var BoardView = function(app) {
 			return true;
 		}
 		return false;
-	}
-	
-	var displayCard = function(row, column, card) {
-		$('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').attr('card', card);
 	};
 	
+	var getEmptySpace = function() {
+		for (var i = 1; i <= maxRow; i++ ) {
+			for (var j =1; j<= maxColumn; j++ ) {
+				if (isSpaceEmpty(i, j)) {
+					console.log('empty space found at row ' + i + 'and column ' + j);
+					return ({row: i, column: j});
+				};			
+			};
+		
+		};
+		console.log('no empty spaces found');
+		return ({row: 'null', column: 'null'});		
+	};
+	
+	var displayCard = function(row, column, card) {
+		$('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').attr('card', card);		
+		if ($('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').hasClass('rotated')) {
+			$('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').toggleClass('rotated');
+			return {rotated: true};
+		}
+		return {rotated: false};
+	};
+	
+	var move = function(type, direction) {
+		if (type === 'column') {
+			displayCard(currentRow, currentColumn + direction, currentCard);
+			if (displayCard(currentRow, currentColumn, 'null').rotated == true) {
+				$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+(currentColumn + direction)+')').toggleClass('rotated');
+			};
+			currentColumn = currentColumn + direction;
+		};
+		if (type === 'row') {
+			displayCard(currentRow + direction, currentColumn, currentCard);
+			if (displayCard(currentRow, currentColumn, 'null').rotated == true) {
+				$('.board ul:nth-child('+(currentRow + direction)+') .board-card:nth-child('+currentColumn+')').toggleClass('rotated');
+			};
+			currentRow = currentRow + direction;
+		}
+	};	
+
   app.socket.on('card-action', function (data) {  		
 		// Moving the card left
 		if (data.type === 'left' && currentColumn!=0 && isSpaceEmpty(currentRow, currentColumn-1)) {
-			displayCard(currentRow, currentColumn, 'null');
-      //  turn off rotate and rotate the next one if rotated
-			currentColumn--;					
-			displayCard(currentRow, currentColumn, currentCard);
+			move('column', -1);
 		};
 		
 		// Moving the card right
 		if (data.type === 'right' && currentColumn!=maxColumn && isSpaceEmpty(currentRow, currentColumn+1)) {
-			displayCard(currentRow, currentColumn, 'null');
-      //  turn off rotate and rotate the next one if rotated
-			currentColumn++;					
-			displayCard(currentRow, currentColumn, currentCard);
+			move('column', 1);
 		};
 		
 		// Move card up
 		if (data.type === 'up' && currentColumn!=0 && isSpaceEmpty(currentRow-1, currentColumn)) {
-			displayCard(currentRow, currentColumn, 'null');
-      //  turn off rotate and rotate the next one if rotated
-			currentRow--;					
-			displayCard(currentRow, currentColumn, currentCard);
+			move('row', -1);
 		};
 		
 		// Move card down
 		if (data.type === 'down' && currentColumn!=maxColumn && isSpaceEmpty(currentRow+1, currentColumn)) {
-			displayCard(currentRow, currentColumn, 'null');
-      //  turn off rotate and rotate the next one if rotated
-			currentRow++;					
-			displayCard(currentRow, currentColumn, currentCard);
+			move('row', 1);
 		};
 		
 		if (data.type === 'rotate') {
@@ -126,8 +147,8 @@ var BoardView = function(app) {
   app.socket.on('player-action', function (data) {  		
 		if (data.type === 'preview') {
 			currentCard = data.card;
-			currentRow = defaultRow; // place the card in the first 'null' slot found
-			currentColumn = defaultColumn;
+			currentRow = getEmptySpace().row; 
+			currentColumn = getEmptySpace().column;
 			displayCard(currentRow, currentColumn, currentCard);
       // add a new type call 'preview' to indicate that this card is not placed on the board yet
 		}
