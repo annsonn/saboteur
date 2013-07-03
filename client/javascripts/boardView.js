@@ -34,7 +34,7 @@ var BoardView = function(app) {
       
       for (var j in data[i]) {
 				if (data[i][j] == null) {
-					boardRow.append($('<li />').attr('card', 'null').attr('type', 'preview').addClass('board-card'));
+					boardRow.append($('<li />').attr('type', 'preview').addClass('board-card'));
 				} else {
 					boardRow.append($('<li />').attr('card', data[i][j]).addClass('board-card'));        
 				}
@@ -68,10 +68,7 @@ var BoardView = function(app) {
 	var currentCard;
 	
 	var isSpaceEmpty = function(row, column) {
-		if ($('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').attr('card') == 'null') {
-			return true;
-		}
-		return false;
+		return (!$('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').attr('card'));		
 	};
 	
 	var getEmptySpace = function() {
@@ -85,11 +82,16 @@ var BoardView = function(app) {
 		
 		};
 		console.log('no empty spaces found');
-		return ({row: 'null', column: 'null'});		
+		return null;		
 	};
 	
 	var displayCard = function(row, column, card) {
-		$('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').attr('card', card);		
+    if (card == 'null') {
+      $('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').removeAttr('card');		
+    } else {
+      $('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').attr('card', card);		  
+    };
+		
 		if ($('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').hasClass('rotated')) {
 			$('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').toggleClass('rotated');
 			return {rotated: true};
@@ -100,14 +102,14 @@ var BoardView = function(app) {
 	var move = function(type, direction) {
 		if (type === 'column') {
 			displayCard(currentRow, currentColumn + direction, currentCard);
-			if (displayCard(currentRow, currentColumn, 'null').rotated == true) {
+			if (displayCard(currentRow, currentColumn, 'null').rotated) {
 				$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+(currentColumn + direction)+')').toggleClass('rotated');
 			};
 			currentColumn = currentColumn + direction;
 		};
 		if (type === 'row') {
 			displayCard(currentRow + direction, currentColumn, currentCard);
-			if (displayCard(currentRow, currentColumn, 'null').rotated == true) {
+			if (displayCard(currentRow, currentColumn, 'null').rotated) {
 				$('.board ul:nth-child('+(currentRow + direction)+') .board-card:nth-child('+currentColumn+')').toggleClass('rotated');
 			};
 			currentRow = currentRow + direction;

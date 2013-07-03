@@ -13,7 +13,7 @@
   margin: 0;
 }
 
-[card=null]{
+.board li:not([card]){
   background-color: #fff;
   opacity:0.2;
 }
@@ -31,7 +31,7 @@
 	-webkit-animation-iteration-count: infinite;
 }
 
-[card=null][type=preview] {
+.board li:not([card])[type=preview] {
 	-webkit-animation-name: initial;
 }
 
