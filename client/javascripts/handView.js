@@ -160,5 +160,9 @@ var HandView = function(app) {
   $('.down-button').click(function() {
     app.socket.emit('card-action', {type: 'down'});
   });  
-  
+	
+	app.socket.on('deal', function(data) {
+			$('.hand ul').append($('<li />').attr('card', data.card).addClass('card'));
+  });
+	
 };
