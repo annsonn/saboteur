@@ -47,29 +47,10 @@ var HandView = function(app) {
       console.log(data);
   });
 
-  // Game Screens
-  app.socket.on('start', function(data) {
-    console.log('game started', data);
-    
-    if (data.job == "gold-digger") {
-      $('.flip-card-back').append('<img src="/images/job-miner.jpg"/>');  
-    }
-    if (data.job == "saboteur") {
-       $('.flip-card-back').append('<img src="/images/job-saboteur.jpg"/>'); 
-    } 
-    
-    var list = $('<ul />');
-    data.hand.forEach(function(card) {
-      list.append($('<li />').attr('card', card).addClass('card'));
-    });
-    
-    $('.hand').html(list); // or $('.hand').append(list) to add to existing cards    
-    
-    $('.hand').css('width', window.innerWidth-45);
-    $('.hand ul').css('width', window.innerWidth-45);
-    
-    
-    // handling what happens when you click card from hand view
+  // handling what happens when you click card from hand view
+  var bindCardClick = function() {
+     $('.card').unbind('click');
+     
     $('.card').click(function() {
       $('.play-card > div').removeAttr('card').removeClass();
       $('.play-card > div').attr('card', $(this).attr('card')).addClass('selected-card');
@@ -91,6 +72,8 @@ var HandView = function(app) {
       $('.play-button').click(function() {
 				unbindButtons();
 			
+				// removing card from hand
+				$('.hand [card='+$('.selected-card').attr('card')+']').first().remove();
         app.socket.emit('player-action', {card: card, type: 'submit'});            
 				$('#game').attr('page', 'hand');
       });
@@ -99,10 +82,35 @@ var HandView = function(app) {
       
       $('#game').attr('page', 'play-card');
     });
+  };
+  
+  // Game Screens
+  app.socket.on('start', function(data) {
+    console.log('game started', data);
+    
+    if (data.job == "gold-digger") {
+      $('.flip-card-back').append('<img src="/images/job-miner.jpg"/>');  
+    }
+    if (data.job == "saboteur") {
+       $('.flip-card-back').append('<img src="/images/job-saboteur.jpg"/>'); 
+    } 
+    
+    var list = $('<ul />');
+    data.hand.forEach(function(card) {
+      list.append($('<li />').attr('card', card).addClass('card'));
+    });
+    
+    $('.hand').html(list); // or $('.hand').append(list) to add to existing cards    
+    
+    $('.hand').css('width', window.innerWidth-45);
+    $('.hand ul').css('width', window.innerWidth-45);
+    
+    bindCardClick();
     
     $('#game').attr('page', 'choose-role');
   });
     
+
   $('.job-card').click(function() {
     // flip cards
     $('.job-card').addClass('flip');
@@ -158,5 +166,10 @@ var HandView = function(app) {
   $('.down-button').click(function() {
     app.socket.emit('card-action', {type: 'down'});
   });  
-  
+	
+	app.socket.on('deal', function(data) {
+			$('.hand ul').append($('<li />').attr('card', data.card).addClass('card'));
+      bindCardClick();
+  });
+	
 };
