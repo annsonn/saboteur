@@ -84,6 +84,10 @@ var BoardView = function(app) {
 		console.log('no empty spaces found');
 		return null;		
 	};
+
+  var isRotated = function(row, column) {
+    return $('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').hasClass('rotated');
+  };
 	
 	var displayCard = function(row, column, card) {
     if (card == 'null') {
@@ -92,7 +96,7 @@ var BoardView = function(app) {
       $('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').attr('card', card);		  
     };
 		
-		if ($('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').hasClass('rotated')) {
+		if (isRotated(row, column)) {
 			$('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').toggleClass('rotated');
 			return {rotated: true};
 		}
@@ -151,10 +155,9 @@ var BoardView = function(app) {
 		}
     
     if (data.type === 'submit') {
-      console.log('card was submitted');
-			console.log($('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')'));
-			$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').attr('type','submitted');	
-			console.log($('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')'));
+      // Submit to server for validity
+      var rotated = isRotated(currentRow, currentColumn);
+      app.socket.emit('board-action', {type: 'play', card: currentCard, position: {row: currentRow - 1, column: currentColumn - 1, rotated: rotated}});
     }
     
     if (data.type === 'back' || data.type === 'discard') {
@@ -162,4 +165,18 @@ var BoardView = function(app) {
       displayCard(currentRow, currentColumn, 'null');
     }
   });
+
+  app.socket.on('error', function(data) {
+    if (data === 'invalid play') {
+      // Shake card
+    }
+  });
+
+  app.socket.on('place card', function(data) {
+    console.log('card was submitted');
+    console.log($('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')'));
+    $('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').attr('type','submitted'); 
+    console.log($('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')'));
+  });
+
 };

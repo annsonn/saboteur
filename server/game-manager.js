@@ -51,13 +51,12 @@ GameManager.prototype.playCard = function(card, target) {
   var result = false;
   if (target && target.x && target.y) {
     // TODO Place on board
-    result = this.board.placeCard(target.x, target.y, card, target.rotate);
+    result = this.board.placeCard(target.y, target.x, card, target.rotated);
   } else if (!isNaN(parseFloat(target)) && isFinite(target)) {
     // TODO Action on Player number
     result = this.players[target].applyCard(target);
   }
   
-  this.sockets.to(this.name).emit('played', {card: card, target: target});
   return result;
 }
 
