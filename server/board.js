@@ -1,4 +1,5 @@
 var Deck = require('./deck');
+var CardRules = require('./decks/standard-card-rules');
 var boardHeight = 7;
 var boardWidth = 11;
 
@@ -14,6 +15,22 @@ var boardWidth = 11;
 
 */
 
+// Flip 180 degrees
+var rotateCard = function(rules) {
+  return {
+    top: !!rules.bottom,
+    bottom: !!rules.top,
+    left: !!rules.right,
+    right: !!rules.left,
+  }
+};
+
+var getCardRules = function(card) {
+  if (card.indexOf('rotate-') === 0) {
+    return rotateCard(CardRules[card.substr(7)]);
+  }
+  return CardRules[card];
+};
 
 var Board = function(socket) {
   this.socket = socket;
@@ -40,14 +57,20 @@ Board.prototype.initBoard = function() {
   }
 }
 
-Board.prototype.placeCard = function( locationY, locationX, card ) {
+Board.prototype.placeCard = function( locationY, locationX, card, rotated ) {
   if ( !this.board[locationY] ) {
     this.board[locationY] = [];
   } 
   
   if ( !this.board[locationY][locationX] ) {
+    // validate move
+    var card = (rotated ? 'rotated-' : '') + card;
     this.board[locationY][locationX] = card;
+    console.log(card + ' placed (): ' + locationX + ', ' + locationY);
+
+    return true;
   }
+  return false;
 };
 
 Board.prototype.removeCard = function( locationX, locationY ) {

@@ -27,6 +27,7 @@ var Server = function() {
         socket.on('join', self.handlers.joinGame(socket));
         socket.on('leave', self.handlers.leaveGame(socket));
         socket.on('start', self.handlers.startGame(socket));
+        socket.on('board-action', self.handlers.boardAction(socket));
         socket.on('card-action', self.handlers.cardAction(socket));
         socket.on('player-action', self.handlers.playerAction(socket));
         
@@ -48,6 +49,19 @@ var Server = function() {
     },
     
     handlers: {
+
+      boardAction: function(socket) {
+        return function(data) {
+          socket.get('game', function(x, gameId) {
+            var game = self.games[gameId];
+            if (game) {
+              if (data.type === 'play') {
+                game.play(socket, data.card, {x: data.position.column, y: data.position.row, rotated: data.position.rotated});
+              }
+            }
+          });
+        };
+      },
       
       cardAction: function(socket, callback) {
         return function(data) {

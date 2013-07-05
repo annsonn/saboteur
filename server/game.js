@@ -44,9 +44,8 @@ Game.prototype.start = function(socket) {
 };
 
 Game.prototype.play = function(socket, card, target) {
-  if (socket.id === this.gameManager.getCurrentPlayer().socket.id) {
-    socket.emit('error', 'not your turn');
-  } else if (this.gameManager.playCard(card, target)) {
+  if (this.gameManager.playCard(card, target)) {
+    socket.emit('place card');
     this.sockets.to(this.name).emit('next player', this.gameManager.getCurrentPlayer().socket.id);
   } else {
     socket.emit('error', 'invalid play');
