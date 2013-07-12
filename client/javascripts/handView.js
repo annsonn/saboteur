@@ -67,6 +67,12 @@ var HandView = function(app) {
       }
       
       var card = $(this).attr('card');
+			var cardType = 'map';
+			
+			if (card.indexOf('free') >= 0 || card.indexOf('block') >= 0 || card.indexOf('map') >= 0 || card.indexOf('avalanche') >= 0) {
+				console.log('previwing an action card!');
+				cardType = 'action';
+			};
       
       // updates play button based on card picked
       $('.play-button').click(function() {
@@ -74,11 +80,11 @@ var HandView = function(app) {
 			
 				// removing card from hand
 				$('.hand [card='+$('.selected-card').attr('card')+']').first().remove();
-        app.socket.emit('player-action', {card: card, type: 'submit'});            
+        app.socket.emit('player-action', {card: card, type: 'submit', cardType: cardType});            
 				$('#game').attr('page', 'hand');
       });
       
-      app.socket.emit('player-action', {card: card, type: 'preview'});
+      app.socket.emit('player-action', {card: card, type: 'preview', cardType: cardType});
       
       $('#game').attr('page', 'play-card');
     });
