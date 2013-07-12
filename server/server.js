@@ -68,6 +68,9 @@ var Server = function() {
           socket.get('game', function(x, gameId) {
             var game = self.games[gameId];
             if (game) {  
+							if (data.card.indexOf('pickaxe') != -1 || data.card.indexOf('lamp') != -1 || data.card.indexOf('cart') != -1) {
+								console.log('playing an action card!');
+							};
               // sending to host
               game.host.emit('player-action', {card: data.card, type: data.type});
               // if is submitted, then trigger turn ending event (deal new card and move to next player)
