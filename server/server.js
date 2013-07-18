@@ -69,9 +69,19 @@ var Server = function() {
             var game = self.games[gameId];
             if (game) {  
               // sending to host
-              game.host.emit('player-action', {card: data.card, type: data.type});
-              // if is submitted, then trigger turn ending event (deal new card and move to next player)
-							
+							if (data.cardType == 'map'){
+								game.host.emit('player-action', {card: data.card, type: data.type});
+							} else if (data.cardType == 'action') {
+								// get all the players and their blocks on them and display them on the board
+								// for each player emit their block cards to the board, then tell the board to update the view with the selected card.
+								
+								
+								
+								
+								game.host.emit('player-action-card', {card: data.card, currentPlayer: socket, allPlayerBlock:});
+							}
+           
+							// if is submitted, then trigger turn ending event (deal new card and move to next player)
 							if (data.type == 'submit' || data.type == 'discard') {
 								socket.emit('deal', {card: game.gameManager.deck.deal()});
 								//TODO manage discard deck

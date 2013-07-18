@@ -69,7 +69,7 @@ var HandView = function(app) {
       var card = $(this).attr('card');
 			var cardType = 'map';
 			
-			if (card.indexOf('free') >= 0 || card.indexOf('block') >= 0 || card.indexOf('map') >= 0 || card.indexOf('avalanche') >= 0) {
+			if (card.indexOf('free') >= 0 || card.indexOf('block') >= 0) {
 				console.log('previwing an action card!');
 				cardType = 'action';
 			};
