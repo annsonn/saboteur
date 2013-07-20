@@ -74,10 +74,9 @@ var Server = function() {
 							} else if (data.cardType == 'action') {
 								// get all the players and their blocks on them and display them on the board
 								// for each player emit their block cards to the board, then tell the board to update the view with the selected card.
-								
-								
-								
-								
+								for (var i=0; i < game.gameManager.players.length; i++) {
+									game.host.emit('player-block', {playerNumber: i, isBlocked: game.gameManager.players[i].isBlocked(), blocks: game.gameManager.players[i].blocks});
+								}
 								game.host.emit('player-action-card', {card: data.card, currentPlayer: socket, allPlayerBlock:});
 							}
            
