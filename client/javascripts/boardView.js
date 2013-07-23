@@ -63,9 +63,9 @@ var BoardView = function(app) {
 	var maxRow = 7;
 	var maxColumn = 11;
 	
-	var currentRow;
-	var currentColumn;
-	var currentCard;
+	var currentRow = 0;
+	var currentColumn = 0;
+	var currentCard = 'null';
 	
 	var isSpaceEmpty = function(row, column) {
 		return (!$('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').attr('card'));		
@@ -190,13 +190,5 @@ var BoardView = function(app) {
     console.log(data);
     $('#game').attr('page', 'player-action');
   });
-                
-  // this is probably unused
- /* app.socket.on('place card', function(data) {
-    console.log('card was submitted');
-    console.log($('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')'));
-    $('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').attr('type','submitted'); 
-    console.log($('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')'));
-  });*/
 
 };
