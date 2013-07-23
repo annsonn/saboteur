@@ -182,8 +182,9 @@ var BoardView = function(app) {
     var playerBlocks = $('<ul />').addClass('blocks');
     console.log(data.blocks);
     // each block appeds to the player blocks
-    // append playerblocks to status
-    // append status to the view
+
+    playerBlocks.appendTo(playerStatus);
+    $(playerStatus).appendTo('.players-status');
   });
   
   app.socket.on('player-action-card', function(data) {
