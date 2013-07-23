@@ -120,7 +120,9 @@ var BoardView = function(app) {
 		}
 	};	
 
-  app.socket.on('card-action', function (data) {  		
+  app.socket.on('card-action', function (data) {  	
+    //add just for moving between players to block/free
+    
 		// Moving the card left
 		if (data.type === 'left' && currentColumn!=0 && isSpaceEmpty(currentRow, currentColumn-1)) {
 			move('column', -1);
@@ -196,6 +198,7 @@ var BoardView = function(app) {
   
   app.socket.on('player-action-card', function(data) {
     console.log(data);
+    // add in the selected card
     $('#game').attr('page', 'player-action');
   });
 
