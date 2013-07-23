@@ -96,10 +96,14 @@ var Server = function() {
                     game.host.emit('player-block-status', {playerNumber: i, isBlocked: game.gameManager.players[i].isBlocked(), blocks: game.gameManager.players[i].blocks});
                   }
                   console.log('changing board view to the action view');
-                  //game.host.emit('player-action-card', {card: data.card, currentPlayer: game.gameManager.players[game.gameManager.currentPlayerIndex]});
+                  game.host.emit('player-action-card', {card: data.card, currentPlayer: game.gameManager.currentPlayerIndex});
                 }
               }
                 
+              if (data.type == 'back') {
+                game.host.emit('player-action', {type: data.type});
+              }
+              
 							// if is submitted, then trigger turn ending event (deal new card and move to next player)
 							if (data.type == 'submit' || data.type == 'discard') {
                 game.host.emit('player-action', {type: data.type});

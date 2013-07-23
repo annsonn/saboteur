@@ -146,7 +146,9 @@ var BoardView = function(app) {
 		};
   });
   
-  app.socket.on('player-action', function (data) {  		
+  app.socket.on('player-action', function (data) { 
+    $('#game').attr('page', 'board'); // regardless of view goes back to the board view
+    
 		if (data.type === 'preview') {
 			currentCard = data.card;
 			currentRow = getEmptySpace().row; 
@@ -178,7 +180,10 @@ var BoardView = function(app) {
     var playerStatus = $('<li />').addClass(((data.isBlocked) ? 'blocked' : ''));
     playerStatus.append($('<div />').addClass('player'));
     var playerBlocks = $('<ul />').addClass('blocks');
-   
+    console.log(data.blocks);
+    // each block appeds to the player blocks
+    // append playerblocks to status
+    // append status to the view
   });
   
   app.socket.on('player-action-card', function(data) {
