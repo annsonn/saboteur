@@ -83,22 +83,26 @@ var Server = function() {
             var game = self.games[gameId];
             if (game) {  
               // sending to host
-							if (data.cardType == 'map'){
-								game.host.emit('player-action', {card: data.card, type: data.type});
-							} else if (data.cardType == 'action') {
-								// get all the players and their blocks on them and display them on the board
-								// for each player emit their block cards to the board, then tell the board to update the view with the selected card.
-                console.log('emitting player block cards');
-								for (var i=0; i < game.gameManager.players.length; i++) {
-                  console.log('emitting player ' + i + ' block info');s 
-									game.host.emit('player-block', {playerNumber: i, isBlocked: game.gameManager.players[i].isBlocked(), blocks: game.gameManager.players[i].blocks});
-								}
-                console.log('changing board view to the action view');s
-								game.host.emit('player-action-card', {card: data.card, currentPlayer: socket, allPlayerBlock:});
-							}
-           
+              if (data.type == 'preview'){
+                if (data.cardType == 'map'){
+                  game.host.emit('player-action', {card: data.card, type: data.type});
+                } 
+                if (data.cardType == 'action') {
+                  // get all the players and their blocks on them and display them on the board
+                  // for each player emit their block cards to the board, then tell the board to update the view with the selected card.
+                  console.log('emitting player block cards');
+                  for (var i=0; i < game.gameManager.players.length; i++) {
+                    console.log('emitting player ' + i + ' block info'); 
+                    game.host.emit('player-block-status', {playerNumber: i, isBlocked: game.gameManager.players[i].isBlocked(), blocks: game.gameManager.players[i].blocks});
+                  }
+                  console.log('changing board view to the action view');
+                  //game.host.emit('player-action-card', {card: data.card, currentPlayer: game.gameManager.players[game.gameManager.currentPlayerIndex]});
+                }
+              }
+                
 							// if is submitted, then trigger turn ending event (deal new card and move to next player)
 							if (data.type == 'submit' || data.type == 'discard') {
+                game.host.emit('player-action', {type: data.type});
 								socket.emit('deal', {card: game.gameManager.deck.deal()});
 								//TODO manage discard deck
 							};

@@ -171,12 +171,26 @@ var BoardView = function(app) {
       // Shake card
     }
   });
-
-  app.socket.on('place card', function(data) {
+  
+  app.socket.on('player-block-status', function(data) {
+    console.log(data);
+    var playerStatus = $('<li />').addClass(((data.isBlocked) ? 'blocked' : ''));
+    playerStatus.append($('<div />').addClass('player'));
+    var playerBlocks = $('<ul />').addClass('blocks');
+   
+  });
+  
+  app.socket.on('player-action-card', function(data) {
+    console.log(data);
+    $('#game').attr('page', 'player-action');
+  });
+                
+  // this is probably unused
+ /* app.socket.on('place card', function(data) {
     console.log('card was submitted');
     console.log($('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')'));
     $('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').attr('type','submitted'); 
     console.log($('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')'));
-  });
+  });*/
 
 };
