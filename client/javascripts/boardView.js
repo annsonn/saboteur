@@ -156,6 +156,7 @@ var BoardView = function(app) {
     
     if (data.type === 'submit') {
       // Submit to server for validity
+      $('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').attr('type', 'submitted');
       var rotated = isRotated(currentRow, currentColumn);
       app.socket.emit('board-action', {type: 'play', card: currentCard, position: {row: currentRow - 1, column: currentColumn - 1, rotated: rotated}});
     }
