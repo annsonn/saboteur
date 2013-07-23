@@ -178,10 +178,14 @@ var BoardView = function(app) {
   app.socket.on('player-block-status', function(data) {
     console.log(data);
     var playerStatus = $('<li />').addClass(((data.isBlocked) ? 'blocked' : ''));
-    playerStatus.append($('<div />').addClass('player'));
+    playerStatus.append($('<div />').addClass('player').attr('playerNumber', data.playerNumber));
     var playerBlocks = $('<ul />').addClass('blocks');
     console.log(data.blocks);
+    
     // each block appeds to the player blocks
+    playerBlocks.append($('<li/>').addClass('pickaxe').attr('blocked', (data.blocks.pickaxe) ? 'true' : 'false'));
+    playerBlocks.append($('<li/>').addClass('light').attr('blocked', (data.blocks.light) ? 'true' : 'false'));
+    playerBlocks.append($('<li/>').addClass('cart').attr('blocked', (data.blocks.cart) ? 'true' : 'false'));
 
     playerBlocks.appendTo(playerStatus);
     $(playerStatus).appendTo('.players-status');

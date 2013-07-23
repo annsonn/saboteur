@@ -71,6 +71,7 @@ var Server = function() {
             if (game) {  
               // sending to host
               game.host.emit('card-action', {type: data.type});
+              // need to differiate between card actions on a map card vs action action
             }
           });
         }
