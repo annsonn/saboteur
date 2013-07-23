@@ -71,6 +71,9 @@ li[playernumber] {
 
 .playernumber {
   color: #fff;
+  font-weight: bold;
+  padding-top: 40px;
+  text-shadow: 2px 2px black;
 }
 
 .blocks li {

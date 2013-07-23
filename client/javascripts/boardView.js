@@ -182,7 +182,7 @@ var BoardView = function(app) {
   
     if ($('[playernumber="' + data.playerNumber + '"]').length == 0 ) {
       var playerStatus = $('<li />').addClass(((data.isBlocked) ? 'blocked' : '')).attr('playerNumber', data.playerNumber);
-      playerStatus.append($('<div />').addClass('player').append($('<div class="playernumber center">Player<br>'+ (data.playerNumber+1) +'</div>')));
+      playerStatus.append($('<div />').addClass('player').append($('<div class="playernumber center">player<br>'+ (data.playerNumber+1) +'</div>')));
       var playerBlocks = $('<ul />').addClass('blocks');
       console.log(data.blocks);
       
