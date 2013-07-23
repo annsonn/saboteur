@@ -28,35 +28,6 @@
   box-shadow: 0 0 30px white;
 }
 
-.players {
-  margin: auto;
-  text-align: center;
-}
-
-.player {
-  background-image: url(/images/job-card-back.jpg);
-  background-size: cover;
-  border-radius: 5px;
-  display: inline-block;
-  height: 150px;
- 	margin: 0 10px;
-  opacity: .5;
-  width: 94px;
-  -webkit-filter: blur(2px);
-  -webkit-transition: all 0.5s;
-}
-
-.player:hover {
-  opacity: 0.6;
-  -webkit-transform: scale(1.1, 1.1);
-}
-
-.player-joined {
-  opacity: 0.8;
-  -webkit-filter: blur(0px);
-  -webkit-transform: scale(1.2, 1.2);
-}
-
 .colour {
   border-radius: 5px;
   display: table-cell;
