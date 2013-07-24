@@ -147,6 +147,24 @@ var BoardView = function(app) {
     
     if (data.cardType == 'action') {
       console.log(data.type);
+      
+      if (data.type === 'right' || data.type === 'down') {
+        $('li[playernumber]:nth-child(' + currentColumn + ')').attr('selected', false);
+        currentColumn++;
+        if (currentColumn > $('li[playernumber]').length) {
+          currentColumn = 1;
+        }
+        $('li[playernumber]:nth-child(' + currentColumn + ')').attr('selected', true);
+      }
+      
+      if (data.type === 'left' || data.type === 'up') {
+        $('li[playernumber]:nth-child(' + currentColumn + ')').attr('selected', false);
+        currentColumn--;
+        if (currentColumn == 0) {
+          currentColumn = $('li[playernumber]').length;
+        }
+        $('li[playernumber]:nth-child(' + currentColumn + ')').attr('selected', true);      
+      }
     }
       
 		if (data.type === 'rotate') {
@@ -204,6 +222,9 @@ var BoardView = function(app) {
   
   app.socket.on('player-action-card', function(data) {
     console.log(data);
+    currentColumn = 1;
+
+    $('li[playernumber]:nth-child(' + currentColumn + ')').attr('selected', true);
     $('#selected-action-card').attr('card', data.card);
     $('#game').attr('page', 'player-action');
   });
