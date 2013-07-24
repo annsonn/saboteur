@@ -123,26 +123,32 @@ var BoardView = function(app) {
   app.socket.on('card-action', function (data) {  	
     //add just for moving between players to block/free
     
-		// Moving the card left
-		if (data.type === 'left' && currentColumn!=0 && isSpaceEmpty(currentRow, currentColumn-1)) {
-			move('column', -1);
-		};
-		
-		// Moving the card right
-		if (data.type === 'right' && currentColumn!=maxColumn && isSpaceEmpty(currentRow, currentColumn+1)) {
-			move('column', 1);
-		};
-		
-		// Move card up
-		if (data.type === 'up' && currentColumn!=0 && isSpaceEmpty(currentRow-1, currentColumn)) {
-			move('row', -1);
-		};
-		
-		// Move card down
-		if (data.type === 'down' && currentColumn!=maxColumn && isSpaceEmpty(currentRow+1, currentColumn)) {
-			move('row', 1);
-		};
-		
+    if (data.cardType == 'map') {
+      // Moving the card left
+      if (data.type === 'left' && currentColumn!=0 && isSpaceEmpty(currentRow, currentColumn-1)) {
+        move('column', -1);
+      };
+      
+      // Moving the card right
+      if (data.type === 'right' && currentColumn!=maxColumn && isSpaceEmpty(currentRow, currentColumn+1)) {
+        move('column', 1);
+      };
+      
+      // Move card up
+      if (data.type === 'up' && currentColumn!=0 && isSpaceEmpty(currentRow-1, currentColumn)) {
+        move('row', -1);
+      };
+      
+      // Move card down
+      if (data.type === 'down' && currentColumn!=maxColumn && isSpaceEmpty(currentRow+1, currentColumn)) {
+        move('row', 1);
+      };
+    }
+    
+    if (data.cardType == 'action') {
+      console.log(data.type);
+    }
+      
 		if (data.type === 'rotate') {
 			$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').toggleClass('rotated');
 		};
@@ -198,7 +204,7 @@ var BoardView = function(app) {
   
   app.socket.on('player-action-card', function(data) {
     console.log(data);
-    // add in the selected card
+    $('#selected-action-card').attr('card', data.card);
     $('#game').attr('page', 'player-action');
   });
 

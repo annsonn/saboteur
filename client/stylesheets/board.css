@@ -51,3 +51,19 @@
 	-webkit-perspective: 100px;
 	position: relative;
 }
+
+.playing-action-card {
+  bottom: 0;
+  height: 200px;
+  position: absolute;
+  width: 100%;
+}
+
+#selected-action-card {
+  background-repeat: no-repeat;
+  background-size: 300px;
+  border-radius: 15px 15px 0 0;
+  height: 100%;
+  margin: 0 auto;
+  width: 300px;
+}

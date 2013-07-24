@@ -57,7 +57,7 @@
   -webkit-transform: scale(1.1, 1.1);
 }
 
-.player-joined {
+.players .player-joined {
   opacity: 0.8;
   -webkit-filter: blur(0px);
   -webkit-transform: scale(1.2, 1.2);

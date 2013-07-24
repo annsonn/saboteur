@@ -161,16 +161,16 @@ var HandView = function(app) {
 	});
 	
   $('.left-button').click(function() {
-    app.socket.emit('card-action', {type: 'left'});
+    app.socket.emit('card-action', {type: 'left', cardType: ($('.selected-card').attr('card').indexOf('free') >= 0 || $('.selected-card').attr('card').indexOf('block') >= 0) ? 'action' : 'map'});
   });
   $('.right-button').click(function() {
-    app.socket.emit('card-action', {type: 'right'});
+    app.socket.emit('card-action', {type: 'right', cardType: ($('.selected-card').attr('card').indexOf('free') >= 0 || $('.selected-card').attr('card').indexOf('block') >= 0) ? 'action' : 'map'});
   });
   $('.up-button').click(function() {
-    app.socket.emit('card-action', {type: 'up'});
+    app.socket.emit('card-action', {type: 'up', cardType: ($('.selected-card').attr('card').indexOf('free') >= 0 || $('.selected-card').attr('card').indexOf('block') >= 0) ? 'action' : 'map'});
   });
   $('.down-button').click(function() {
-    app.socket.emit('card-action', {type: 'down'});
+    app.socket.emit('card-action', {type: 'down', cardType: ($('.selected-card').attr('card').indexOf('free') >= 0 || $('.selected-card').attr('card').indexOf('block') >= 0) ? 'action' : 'map'});
   });  
 	
 	app.socket.on('deal', function(data) {

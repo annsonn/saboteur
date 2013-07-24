@@ -70,7 +70,7 @@ var Server = function() {
             var game = self.games[gameId];
             if (game) {  
               // sending to host
-              game.host.emit('card-action', {type: data.type});
+              game.host.emit('card-action', {type: data.type, cardType: data.cardType});
               // need to differiate between card actions on a map card vs action action
             }
           });
