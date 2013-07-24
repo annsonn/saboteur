@@ -46,7 +46,18 @@ var HandView = function(app) {
   app.socket.on('game-full', function(data) {
       console.log(data);
   });
-
+  
+  var typeOfCard = function(node) {
+    if (node.indexOf('free') >= 0 || node.indexOf('block') >= 0) {
+      return 'action';
+    } else if (node.indexOf('map') >= 0) {
+      return 'map';
+    } else if (node.indexOf('avalanche') >= 0) {
+      return 'avalanche';
+    }
+    return 'path';
+  };
+  
   // handling what happens when you click card from hand view
   var bindCardClick = function() {
      $('.card').unbind('click');
@@ -67,12 +78,7 @@ var HandView = function(app) {
       }
       
       var card = $(this).attr('card');
-			var cardType = 'map';
-			
-			if (card.indexOf('free') >= 0 || card.indexOf('block') >= 0) {
-				console.log('previwing an action card!');
-				cardType = 'action';
-			};
+			var cardType = typeOfCard($(this).attr('card'));
       
       // updates play button based on card picked
       $('.play-button').click(function() {
@@ -142,7 +148,7 @@ var HandView = function(app) {
       }
     }
 	};
-	
+  
   $('.back-button').click(function() {
     unbindButtons();
     
@@ -161,18 +167,18 @@ var HandView = function(app) {
 	});
 	
   $('.left-button').click(function() {
-    app.socket.emit('card-action', {type: 'left', cardType: ($('.selected-card').attr('card').indexOf('free') >= 0 || $('.selected-card').attr('card').indexOf('block') >= 0) ? 'action' : 'map'});
+    app.socket.emit('card-action', {type: 'left', cardType: typeOfCard($('.selected-card').attr('card')) });
   });
   $('.right-button').click(function() {
-    app.socket.emit('card-action', {type: 'right', cardType: ($('.selected-card').attr('card').indexOf('free') >= 0 || $('.selected-card').attr('card').indexOf('block') >= 0) ? 'action' : 'map'});
+    app.socket.emit('card-action', {type: 'right', cardType: typeOfCard($('.selected-card').attr('card')) });
   });
   $('.up-button').click(function() {
-    app.socket.emit('card-action', {type: 'up', cardType: ($('.selected-card').attr('card').indexOf('free') >= 0 || $('.selected-card').attr('card').indexOf('block') >= 0) ? 'action' : 'map'});
+    app.socket.emit('card-action', {type: 'up', cardType: typeOfCard($('.selected-card').attr('card')) });
   });
   $('.down-button').click(function() {
-    app.socket.emit('card-action', {type: 'down', cardType: ($('.selected-card').attr('card').indexOf('free') >= 0 || $('.selected-card').attr('card').indexOf('block') >= 0) ? 'action' : 'map'});
+    app.socket.emit('card-action', {type: 'down', cardType: typeOfCard($('.selected-card').attr('card')) });
   });  
-	
+  
 	app.socket.on('deal', function(data) {
 			$('.hand ul').append($('<li />').attr('card', data.card).addClass('card'));
       bindCardClick();

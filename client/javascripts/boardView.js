@@ -125,7 +125,7 @@ var BoardView = function(app) {
 
     var moveDistance = 0;    
     
-    if (data.cardType == 'map') {
+    if (data.cardType == 'path') {
       // Moving the card left
       if (data.type === 'left' && currentColumn!=0) {
         for (var i = currentColumn; i>0; i--) {
@@ -209,7 +209,7 @@ var BoardView = function(app) {
     
     if (data.type === 'submit') {
       console.log(data);
-      if (data.cardType === 'map') {
+      if (data.cardType === 'path') {
         // Submit to server for validity
         $('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').attr('type', 'submitted');
         var rotated = isRotated(currentRow, currentColumn);

@@ -56,7 +56,12 @@ var Server = function() {
             var game = self.games[gameId];
             if (game) {
               if (data.type === 'play') {
-                game.play(socket, data.card, {x: data.position.column, y: data.position.row, rotated: data.position.rotated});
+                // place card on the board if not valid then tell board to blink red
+                // if valid deal new card to player
+              }
+              if (data.type === 'play-action') {
+                // apply card to player if valid
+                // if valid deal card
               }
             }
           });
@@ -83,7 +88,7 @@ var Server = function() {
             if (game) {  
               // sending to host
               if (data.type == 'preview'){
-                if (data.cardType == 'map'){
+                if (data.cardType == 'path'){
                   game.host.emit('player-action', {card: data.card, type: data.type});
                 } 
                 if (data.cardType == 'action') {
