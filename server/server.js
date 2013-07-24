@@ -55,6 +55,7 @@ var Server = function() {
           socket.get('game', function(x, gameId) {
             var game = self.games[gameId];
             if (game) {
+              console.log(data);
               if (data.type === 'play') {
                 game.play(socket, data.card, {x: data.position.column, y: data.position.row, rotated: data.position.rotated});
               }
@@ -107,7 +108,7 @@ var Server = function() {
               
 							// if is submitted, then trigger turn ending event (deal new card and move to next player)
 							if (data.type == 'submit' || data.type == 'discard') {
-                game.host.emit('player-action', {type: data.type});
+                game.host.emit('player-action', {type: data.type, cardType: data.cardType});
 								socket.emit('deal', {card: game.gameManager.deck.deal()});
 								//TODO manage discard deck
 							};

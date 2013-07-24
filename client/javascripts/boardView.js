@@ -183,10 +183,16 @@ var BoardView = function(app) {
 		}
     
     if (data.type === 'submit') {
-      // Submit to server for validity
-      $('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').attr('type', 'submitted');
-      var rotated = isRotated(currentRow, currentColumn);
-      app.socket.emit('board-action', {type: 'play', card: currentCard, position: {row: currentRow - 1, column: currentColumn - 1, rotated: rotated}});
+      console.log(data);
+      if (data.cardType === 'map') {
+        // Submit to server for validity
+        $('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').attr('type', 'submitted');
+        var rotated = isRotated(currentRow, currentColumn);
+        app.socket.emit('board-action', {type: 'play', card: currentCard, position: {row: currentRow - 1, column: currentColumn - 1, rotated: rotated}});
+      }
+      if (data.cardType === 'action') {
+        app.socket.emit('board-action', {type: 'play-action', card: $('#selected-action-card').attr('card'), target: $('[playernumber][selected]').attr('playernumber')}); 
+      }
     }
     
     if (data.type === 'back' || data.type === 'discard') {
