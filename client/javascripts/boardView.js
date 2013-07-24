@@ -146,7 +146,6 @@ var BoardView = function(app) {
     }
     
     if (data.cardType == 'action') {
-      console.log(data.type);
       
       if (data.type === 'right' || data.type === 'down') {
         $('li[playernumber]:nth-child(' + currentColumn + ')').attr('selected', false);
@@ -208,7 +207,6 @@ var BoardView = function(app) {
   });
   
   app.socket.on('player-block-status', function(data) {
-    console.log(data);
   
     if ($('[playernumber="' + data.playerNumber + '"]').length == 0 ) {
       var playerStatus = $('<li />').addClass(((data.isBlocked) ? 'blocked' : '')).attr('playerNumber', data.playerNumber);
@@ -227,7 +225,6 @@ var BoardView = function(app) {
   });
   
   app.socket.on('player-action-card', function(data) {
-    console.log(data);
     currentColumn = 1;
 
     $('li[playernumber]:nth-child(' + currentColumn + ')').attr('selected', true);

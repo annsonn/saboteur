@@ -55,7 +55,6 @@ var Server = function() {
           socket.get('game', function(x, gameId) {
             var game = self.games[gameId];
             if (game) {
-              console.log(data);
               if (data.type === 'play') {
                 game.play(socket, data.card, {x: data.position.column, y: data.position.row, rotated: data.position.rotated});
               }
@@ -72,7 +71,6 @@ var Server = function() {
             if (game) {  
               // sending to host
               game.host.emit('card-action', {type: data.type, cardType: data.cardType});
-              // need to differiate between card actions on a map card vs action action
             }
           });
         }
@@ -80,7 +78,6 @@ var Server = function() {
       
       playerAction: function(socket, callback) {
         return function(data) {
-          console.log(data);
           socket.get('game', function(x, gameId) {
             var game = self.games[gameId];
             if (game) {  
@@ -94,10 +91,8 @@ var Server = function() {
                   // for each player emit their block cards to the board, then tell the board to update the view with the selected card.
                   console.log('emitting player block cards');
                   for (var i=0; i < game.gameManager.players.length; i++) {
-                    console.log('emitting player ' + i + ' block info'); 
                     game.host.emit('player-block-status', {playerNumber: i, isBlocked: game.gameManager.players[i].isBlocked(), blocks: game.gameManager.players[i].blocks});
                   }
-                  console.log('changing board view to the action view');
                   game.host.emit('player-action-card', {card: data.card, currentPlayer: game.gameManager.currentPlayerIndex});
                 }
               }
