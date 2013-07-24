@@ -105,43 +105,69 @@ var BoardView = function(app) {
 	
 	var move = function(type, direction) {
 		if (type === 'column') {
-			displayCard(currentRow, currentColumn + direction, currentCard);
 			if (displayCard(currentRow, currentColumn, 'null').rotated) {
 				$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+(currentColumn + direction)+')').toggleClass('rotated');
 			};
+      displayCard(currentRow, currentColumn + direction, currentCard);
 			currentColumn = currentColumn + direction;
 		};
 		if (type === 'row') {
-			displayCard(currentRow + direction, currentColumn, currentCard);
 			if (displayCard(currentRow, currentColumn, 'null').rotated) {
 				$('.board ul:nth-child('+(currentRow + direction)+') .board-card:nth-child('+currentColumn+')').toggleClass('rotated');
 			};
+      displayCard(currentRow + direction, currentColumn, currentCard);
 			currentRow = currentRow + direction;
 		}
 	};	
 
   app.socket.on('card-action', function (data) {  	
     //add just for moving between players to block/free
+
+    var moveDistance = 0;    
     
     if (data.cardType == 'map') {
       // Moving the card left
-      if (data.type === 'left' && currentColumn!=0 && isSpaceEmpty(currentRow, currentColumn-1)) {
-        move('column', -1);
+      if (data.type === 'left' && currentColumn!=0) {
+        for (var i = currentColumn; i>0; i--) {
+          if (isSpaceEmpty(currentRow, i)) {
+            moveDistance = i - currentColumn;
+            break;
+          }
+        }
+        move('column', moveDistance);
       };
       
       // Moving the card right
-      if (data.type === 'right' && currentColumn!=maxColumn && isSpaceEmpty(currentRow, currentColumn+1)) {
-        move('column', 1);
+      if (data.type === 'right' && currentColumn!=maxColumn) {
+        for (var i = currentColumn; i<=maxColumn; i++) {
+          if (isSpaceEmpty(currentRow, i)) {
+            moveDistance = i - currentColumn;
+            break;
+          }
+        }
+        move('column', moveDistance);
       };
       
       // Move card up
-      if (data.type === 'up' && currentColumn!=0 && isSpaceEmpty(currentRow-1, currentColumn)) {
-        move('row', -1);
+      if (data.type === 'up' && currentColumn!=0) {
+        for (var i = currentRow; i>0; i--) {
+          if (isSpaceEmpty(i, currentColumn)) {
+            moveDistance = i - currentRow;
+            break;
+          }
+        }
+        move('row', moveDistance);
       };
       
       // Move card down
-      if (data.type === 'down' && currentColumn!=maxColumn && isSpaceEmpty(currentRow+1, currentColumn)) {
-        move('row', 1);
+      if (data.type === 'down' && currentColumn!=maxColumn) {
+        for (var i = currentRow; i<=maxRow; i++) {
+          if (isSpaceEmpty(i, currentColumn)) {
+            moveDistance = i - currentRow;
+            break;
+          }
+        }
+        move('row', moveDistance);
       };
     }
     
