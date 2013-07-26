@@ -17,7 +17,8 @@
 #game[page=choose-role] #choose-role, 
 #game[page=hand] #hand,
 #game[page=play-card] #play-card,
-#game[page=board] #board {
+#game[page=board] #board,
+#game[page=player-action] #player-action  {
   display: block
 }
 
