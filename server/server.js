@@ -70,7 +70,6 @@ var Server = function() {
       
       cardAction: function(socket, callback) {
         return function(data) {
-          console.log(data);
           socket.get('game', function(x, gameId) {
             var game = self.games[gameId];
             if (game) {  

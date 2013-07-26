@@ -26,8 +26,8 @@ var rotateCard = function(rules) {
 };
 
 var getCardRules = function(card) {
-  if (card.indexOf('rotate-') === 0) {
-    return rotateCard(CardRules[card.substr(7)]);
+  if (card.indexOf('rotated-') === 0) {
+    return rotateCard(CardRules[card.substr(8)]);
   }
   return CardRules[card];
 };
@@ -114,7 +114,6 @@ Board.prototype.placeCard = function( locationY, locationX, card, rotated ) {
 
   // All good
   this.board[locationY][locationX] = card;
-  console.log(card + ' placed (): ' + locationX + ', ' + locationY);
 
   return true;
 };
