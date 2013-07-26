@@ -60,6 +60,11 @@ Board.prototype.initBoard = function() {
 }
 
 Board.prototype.placeCard = function( locationY, locationX, card, rotated ) {
+  // Save gold position
+  if (card === 'gold') {
+    this.gold = {x: locationX, y: locationY};
+  }
+
   if ( !this.board[locationY] ) {
     this.board[locationY] = [];
   } 
@@ -130,11 +135,51 @@ Board.prototype.serialize = function() {
   return this.board;
 };
 
+Board.prototype.getNeighbouringCards = function(x, y) {
+  var card = getCardRules(this.board[y][x]);
+  var result = [];
+
+  if (card.left && x - 1 >= 0) {
+    result.push({x: x - 1, y: y});
+  }
+  if (card.top && y - 1 >= 0) {
+    result.push({x: x, y: y - 1});
+  }
+  if (card.right && x + 1 < boardWidth) {
+    result.push({x: x + 1, y: y});
+  }
+  if (card.bottom && y + 1 < boardHeight) {
+    result.push({x: x, y: y + 1});
+  }
+  return result;
+};
+
 //+ Jonas Raoni Soares Silva
 //@ http://jsfromhell.com/array/shuffle [v1.0]
 Board.prototype.shuffleGoal = function() {
   for(var j, x, i = this.goal.length; i; j = parseInt(Math.random() * i), x = this.goal[--i], this.goal[i] = this.goal[j], this.goal[j] = x);
 };
+
+Board.prototype.hasWinner = function() {
+  var open = [{x: 1, y: 3}];
+  var closed = [];
+  var winnerFound;
+
+  while(open.length > 0 && !winnerFound) {
+    var card = open.pop();
+    closed.push(card);
+
+    var neighbours = this.getNeighbouringCards(card.x, card.y);
+    neighbours.forEach(function(neighbour) {
+      neighbour.parent = card;
+
+      open.push(neighbour);
+    });
+
+  }
+
+  return winnerFound;
+}
 
 
 module.exports = Board;
