@@ -89,33 +89,30 @@ var BoardView = function(app) {
     return $('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').hasClass('rotated');
   };
 	
-	var displayCard = function(row, column, card) {
+	var displayCard = function(row, column, card, rotated) {
     if (card == 'null') {
-      $('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').removeAttr('card');		
+      $('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').removeAttr('card');
+			$('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').removeClass('rotated');
     } else {
-      $('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').attr('card', card);		  
+      $('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').attr('card', card); 
+			if (rotated) {
+				$('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').addClass('rotated');
+			}
     };
-		
-		if (isRotated(row, column)) {
-			$('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').toggleClass('rotated');
-			return {rotated: true};
-		}
-		return {rotated: false};
 	};
 	
 	var move = function(type, direction) {
+		var rotated = isRotated(currentRow, currentColumn);
+
 		if (type === 'column') {
-			if (displayCard(currentRow, currentColumn, 'null').rotated) {
-				$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+(currentColumn + direction)+')').toggleClass('rotated');
-			};
-      displayCard(currentRow, currentColumn + direction, currentCard);
+			displayCard(currentRow, currentColumn, 'null');
+			displayCard(currentRow, currentColumn + direction, currentCard, rotated);
+			
 			currentColumn = currentColumn + direction;
-		};
-		if (type === 'row') {
-			if (displayCard(currentRow, currentColumn, 'null').rotated) {
-				$('.board ul:nth-child('+(currentRow + direction)+') .board-card:nth-child('+currentColumn+')').toggleClass('rotated');
-			};
-      displayCard(currentRow + direction, currentColumn, currentCard);
+		} else if (type === 'row') {
+			displayCard(currentRow, currentColumn, 'null');
+			displayCard(currentRow + direction, currentColumn, currentCard, rotated);
+			
 			currentRow = currentRow + direction;
 		}
 	};	
