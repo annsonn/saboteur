@@ -57,7 +57,7 @@ var Server = function() {
             if (game) {
               if (data.type === 'play') {
                 // place card on the board if not valid then tell board to blink red
-                // if valid deal new card to player
+                 game.play(socket, data.card, {x: data.position.column, y: data.position.row, rotated: data.position.rotated});
               }
               if (data.type === 'play-action') {
                 // apply card to player if valid

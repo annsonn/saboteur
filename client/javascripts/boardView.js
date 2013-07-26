@@ -211,7 +211,6 @@ var BoardView = function(app) {
       console.log(data);
       if (data.cardType === 'path') {
         // Submit to server for validity
-        $('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').attr('type', 'submitted');
         var rotated = isRotated(currentRow, currentColumn);
         app.socket.emit('board-action', {type: 'play', card: currentCard, position: {row: currentRow - 1, column: currentColumn - 1, rotated: rotated}});
       }
@@ -226,9 +225,16 @@ var BoardView = function(app) {
     }
   });
 
+	app.socket.on('next player', function(data) {
+		console.log('card accepted by server');
+		$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').attr('type', 'submitted');
+	});
+	
   app.socket.on('error', function(data) {
+		console.log(data);
     if (data === 'invalid play') {
-      // Shake card
+      // Add class to Shake card and then remove the class
+			$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').addClass('invalid-play').delay(800).removeClass('invalid-play');
     }
   });
   

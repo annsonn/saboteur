@@ -82,12 +82,7 @@ var HandView = function(app) {
       
       // updates play button based on card picked
       $('.play-button').click(function() {
-				unbindButtons();
-			
-				// removing card from hand
-				$('.hand [card='+$('.selected-card').attr('card')+']').first().remove();
         app.socket.emit('player-action', {card: card, type: 'submit', cardType: cardType});            
-				$('#game').attr('page', 'hand');
       });
       
       app.socket.emit('player-action', {card: card, type: 'preview', cardType: cardType});
@@ -96,6 +91,14 @@ var HandView = function(app) {
     });
   };
   
+	app.socket.on('next player', function(data) {
+		console.log('card accepted by server');
+		// removing card from hand
+		unbindButtons();
+		$('.hand [card='+$('.selected-card').attr('card')+']').first().remove();
+		$('#game').attr('page', 'hand');
+	});
+	
   // Game Screens
   app.socket.on('start', function(data) {
     console.log('game started', data);
