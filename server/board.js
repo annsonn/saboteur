@@ -62,21 +62,66 @@ Board.prototype.placeCard = function( locationY, locationX, card, rotated ) {
     this.board[locationY] = [];
   } 
   
-  if ( !this.board[locationY][locationX] ) {
-    // validate move
-    var card = (rotated ? 'rotated-' : '') + card;
-    this.board[locationY][locationX] = card;
-    console.log(card + ' placed (): ' + locationX + ', ' + locationY);
-
-    return true;
+  if ( this.board[locationY][locationX] ) { // Card already exists
+    return false;
   }
-  return false;
+
+  var card = (rotated ? 'rotated-' : '') + card;
+  var cardRules = getCardRules(card);
+
+  // validate move
+
+  var isAttached = false;
+  // Top
+  if (locationY - 1 >= 0 && this.board[locationY - 1][locationX]) {
+    isAttached = true;
+    var topCardRules = getCardRules(this.board[locationY - 1][locationX]);
+    if (topCardRules.bottom && !cardRules.top   // Top card has road but card doesn't connect
+        || card.top && !topCardRules.bottom) { // Card has top road, but top card doesn't connect
+      return false;
+    }
+  }
+
+  // Bottom
+  if (locationY + 1 < boardHeight && this.board[locationY + 1][locationX]) {
+    isAttached = true;
+    var bottomCardRules = getCardRules(this.board[locationY + 1][locationX]);
+    if (bottomCardRules.top && !cardRules.bottom   // Bottom card has road but card doesn't connect
+        || card.bottom && !bottomCardRules.top) { // Card has bottom road, but bottom card doesn't connect
+      return false;
+    }
+  }
+
+  // Left
+  if (locationX - 1 >= 0 && this.board[locationY][locationX - 1]) {
+    isAttached = true;
+    var leftCardRules = getCardRules(this.board[locationY][locationX - 1]);
+    if (leftCardRules.right && !cardRules.left   // Left card has road but card doesn't connect
+        || card.left && !leftCardRules.right) { // Card has left road, but left card doesn't connect
+      return false;
+    }
+  }
+
+  // Right
+  if (locationX + 1 < boardWidth && this.board[locationY][locationX + 1]) {
+    isAttached = true;
+    var rightCardRules = getCardRules(this.board[locationY][locationX + 1]);
+    if (rightCardRules.left && !cardRules.right   // Right card has road but card doesn't connect
+        || card.right && !leftCardRules.left) { // Card has right road, but right card doesn't connect
+      return false;
+    }
+  }
+
+  // All good
+  this.board[locationY][locationX] = card;
+  console.log(card + ' placed (): ' + locationX + ', ' + locationY);
+
+  return true;
 };
 
 Board.prototype.removeCard = function( locationX, locationY ) {
-  if ( !this.board[locationX][locationY] ) {
-    // discard(this.board[locationX][locationY])
-    this.board[locationX][locationY] = null;
+  if ( !this.board[locationY][locationX] ) {
+    this.board[locationY][locationX] = null;
   }
 };
 

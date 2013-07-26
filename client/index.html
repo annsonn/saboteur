@@ -19,6 +19,7 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/cards.css" />
     <link rel="stylesheet" type="text/css" href="/stylesheets/play-card.css" />
     <link rel="stylesheet" type="text/css" href="/stylesheets/board.css" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/players.css" />
     <link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
   </head>
   <body>
@@ -95,7 +96,7 @@
             Waiting for others to join...
           </div>
           <div class="ready-button yellow-border center">
-            All Players Ready
+            Game requires at least 3 players to start
           </div>
         </div>
       </section>
@@ -176,6 +177,15 @@
         <div class="screen">
           <div class="board center">
             <!-- board is added in with javascript -->  
+          </div>
+        </div>
+      </section>
+			
+			<section id="player-action" class="layer white-border">
+        <div class="screen">
+          <div class="view center">
+            <ul class="players-status"></ul><!-- to be added with is added in with javascript -->  
+            <div class="playing-action-card"><div card="" id="selected-action-card"></div></div>
           </div>
         </div>
       </section>

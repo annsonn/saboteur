@@ -63,9 +63,9 @@ var BoardView = function(app) {
 	var maxRow = 7;
 	var maxColumn = 11;
 	
-	var currentRow;
-	var currentColumn;
-	var currentCard;
+	var currentRow = 0;
+	var currentColumn = 0;
+	var currentCard = 'null';
 	
 	var isSpaceEmpty = function(row, column) {
 		return (!$('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').attr('card'));		
@@ -105,48 +105,101 @@ var BoardView = function(app) {
 	
 	var move = function(type, direction) {
 		if (type === 'column') {
-			displayCard(currentRow, currentColumn + direction, currentCard);
 			if (displayCard(currentRow, currentColumn, 'null').rotated) {
 				$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+(currentColumn + direction)+')').toggleClass('rotated');
 			};
+      displayCard(currentRow, currentColumn + direction, currentCard);
 			currentColumn = currentColumn + direction;
 		};
 		if (type === 'row') {
-			displayCard(currentRow + direction, currentColumn, currentCard);
 			if (displayCard(currentRow, currentColumn, 'null').rotated) {
 				$('.board ul:nth-child('+(currentRow + direction)+') .board-card:nth-child('+currentColumn+')').toggleClass('rotated');
 			};
+      displayCard(currentRow + direction, currentColumn, currentCard);
 			currentRow = currentRow + direction;
 		}
 	};	
 
-  app.socket.on('card-action', function (data) {  		
-		// Moving the card left
-		if (data.type === 'left' && currentColumn!=0 && isSpaceEmpty(currentRow, currentColumn-1)) {
-			move('column', -1);
-		};
-		
-		// Moving the card right
-		if (data.type === 'right' && currentColumn!=maxColumn && isSpaceEmpty(currentRow, currentColumn+1)) {
-			move('column', 1);
-		};
-		
-		// Move card up
-		if (data.type === 'up' && currentColumn!=0 && isSpaceEmpty(currentRow-1, currentColumn)) {
-			move('row', -1);
-		};
-		
-		// Move card down
-		if (data.type === 'down' && currentColumn!=maxColumn && isSpaceEmpty(currentRow+1, currentColumn)) {
-			move('row', 1);
-		};
-		
+  app.socket.on('card-action', function (data) {  	
+    //add just for moving between players to block/free
+
+    var moveDistance = 0;    
+    
+    if (data.cardType == 'path') {
+      // Moving the card left
+      if (data.type === 'left' && currentColumn!=0) {
+        for (var i = currentColumn; i>0; i--) {
+          if (isSpaceEmpty(currentRow, i)) {
+            moveDistance = i - currentColumn;
+            break;
+          }
+        }
+        move('column', moveDistance);
+      };
+      
+      // Moving the card right
+      if (data.type === 'right' && currentColumn!=maxColumn) {
+        for (var i = currentColumn; i<=maxColumn; i++) {
+          if (isSpaceEmpty(currentRow, i)) {
+            moveDistance = i - currentColumn;
+            break;
+          }
+        }
+        move('column', moveDistance);
+      };
+      
+      // Move card up
+      if (data.type === 'up' && currentColumn!=0) {
+        for (var i = currentRow; i>0; i--) {
+          if (isSpaceEmpty(i, currentColumn)) {
+            moveDistance = i - currentRow;
+            break;
+          }
+        }
+        move('row', moveDistance);
+      };
+      
+      // Move card down
+      if (data.type === 'down' && currentColumn!=maxColumn) {
+        for (var i = currentRow; i<=maxRow; i++) {
+          if (isSpaceEmpty(i, currentColumn)) {
+            moveDistance = i - currentRow;
+            break;
+          }
+        }
+        move('row', moveDistance);
+      };
+    }
+    
+    if (data.cardType == 'action') {
+      
+      if (data.type === 'right' || data.type === 'down') {
+        $('li[playernumber]:nth-child(' + currentColumn + ')').attr('selected', false);
+        currentColumn++;
+        if (currentColumn > $('li[playernumber]').length) {
+          currentColumn = 1;
+        }
+        $('li[playernumber]:nth-child(' + currentColumn + ')').attr('selected', true);
+      }
+      
+      if (data.type === 'left' || data.type === 'up') {
+        $('li[playernumber]:nth-child(' + currentColumn + ')').attr('selected', false);
+        currentColumn--;
+        if (currentColumn == 0) {
+          currentColumn = $('li[playernumber]').length;
+        }
+        $('li[playernumber]:nth-child(' + currentColumn + ')').attr('selected', true);      
+      }
+    }
+      
 		if (data.type === 'rotate') {
 			$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').toggleClass('rotated');
 		};
   });
   
-  app.socket.on('player-action', function (data) {  		
+  app.socket.on('player-action', function (data) { 
+    $('#game').attr('page', 'board'); // regardless of view goes back to the board view
+    
 		if (data.type === 'preview') {
 			currentCard = data.card;
 			currentRow = getEmptySpace().row; 
@@ -155,9 +208,15 @@ var BoardView = function(app) {
 		}
     
     if (data.type === 'submit') {
-      // Submit to server for validity
-      var rotated = isRotated(currentRow, currentColumn);
-      app.socket.emit('board-action', {type: 'play', card: currentCard, position: {row: currentRow - 1, column: currentColumn - 1, rotated: rotated}});
+      console.log(data);
+      if (data.cardType === 'path') {
+        // Submit to server for validity
+        var rotated = isRotated(currentRow, currentColumn);
+        app.socket.emit('board-action', {type: 'play', card: currentCard, position: {row: currentRow - 1, column: currentColumn - 1, rotated: rotated}});
+      }
+      if (data.cardType === 'action') {
+        app.socket.emit('board-action', {type: 'play-action', card: $('#selected-action-card').attr('card'), target: $('[playernumber][selected]').attr('playernumber')}); 
+      }
     }
     
     if (data.type === 'back' || data.type === 'discard') {
@@ -166,17 +225,43 @@ var BoardView = function(app) {
     }
   });
 
+	app.socket.on('next player', function(data) {
+		console.log('card accepted by server');
+		$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').attr('type', 'submitted');
+	});
+	
   app.socket.on('error', function(data) {
+		console.log(data);
     if (data === 'invalid play') {
-      // Shake card
+      // Add class to Shake card and then remove the class
+			$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').addClass('invalid-play').delay(800).removeClass('invalid-play');
     }
   });
+  
+  app.socket.on('player-block-status', function(data) {
+  
+    if ($('[playernumber="' + data.playerNumber + '"]').length == 0 ) {
+      var playerStatus = $('<li />').addClass(((data.isBlocked) ? 'blocked' : '')).attr('playerNumber', data.playerNumber);
+      playerStatus.append($('<div />').addClass('player').append($('<div class="playernumber center">player<br>'+ (data.playerNumber+1) +'</div>')));
+      var playerBlocks = $('<ul />').addClass('blocks');
+      console.log(data.blocks);
+      
+      // each block appeds to the player blocks
+      playerBlocks.append($('<li/>').attr('card', 'block-pickaxe').attr('blocked', (data.blocks.pickaxe) ? 'true' : 'false'));
+      playerBlocks.append($('<li/>').attr('card', 'block-lamp').attr('blocked', (data.blocks.lamp) ? 'true' : 'false'));
+      playerBlocks.append($('<li/>').attr('card', 'block-cart').attr('blocked', (data.blocks.cart) ? 'true' : 'false'));
+  
+      playerBlocks.appendTo(playerStatus);
+      $(playerStatus).appendTo('.players-status');
+    }
+  });
+  
+  app.socket.on('player-action-card', function(data) {
+    currentColumn = 1;
 
-  app.socket.on('place card', function(data) {
-    console.log('card was submitted');
-    console.log($('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')'));
-    $('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').attr('type','submitted'); 
-    console.log($('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')'));
+    $('li[playernumber]:nth-child(' + currentColumn + ')').attr('selected', true);
+    $('#selected-action-card').attr('card', data.card);
+    $('#game').attr('page', 'player-action');
   });
 
 };
