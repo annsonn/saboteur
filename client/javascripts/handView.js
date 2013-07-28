@@ -79,6 +79,7 @@ var HandView = function(app) {
       
       var card = $(this).attr('card');
 			var cardType = typeOfCard($(this).attr('card'));
+      console.log('sending:' + card + ' to server as cardtype: ' + cardType);
       
       // updates play button based on card picked
       $('.play-button').click(function() {

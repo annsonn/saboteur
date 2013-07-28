@@ -217,8 +217,10 @@ var BoardView = function(app) {
     }
     
     if (data.type === 'back' || data.type === 'discard') {
-      $('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').removeClass('rotated');
-      displayCard(currentRow, currentColumn, 'null');
+      if (data.cardType === 'path') {
+        $('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').removeClass('rotated');
+        displayCard(currentRow, currentColumn, 'null');
+      }
     }
   });
 
