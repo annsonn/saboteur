@@ -98,6 +98,10 @@ var HandView = function(app) {
 		unbindButtons();
 		$('.hand [card='+$('.selected-card').attr('card')+']').first().remove();
 		$('#game').attr('page', 'hand');
+		$('.hand').fadeIn(400).delay(300).queue( function(next){ 
+			$(this).css('left', '0');
+			next(); 
+		});
 	});
 	
   // Game Screens
