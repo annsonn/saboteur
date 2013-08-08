@@ -170,26 +170,45 @@ var BoardView = function(app) {
     }
     
     if (data.cardType == 'action') {
+      $('li[playernumber]:nth-child(' + currentColumn + ')').attr('selected', false);
       
       if (data.type === 'right' || data.type === 'down') {
-        $('li[playernumber]:nth-child(' + currentColumn + ')').attr('selected', false);
         currentColumn++;
         if (currentColumn > $('li[playernumber]').length) {
           currentColumn = 1;
         }
-        $('li[playernumber]:nth-child(' + currentColumn + ')').attr('selected', true);
-      }
+      }      
       
       if (data.type === 'left' || data.type === 'up') {
-        $('li[playernumber]:nth-child(' + currentColumn + ')').attr('selected', false);
         currentColumn--;
         if (currentColumn == 0) {
           currentColumn = $('li[playernumber]').length;
-        }
-        $('li[playernumber]:nth-child(' + currentColumn + ')').attr('selected', true);      
+        }    
       }
-    }
       
+      $('li[playernumber]:nth-child(' + currentColumn + ')').attr('selected', true);
+    }
+
+    if (data.cardType == 'map') {
+       $('.board ul:nth-child('+ (goalLocations[currentRow].row + 1) +') .board-card:nth-child('+ (goalLocations[currentRow].column + 1) +')').attr('type', '');
+       
+       if (data.type === 'right' || data.type === 'down') {
+        currentRow++;
+        if (currentRow == goalLocations.length) {
+          currentRow = 0;
+        }
+      }      
+      
+      if (data.type === 'left' || data.type === 'up') {
+        currentRow--;
+        if (currentRow < 0) {
+          currentRow = goalLocations.length-1;
+        }    
+      }
+      
+      $('.board ul:nth-child('+ (goalLocations[currentRow].row + 1) +') .board-card:nth-child('+ (goalLocations[currentRow].column + 1) +')').attr('type', 'preview');
+    }
+    
 		if (data.type === 'rotate') {
 			$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').toggleClass('rotated');
 		};
@@ -265,9 +284,10 @@ var BoardView = function(app) {
   });
 
 	app.socket.on('map-card', function(data) {
-		goalLocations = data;
+		goalLocations = data;    
+    currentRow = 0;
 		console.log(goalLocations);
-		console.log(goalLocations[0].row + ' ' + goalLocations[0].column);
-		$('.board ul:nth-child('+goalLocations[0].row+') .board-card:nth-child('+goalLocations[0].column+')').attr('type', 'preview');
+		$('.board ul:nth-child('+ (goalLocations[currentRow].row + 1) +') .board-card:nth-child('+ (goalLocations[currentRow].column + 1) +')').attr('type', 'preview');
 	});
+  
 };

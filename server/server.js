@@ -107,7 +107,7 @@ var Server = function() {
 									console.log('player played a map card');
 									// send server goal positions that are not flipped
 									// emit coordinates of goals to board in array
-									game.host.emit('map-card', [{row:'2', column:'10'},{row:'4', column:'10'},{row:'6', column:'10'}]);
+									game.host.emit('map-card', game.gameManager.board.goalLocations);
 								}
               }
                 
