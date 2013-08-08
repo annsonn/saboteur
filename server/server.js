@@ -54,6 +54,8 @@ var Server = function() {
         return function(data) {
           socket.get('game', function(x, gameId) {
             var game = self.games[gameId];
+            console.log(data);
+            
             if (game) {
               if (data.type === 'play') {
                 // place card on the board if not valid then tell board to blink red
@@ -63,7 +65,7 @@ var Server = function() {
                 // apply card to player if valid
                 // if valid deal card
               }
-							if (data.tyoe === 'map') {
+							if (data.type === 'play-map') {
 								// send current player the selected card
 							}
             }
@@ -112,7 +114,7 @@ var Server = function() {
               }
                 
               if (data.type == 'back') {
-                game.host.emit('player-action', {type: data.type});
+                game.host.emit('player-action', {type: data.type, cardType: data.cardType});
               }
               
 							// if is submitted, then trigger turn ending event (deal new card and move to next player)

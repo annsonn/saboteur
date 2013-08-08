@@ -161,7 +161,7 @@ var HandView = function(app) {
     unbindButtons();
     
     // telling server that the card needs to be removed from board view
-    app.socket.emit('player-action', {type: 'back'});
+    app.socket.emit('player-action', {type: 'back', cardType: typeOfCard($('.selected-card').attr('card'))});
     $('#game').attr('page', 'hand');
   });
   

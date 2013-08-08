@@ -215,6 +215,7 @@ var BoardView = function(app) {
   });
   
   app.socket.on('player-action', function (data) { 
+    console.log(data);
     $('#game').attr('page', 'board'); // regardless of view goes back to the board view
     
 		if (data.type === 'preview') {
@@ -225,7 +226,6 @@ var BoardView = function(app) {
 		}
     
     if (data.type === 'submit') {
-      console.log(data);
       if (data.cardType === 'path') {
         // Submit to server for validity
         var rotated = isRotated(currentRow, currentColumn);
@@ -234,12 +234,19 @@ var BoardView = function(app) {
       if (data.cardType === 'action') {
         app.socket.emit('board-action', {type: 'play-action', card: $('#selected-action-card').attr('card'), target: $('[playernumber][selected]').attr('playernumber')}); 
       }
+      if (data.cardType === 'map') {
+        console.log('emit ' + $('[type=preview][card]').attr('card') + ' to server to send to current player');
+        app.socket.emit('board-action', {type: 'play-map', card: $('[type=preview][card]').attr('card')});
+      }
     }
     
     if (data.type === 'back' || data.type === 'discard') {
       if (data.cardType === 'path') {
         $('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').removeClass('rotated');
         displayCard(currentRow, currentColumn, 'null');
+      }
+      if (data.cardType === 'map') {
+        $('.board ul:nth-child('+ (goalLocations[currentRow].row + 1) +') .board-card:nth-child('+ (goalLocations[currentRow].column + 1) +')').attr('type', '');
       }
     }
   });
