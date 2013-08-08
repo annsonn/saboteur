@@ -170,7 +170,7 @@ var HandView = function(app) {
     
     // telling server that the card needs to be removed from board view
 		$('.hand [card='+$('.selected-card').attr('card')+']').first().remove();
-    app.socket.emit('player-action', {card: $('.selected-card').attr('card'), type: 'discard'});
+    app.socket.emit('player-action', {card: $('.selected-card').attr('card'), type: 'discard', cardType: typeOfCard($('.selected-card').attr('card'))});
 		$('#game').attr('page', 'hand');
 	});
 	

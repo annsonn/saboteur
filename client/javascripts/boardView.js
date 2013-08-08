@@ -62,6 +62,7 @@ var BoardView = function(app) {
 	// Stuff to deal with play cards onto the board 
 	var maxRow = 7;
 	var maxColumn = 11;
+	var goalLocations = [];
 	
 	var currentRow = 0;
 	var currentColumn = 0;
@@ -245,7 +246,7 @@ var BoardView = function(app) {
       var playerBlocks = $('<ul />').addClass('blocks');
       console.log(data.blocks);
       
-      // each block appeds to the player blocks
+      // each block appends to the player blocks
       playerBlocks.append($('<li/>').attr('card', 'block-pickaxe').attr('blocked', (data.blocks.pickaxe) ? 'true' : 'false'));
       playerBlocks.append($('<li/>').attr('card', 'block-lamp').attr('blocked', (data.blocks.lamp) ? 'true' : 'false'));
       playerBlocks.append($('<li/>').attr('card', 'block-cart').attr('blocked', (data.blocks.cart) ? 'true' : 'false'));
@@ -263,4 +264,10 @@ var BoardView = function(app) {
     $('#game').attr('page', 'player-action');
   });
 
+	app.socket.on('map-card', function(data) {
+		goalLocations = data;
+		console.log(goalLocations);
+		console.log(goalLocations[0].row + ' ' + goalLocations[0].column);
+		$('.board ul:nth-child('+goalLocations[0].row+') .board-card:nth-child('+goalLocations[0].column+')').attr('type', 'preview');
+	});
 };

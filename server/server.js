@@ -63,6 +63,9 @@ var Server = function() {
                 // apply card to player if valid
                 // if valid deal card
               }
+							if (data.tyoe === 'map') {
+								// send current player the selected card
+							}
             }
           });
         };
@@ -85,6 +88,7 @@ var Server = function() {
           socket.get('game', function(x, gameId) {
             var game = self.games[gameId];
             if (game) {  
+							console.log(data);
               // sending to host
               if (data.type == 'preview'){
                 if (data.cardType == 'path'){
@@ -99,6 +103,12 @@ var Server = function() {
                   }
                   game.host.emit('player-action-card', {card: data.card, currentPlayer: game.gameManager.currentPlayerIndex});
                 }
+								if (data.cardType == 'map') {
+									console.log('player played a map card');
+									// send server goal positions that are not flipped
+									// emit coordinates of goals to board in array
+									game.host.emit('map-card', [{row:'2', column:'10'},{row:'4', column:'10'},{row:'6', column:'10'}]);
+								}
               }
                 
               if (data.type == 'back') {
