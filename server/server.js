@@ -59,14 +59,14 @@ var Server = function() {
             if (game) {
               if (data.type === 'play') {
                 // place card on the board if not valid then tell board to blink red
-                 game.play(socket, data.card, {x: data.position.column, y: data.position.row, rotated: data.position.rotated});
+                 game.play(socket, data.card, {type: data.type, x: data.position.column, y: data.position.row, rotated: data.position.rotated});
               }
               if (data.type === 'play-action') {
-                // apply card to player if valid
-                // if valid deal card
+                game.play(socket, data.card, {type: data.type});
               }
 							if (data.type === 'play-map') {
 								// send current player the selected card
+                game.play(socket, data.card, {type: data.type});
 							}
             }
           });
@@ -120,8 +120,8 @@ var Server = function() {
 							// if is submitted, then trigger turn ending event (deal new card and move to next player)
 							if (data.type == 'submit' || data.type == 'discard') {
                 game.host.emit('player-action', {type: data.type, cardType: data.cardType});
-								socket.emit('deal', {card: game.gameManager.deck.deal()});
-								//TODO manage discard deck
+                //TODO manage discard deck
+                socket.emit('deal', {card: game.gameManager.deck.deal()});
 							};
             }
           });

@@ -47,17 +47,6 @@ var HandView = function(app) {
       console.log(data);
   });
   
-  var typeOfCard = function(node) {
-    if (node.indexOf('free') >= 0 || node.indexOf('block') >= 0) {
-      return 'action';
-    } else if (node.indexOf('map') >= 0) {
-      return 'map';
-    } else if (node.indexOf('avalanche') >= 0) {
-      return 'avalanche';
-    }
-    return 'path';
-  };
-  
   // handling what happens when you click card from hand view
   var bindCardClick = function() {
      $('.card').unbind('click');
@@ -188,8 +177,13 @@ var HandView = function(app) {
   });  
   
 	app.socket.on('deal', function(data) {
-			$('.hand ul').append($('<li />').attr('card', data.card).addClass('card'));
-      bindCardClick();
+    console.log('dealt ' + data.card + ' to player');
+    $('.hand ul').append($('<li />').attr('card', data.card).addClass('card'));
+    bindCardClick();
   });
 	
+  app.socket.on('reveal-goal', function(data) {
+    console.log('reveal goal: ' + data.card);
+  });
+  
 };
