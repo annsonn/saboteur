@@ -184,6 +184,7 @@ var HandView = function(app) {
 	
   app.socket.on('reveal-goal', function(data) {
     console.log('reveal goal: ' + data.card);
+    $('.revealed-goal').attr('card', data.card);
   });
   
 };
