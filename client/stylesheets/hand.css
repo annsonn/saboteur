@@ -26,13 +26,9 @@
 }
 
 .revealed-goal {
-  margin: 20px auto;
-  width: 220px;
-  height: 351px;
   background-size: contain;
   border-radius: 20px;
-}
-
-.revealed-goal[card=""] {
-  bottom: 0;
+  height: 351px;
+  margin: 20px auto;
+  width: 220px;
 }
