@@ -184,7 +184,13 @@ var HandView = function(app) {
 	
   app.socket.on('reveal-goal', function(data) {
     console.log('reveal goal: ' + data.card);
-    $('.revealed-goal').attr('card', data.card);
+    $('.revealed-goal').attr('card', data.card).removeClass('hide');
+    $('.hand').addClass('hide');
+  });
+  
+  $('.revealed-goal').click( function() {
+    $('.revealed-goal').addClass('hide');
+    $('.hand').removeClass('hide');
   });
   
 };

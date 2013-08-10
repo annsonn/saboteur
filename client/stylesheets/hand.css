@@ -24,3 +24,15 @@
   margin: 0 5px;
   width: 150px;
 }
+
+.revealed-goal {
+  margin: 20px auto;
+  width: 220px;
+  height: 351px;
+  background-size: contain;
+  border-radius: 20px;
+}
+
+.revealed-goal[card=""] {
+  bottom: 0;
+}
