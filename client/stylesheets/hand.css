@@ -31,4 +31,15 @@
   height: 351px;
   margin: 20px auto;
   width: 220px;
+	
+	transition: all 1.4s;
+  transform: rotateY(90deg);
+  -webkit-transform: rotateY(90deg);
+  -moz-transform: rotateY(90deg);
+}
+
+.flip-goal {
+	transform: rotateY(0deg) ;
+  -webkit-transform: rotateY(0deg);
+  -moz-transform: rotateY(0deg);
 }

@@ -186,11 +186,15 @@ var HandView = function(app) {
     console.log('reveal goal: ' + data.card);
     $('.revealed-goal').attr('card', data.card).removeClass('hide');
     $('.hand').addClass('hide');
+		$('.revealed-goal').addClass('flip-goal');
   });
   
   $('.revealed-goal').click( function() {
+		$('.revealed-goal').removeClass('flip-goal');
+		$('.revealed-goal').removeAttr('card');
     $('.revealed-goal').addClass('hide');
-    $('.hand').removeClass('hide');
+		$('.hand').removeClass('hide');
+		
   });
   
 };
