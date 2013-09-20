@@ -54,15 +54,20 @@ var Server = function() {
         return function(data) {
           socket.get('game', function(x, gameId) {
             var game = self.games[gameId];
+            console.log(data);
+            
             if (game) {
               if (data.type === 'play') {
                 // place card on the board if not valid then tell board to blink red
-                 game.play(socket, data.card, {x: data.position.column, y: data.position.row, rotated: data.position.rotated});
+                 game.play(socket, data.card, {type: data.type, x: data.position.column, y: data.position.row, rotated: data.position.rotated});
               }
               if (data.type === 'play-action') {
-                // apply card to player if valid
-                // if valid deal card
+                game.play(socket, data.card, {type: data.type});
               }
+							if (data.type === 'play-map') {
+								// send current player the selected card
+                game.play(socket, data.card, {type: data.type});
+							}
             }
           });
         };
@@ -85,6 +90,7 @@ var Server = function() {
           socket.get('game', function(x, gameId) {
             var game = self.games[gameId];
             if (game) {  
+							console.log(data);
               // sending to host
               if (data.type == 'preview'){
                 if (data.cardType == 'path'){
@@ -99,17 +105,23 @@ var Server = function() {
                   }
                   game.host.emit('player-action-card', {card: data.card, currentPlayer: game.gameManager.currentPlayerIndex});
                 }
+								if (data.cardType == 'map') {
+									console.log('player played a map card');
+									// send server goal positions that are not flipped
+									// emit coordinates of goals to board in array
+									game.host.emit('map-card', game.gameManager.board.goalLocations);
+								}
               }
                 
               if (data.type == 'back') {
-                game.host.emit('player-action', {type: data.type});
+                game.host.emit('player-action', {type: data.type, cardType: data.cardType});
               }
               
 							// if is submitted, then trigger turn ending event (deal new card and move to next player)
 							if (data.type == 'submit' || data.type == 'discard') {
                 game.host.emit('player-action', {type: data.type, cardType: data.cardType});
-								socket.emit('deal', {card: game.gameManager.deck.deal()});
-								//TODO manage discard deck
+                //TODO manage discard deck
+                socket.emit('deal', {card: game.gameManager.deck.deal()});
 							};
             }
           });

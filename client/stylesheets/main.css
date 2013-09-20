@@ -85,3 +85,11 @@ body {
 .right {
   float: right;
 }
+
+.block {
+  display: block;
+}
+
+.hide {
+  display: none !important;
+}

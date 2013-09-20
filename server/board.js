@@ -16,6 +16,14 @@ var boardWidth = 11;
 */
 
 // Flip 180 degrees
+
+var Board = function(socket) {
+  this.socket = socket;
+  this.board = []; 
+  this.startLocation = {row: 3, column: 1};
+  this.goalLocations = [{row: 1, column: 9}, {row: 3, column: 9}, {row: 5, column: 9}];
+};
+
 var rotateCard = function(rules) {
   return {
     top: !!rules.bottom,
@@ -32,20 +40,14 @@ var getCardRules = function(card) {
   return CardRules[card];
 };
 
-var Board = function(socket) {
-  this.socket = socket;
-  this.board = []; 
-  
-};
-
 Board.prototype.reset = function() {
   var goal = new Deck(['gold', 'coal-left', 'coal-right']);
   goal.shuffle();
   this.initBoard();
-  this.placeCard(3, 1, 'start');
-  this.placeCard(1, 9, goal.deal());
-  this.placeCard(3, 9, goal.deal());
-  this.placeCard(5, 9, goal.deal());
+  this.placeCard(this.startLocation.row, this.startLocation.column, 'start');
+  for (var i = 0; i < this.goalLocations.length; i++) {
+    this.placeCard(this.goalLocations[i].row, this.goalLocations[i].column, goal.deal());
+  };
 };
 
 Board.prototype.initBoard = function() {

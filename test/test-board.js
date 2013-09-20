@@ -1,7 +1,7 @@
 var Board = require('../server/board');
 
 exports.testBoardReset = function(test) {
-  var board = new Board();
+  var board = new Board('socket');
   
   var height = 7;
   var width = 11;
@@ -21,7 +21,7 @@ exports.testBoardReset = function(test) {
 }
 
 exports.testPlaceCardPass = function(test) {
-  var board = new Board();
+  var board = new Board('socket');
   
   var locationY = 3;
   var locationX = 2;
@@ -35,7 +35,7 @@ exports.testPlaceCardPass = function(test) {
 }
 
 exports.testPlaceCardFail = function(test) {
-  var board = new Board();
+  var board = new Board('socket');
   
   var card = 'deadend-top';
   

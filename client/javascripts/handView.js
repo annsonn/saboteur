@@ -47,17 +47,6 @@ var HandView = function(app) {
       console.log(data);
   });
   
-  var typeOfCard = function(node) {
-    if (node.indexOf('free') >= 0 || node.indexOf('block') >= 0) {
-      return 'action';
-    } else if (node.indexOf('map') >= 0) {
-      return 'map';
-    } else if (node.indexOf('avalanche') >= 0) {
-      return 'avalanche';
-    }
-    return 'path';
-  };
-  
   // handling what happens when you click card from hand view
   var bindCardClick = function() {
      $('.card').unbind('click');
@@ -79,6 +68,7 @@ var HandView = function(app) {
       
       var card = $(this).attr('card');
 			var cardType = typeOfCard($(this).attr('card'));
+      console.log('sending:' + card + ' to server as cardtype: ' + cardType);
       
       // updates play button based on card picked
       $('.play-button').click(function() {
@@ -97,6 +87,10 @@ var HandView = function(app) {
 		unbindButtons();
 		$('.hand [card='+$('.selected-card').attr('card')+']').first().remove();
 		$('#game').attr('page', 'hand');
+		$('.hand').fadeIn(400).delay(300).queue( function(next){ 
+			$(this).css('left', '0');
+			next(); 
+		});
 	});
 	
   // Game Screens
@@ -156,7 +150,7 @@ var HandView = function(app) {
     unbindButtons();
     
     // telling server that the card needs to be removed from board view
-    app.socket.emit('player-action', {type: 'back'});
+    app.socket.emit('player-action', {type: 'back', cardType: typeOfCard($('.selected-card').attr('card'))});
     $('#game').attr('page', 'hand');
   });
   
@@ -165,7 +159,7 @@ var HandView = function(app) {
     
     // telling server that the card needs to be removed from board view
 		$('.hand [card='+$('.selected-card').attr('card')+']').first().remove();
-    app.socket.emit('player-action', {card: $('.selected-card').attr('card'), type: 'discard'});
+    app.socket.emit('player-action', {card: $('.selected-card').attr('card'), type: 'discard', cardType: typeOfCard($('.selected-card').attr('card'))});
 		$('#game').attr('page', 'hand');
 	});
 	
@@ -183,8 +177,24 @@ var HandView = function(app) {
   });  
   
 	app.socket.on('deal', function(data) {
-			$('.hand ul').append($('<li />').attr('card', data.card).addClass('card'));
-      bindCardClick();
+    console.log('dealt ' + data.card + ' to player');
+    $('.hand ul').append($('<li />').attr('card', data.card).addClass('card'));
+    bindCardClick();
   });
 	
+  app.socket.on('reveal-goal', function(data) {
+    console.log('reveal goal: ' + data.card);
+    $('.revealed-goal').attr('card', data.card).removeClass('hide');
+    $('.hand').addClass('hide');
+		$('.revealed-goal').addClass('flip-goal');
+  });
+  
+  $('.revealed-goal').click( function() {
+		$('.revealed-goal').removeClass('flip-goal');
+		$('.revealed-goal').removeAttr('card');
+    $('.revealed-goal').addClass('hide');
+		$('.hand').removeClass('hide');
+		
+  });
+  
 };

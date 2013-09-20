@@ -13,7 +13,7 @@ var GameManager = function(sockets, name, playerList) {
 
   this.players = [];
   initializePlayers(this, sockets, playerList);
-  this.currentPlayerIndex = 1;  // Player 1 goes first
+  this.currentPlayerIndex = 0;  // Player 1 goes first
   
   this.board.reset();
   this.deck.reset();
@@ -47,17 +47,21 @@ GameManager.prototype.start = function() {
   })
 };
 
-GameManager.prototype.playCard = function(card, target) {
-  var result = false;
-  if (target && target.x && target.y) {
+GameManager.prototype.playCard = function(card, data) {
+  console.log('game manager has ' + card);
+  if (data.type == 'play') {
     // TODO Place on board
-    result = this.board.placeCard(target.y, target.x, card, target.rotated);
-  } else if (!isNaN(parseFloat(target)) && isFinite(target)) {
+    return this.board.placeCard(data.y, data.x, card, data.rotated);
+  } else if (data.type == 'play-map') {
+    console.log('emitting card to the current player: ' + this.getCurrentPlayer().socket.id);
+    this.getCurrentPlayer().socket.emit('reveal-goal', {card: card});
+    return true;
+  } else if (!isNaN(parseFloat(data)) && isFinite(data)) {
     // TODO Action on Player number
-    result = this.players[target].applyCard(target);
+    return this.players[data].applyCard(data);
   }
   
-  return result;
+  return false;
 }
 
 GameManager.prototype.eachPlayer = function(callback) {
