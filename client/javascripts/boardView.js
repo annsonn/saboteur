@@ -62,6 +62,7 @@ var BoardView = function(app) {
 	// Stuff to deal with play cards onto the board 
 	var maxRow = 7;
 	var maxColumn = 11;
+	var goalLocations = [];
 	
 	var currentRow = 0;
 	var currentColumn = 0;
@@ -169,32 +170,52 @@ var BoardView = function(app) {
     }
     
     if (data.cardType == 'action') {
+      $('li[playernumber]:nth-child(' + currentColumn + ')').attr('selected', false);
       
       if (data.type === 'right' || data.type === 'down') {
-        $('li[playernumber]:nth-child(' + currentColumn + ')').attr('selected', false);
         currentColumn++;
         if (currentColumn > $('li[playernumber]').length) {
           currentColumn = 1;
         }
-        $('li[playernumber]:nth-child(' + currentColumn + ')').attr('selected', true);
-      }
+      }      
       
       if (data.type === 'left' || data.type === 'up') {
-        $('li[playernumber]:nth-child(' + currentColumn + ')').attr('selected', false);
         currentColumn--;
         if (currentColumn == 0) {
           currentColumn = $('li[playernumber]').length;
-        }
-        $('li[playernumber]:nth-child(' + currentColumn + ')').attr('selected', true);      
+        }    
       }
-    }
       
+      $('li[playernumber]:nth-child(' + currentColumn + ')').attr('selected', true);
+    }
+
+    if (data.cardType == 'map') {
+       $('.board ul:nth-child('+ (goalLocations[currentRow].row + 1) +') .board-card:nth-child('+ (goalLocations[currentRow].column + 1) +')').attr('type', '');
+       
+       if (data.type === 'right' || data.type === 'down') {
+        currentRow++;
+        if (currentRow == goalLocations.length) {
+          currentRow = 0;
+        }
+      }      
+      
+      if (data.type === 'left' || data.type === 'up') {
+        currentRow--;
+        if (currentRow < 0) {
+          currentRow = goalLocations.length-1;
+        }    
+      }
+      
+      $('.board ul:nth-child('+ (goalLocations[currentRow].row + 1) +') .board-card:nth-child('+ (goalLocations[currentRow].column + 1) +')').attr('type', 'preview');
+    }
+    
 		if (data.type === 'rotate') {
 			$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').toggleClass('rotated');
 		};
   });
   
   app.socket.on('player-action', function (data) { 
+    console.log(data);
     $('#game').attr('page', 'board'); // regardless of view goes back to the board view
     
 		if (data.type === 'preview') {
@@ -205,7 +226,6 @@ var BoardView = function(app) {
 		}
     
     if (data.type === 'submit') {
-      console.log(data);
       if (data.cardType === 'path') {
         // Submit to server for validity
         var rotated = isRotated(currentRow, currentColumn);
@@ -214,11 +234,20 @@ var BoardView = function(app) {
       if (data.cardType === 'action') {
         app.socket.emit('board-action', {type: 'play-action', card: $('#selected-action-card').attr('card'), target: $('[playernumber][selected]').attr('playernumber')}); 
       }
+      if (data.cardType === 'map') {
+        console.log('emit ' + $('[type=preview][card]').attr('card') + ' to server to send to current player');
+        app.socket.emit('board-action', {type: 'play-map', card: $('[type=preview][card]').attr('card')});
+      }
     }
     
     if (data.type === 'back' || data.type === 'discard') {
-      $('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').removeClass('rotated');
-      displayCard(currentRow, currentColumn, 'null');
+      if (data.cardType === 'path') {
+        $('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').removeClass('rotated');
+        displayCard(currentRow, currentColumn, 'null');
+      }
+      if (data.cardType === 'map') {
+        $('.board ul:nth-child('+ (goalLocations[currentRow].row + 1) +') .board-card:nth-child('+ (goalLocations[currentRow].column + 1) +')').attr('type', '');
+      }
     }
   });
 
@@ -243,7 +272,7 @@ var BoardView = function(app) {
       var playerBlocks = $('<ul />').addClass('blocks');
       console.log(data.blocks);
       
-      // each block appeds to the player blocks
+      // each block appends to the player blocks
       playerBlocks.append($('<li/>').attr('card', 'block-pickaxe').attr('blocked', (data.blocks.pickaxe) ? 'true' : 'false'));
       playerBlocks.append($('<li/>').attr('card', 'block-lamp').attr('blocked', (data.blocks.lamp) ? 'true' : 'false'));
       playerBlocks.append($('<li/>').attr('card', 'block-cart').attr('blocked', (data.blocks.cart) ? 'true' : 'false'));
@@ -261,4 +290,11 @@ var BoardView = function(app) {
     $('#game').attr('page', 'player-action');
   });
 
+	app.socket.on('map-card', function(data) {
+		goalLocations = data;    
+    currentRow = 0;
+		console.log(goalLocations);
+		$('.board ul:nth-child('+ (goalLocations[currentRow].row + 1) +') .board-card:nth-child('+ (goalLocations[currentRow].column + 1) +')').attr('type', 'preview');
+	});
+  
 };
