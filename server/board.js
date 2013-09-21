@@ -19,7 +19,7 @@ var boardWidth = 11;
 
 var Board = function(socket) {
   this.socket = socket;
-  this.board = []; 
+  this.board = [];
   this.startLocation = {row: 3, column: 1};
   this.goalLocations = [{row: 1, column: 9}, {row: 3, column: 9}, {row: 5, column: 9}];
 };
@@ -61,14 +61,18 @@ Board.prototype.initBoard = function() {
 
 Board.prototype.placeCard = function( locationY, locationX, card, rotated ) {
   // Save gold position
+  if (typeof card === 'object') {
+    card = card[0];
+  }
+
   if (card === 'gold') {
     this.gold = {x: locationX, y: locationY};
   }
 
   if ( !this.board[locationY] ) {
     this.board[locationY] = [];
-  } 
-  
+  }
+
   if ( this.board[locationY][locationX] ) { // Card already exists
     return false;
   }
@@ -161,19 +165,30 @@ Board.prototype.shuffleGoal = function() {
 };
 
 Board.prototype.hasWinner = function() {
-  var open = [{x: 1, y: 3}];
+  var open = [{x: 1, y: 3, score: 0}];
   var closed = [];
-  var winnerFound;
+  var winnerFound = false;
 
   while(open.length > 0 && !winnerFound) {
     var card = open.pop();
+    console.log(card);
+
+    if (cardEquals(card, this.gold)) {
+      return true;
+    }
+
     closed.push(card);
 
     var neighbours = this.getNeighbouringCards(card.x, card.y);
     neighbours.forEach(function(neighbour) {
       neighbour.parent = card;
+      if (closed.filter(function(card) {return !!cardEquals(neighbour, card).length})) {
+        return; // Exists in closed set (continue)
+      }
 
-      open.push(neighbour);
+      neighbour.score = heuristic(neighbour, this.gold);
+
+      pushOrdered(open, neighbour);
     });
 
   }
@@ -181,5 +196,22 @@ Board.prototype.hasWinner = function() {
   return winnerFound;
 }
 
+var heuristic = function(start, goal) {
+  return Math.abs(start.x - goal.x) + Math.abs(start.y - goal.y);
+}
+
+var cardEquals = function(start, goal) {
+  return start.x === goal.x && start.y === goal.y;
+}
+
+var pushOrdered = function(list, card) {
+  for (var i = list.length - 1; i >= 0; i--) {
+    var theCard = list[i];
+    if (theCard.score > card.score) {
+      list.splice(i, 0, card);
+      break;
+    }
+  };
+}
 
 module.exports = Board;
