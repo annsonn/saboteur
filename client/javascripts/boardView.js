@@ -235,8 +235,9 @@ var BoardView = function(app) {
         app.socket.emit('board-action', {type: 'play-action', card: $('#selected-action-card').attr('card'), target: $('[playernumber][selected]').attr('playernumber')}); 
       }
       if (data.cardType === 'map') {
-        console.log('emit ' + $('[type=preview][card]').attr('card') + ' to server to send to current player');
+        console.log('emit ' + $('[type=preview][card]').attr('card') + ' to server to send to current player');				
         app.socket.emit('board-action', {type: 'play-map', card: $('[type=preview][card]').attr('card')});
+				$('[type=preview][card]').removeAttr('type');
       }
     }
     
