@@ -141,19 +141,22 @@ Board.prototype.serialize = function() {
 
 Board.prototype.getNeighbouringCards = function(x, y) {
   var card = getCardRules(this.board[y][x]);
+  console.log('card ' + x + ', ' + y, card);
   var result = [];
 
-  if (card.left && x - 1 >= 0) {
-    result.push({x: x - 1, y: y});
-  }
-  if (card.top && y - 1 >= 0) {
-    result.push({x: x, y: y - 1});
-  }
-  if (card.right && x + 1 < boardWidth) {
-    result.push({x: x + 1, y: y});
-  }
-  if (card.bottom && y + 1 < boardHeight) {
-    result.push({x: x, y: y + 1});
+  if (!card.block) {
+    if (card.left && x - 1 >= 0) {
+      result.push({x: x - 1, y: y});
+    }
+    if (card.top && y - 1 >= 0) {
+      result.push({x: x, y: y - 1});
+    }
+    if (card.right && x + 1 < boardWidth) {
+      result.push({x: x + 1, y: y});
+    }
+    if (card.bottom && y + 1 < boardHeight) {
+      result.push({x: x, y: y + 1});
+    }
   }
   return result;
 };
@@ -165,13 +168,14 @@ Board.prototype.shuffleGoal = function() {
 };
 
 Board.prototype.hasWinner = function() {
+  var self = this;
   var open = [{x: 1, y: 3, score: 0}];
   var closed = [];
   var winnerFound = false;
 
   while(open.length > 0 && !winnerFound) {
     var card = open.pop();
-    console.log(card);
+    console.log('open card ', card);
 
     if (cardEquals(card, this.gold)) {
       return true;
@@ -180,17 +184,33 @@ Board.prototype.hasWinner = function() {
     closed.push(card);
 
     var neighbours = this.getNeighbouringCards(card.x, card.y);
+
     neighbours.forEach(function(neighbour) {
-      neighbour.parent = card;
-      if (closed.filter(function(card) {return !!cardEquals(neighbour, card).length})) {
+      if (!self.board[neighbour.y][neighbour.x]) {
+        closed.push(neighbour);
+        return;
+      }
+      console.log(neighbour);
+
+      console.log('closed', closed);
+      var isClosed = !!closed.filter(function(card) {
+          return !!cardEquals(neighbour, card).length;
+      }).length;
+      console.log('is closed = ', isClosed);
+
+      if (isClosed) {
         return; // Exists in closed set (continue)
       }
 
+      neighbour.parent = card;
       neighbour.score = heuristic(neighbour, this.gold);
+
+      console.log('added to open', neighbour);
 
       pushOrdered(open, neighbour);
     });
 
+    console.log('open cards', open);
   }
 
   return winnerFound;

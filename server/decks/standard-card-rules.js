@@ -1,5 +1,6 @@
 module.exports = {
   'start': {top: true, right: true, left: true, bottom: true},
+
   'connected-top-bottom': {top: true, bottom: true},
   'connected-right-left': {right: true, left: true},
   'connected-top-right': {top: true, right: true},
@@ -17,5 +18,9 @@ module.exports = {
   'deadend-top-right-bottom': {block: true, top: true, right: true, bottom: true},
   'deadend-top-right-left': {block: true, top: true, right: true, left: true},
   'deadend-cross': {block: true, top: true, right: true, left: true, bottom: true},
+
+  'coal-left': {top: true, left: true},
+  'coal-right': {top: true, right: true},
+  'gold': {top: true, right: true, left: true, bottom: true}
 
 }
