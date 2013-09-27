@@ -86,20 +86,16 @@ exports.testWinner = function(test) {
   // Make path to winner (upper card)
   test.equal(board.placeCard(2, 7, 'connected-top-bottom', false), true);
   test.equal(board.placeCard(1, 7, 'connected-top-left', true), true);
-  //test.equal(board.placeCard(1, 8, 'connected-right-left', false), true);
-  console.log(board.placeCard(1, 8, 'connected-right-left', false));
+  test.equal(board.placeCard(1, 8, 'connected-right-left', false), true);
 
   // Make path to winner (middle card)
-  //test.equal(board.placeCard(3, 8, 'connected-right-left', false), true);
-  console.log(board.placeCard(3, 8, 'connected-right-left', false));
+  test.equal(board.placeCard(3, 8, 'connected-right-left', false), true);
 
   // Make path to winner (lower card)
   test.equal(board.placeCard(4, 7, 'connected-top-bottom', false), true);
   test.equal(board.placeCard(5, 7, 'connected-top-right', false), true);
-  //test.equal(board.placeCard(5, 8, 'connected-right-left', false), true);
-  console.log(board.placeCard(5, 8, 'connected-right-left', false));
+  test.equal(board.placeCard(5, 8, 'connected-right-left', false), true);
 
-  console.log(board.gold);
 
   test.equal(board.hasWinner(), true);
 

@@ -141,7 +141,6 @@ Board.prototype.serialize = function() {
 
 Board.prototype.getNeighbouringCards = function(x, y) {
   var card = getCardRules(this.board[y][x]);
-  console.log('card ' + x + ', ' + y, card);
   var result = [];
 
   if (!card.block) {
@@ -171,11 +170,9 @@ Board.prototype.hasWinner = function() {
   var self = this;
   var open = [{x: 1, y: 3, score: 0}];
   var closed = [];
-  var winnerFound = false;
 
-  while(open.length > 0 && !winnerFound) {
+  while(open.length > 0) {
     var card = open.pop();
-    console.log('open card ', card);
 
     if (cardEquals(card, this.gold)) {
       return true;
@@ -187,33 +184,26 @@ Board.prototype.hasWinner = function() {
 
     neighbours.forEach(function(neighbour) {
       if (!self.board[neighbour.y][neighbour.x]) {
-        closed.push(neighbour);
         return;
       }
-      console.log(neighbour);
 
-      console.log('closed', closed);
       var isClosed = !!closed.filter(function(card) {
-          return !!cardEquals(neighbour, card).length;
+          return cardEquals(neighbour, card);
       }).length;
-      console.log('is closed = ', isClosed);
 
       if (isClosed) {
         return; // Exists in closed set (continue)
       }
 
       neighbour.parent = card;
-      neighbour.score = heuristic(neighbour, this.gold);
-
-      console.log('added to open', neighbour);
+      neighbour.score = heuristic(neighbour, self.gold);
 
       pushOrdered(open, neighbour);
     });
 
-    console.log('open cards', open);
   }
 
-  return winnerFound;
+  return false;
 }
 
 var heuristic = function(start, goal) {
@@ -229,9 +219,10 @@ var pushOrdered = function(list, card) {
     var theCard = list[i];
     if (theCard.score > card.score) {
       list.splice(i, 0, card);
-      break;
+      return;
     }
   };
+  list.push(card);
 }
 
 module.exports = Board;
