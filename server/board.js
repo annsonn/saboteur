@@ -19,7 +19,7 @@ var boardWidth = 11;
 
 var Board = function(socket) {
   this.socket = socket;
-  this.board = []; 
+  this.board = [];
   this.startLocation = {row: 3, column: 1};
   this.goalLocations = [{row: 1, column: 9}, {row: 3, column: 9}, {row: 5, column: 9}];
 };
@@ -60,10 +60,19 @@ Board.prototype.initBoard = function() {
 }
 
 Board.prototype.placeCard = function( locationY, locationX, card, rotated ) {
+  // Save gold position
+  if (typeof card === 'object') {
+    card = card[0];
+  }
+
+  if (card === 'gold') {
+    this.gold = {x: locationX, y: locationY};
+  }
+
   if ( !this.board[locationY] ) {
     this.board[locationY] = [];
-  } 
-  
+  }
+
   if ( this.board[locationY][locationX] ) { // Card already exists
     return false;
   }
@@ -130,11 +139,90 @@ Board.prototype.serialize = function() {
   return this.board;
 };
 
+Board.prototype.getNeighbouringCards = function(x, y) {
+  var card = getCardRules(this.board[y][x]);
+  var result = [];
+
+  if (!card.block) {
+    if (card.left && x - 1 >= 0) {
+      result.push({x: x - 1, y: y});
+    }
+    if (card.top && y - 1 >= 0) {
+      result.push({x: x, y: y - 1});
+    }
+    if (card.right && x + 1 < boardWidth) {
+      result.push({x: x + 1, y: y});
+    }
+    if (card.bottom && y + 1 < boardHeight) {
+      result.push({x: x, y: y + 1});
+    }
+  }
+  return result;
+};
+
 //+ Jonas Raoni Soares Silva
 //@ http://jsfromhell.com/array/shuffle [v1.0]
 Board.prototype.shuffleGoal = function() {
   for(var j, x, i = this.goal.length; i; j = parseInt(Math.random() * i), x = this.goal[--i], this.goal[i] = this.goal[j], this.goal[j] = x);
 };
 
+Board.prototype.hasWinner = function() {
+  var self = this;
+  var open = [{x: 1, y: 3, score: 0}];
+  var closed = [];
+
+  while(open.length > 0) {
+    var card = open.pop();
+
+    if (cardEquals(card, this.gold)) {
+      return true;
+    }
+
+    closed.push(card);
+
+    var neighbours = this.getNeighbouringCards(card.x, card.y);
+
+    neighbours.forEach(function(neighbour) {
+      if (!self.board[neighbour.y][neighbour.x]) {
+        return;
+      }
+
+      var isClosed = !!closed.filter(function(card) {
+          return cardEquals(neighbour, card);
+      }).length;
+
+      if (isClosed) {
+        return; // Exists in closed set (continue)
+      }
+
+      neighbour.parent = card;
+      neighbour.score = heuristic(neighbour, self.gold);
+
+      pushOrdered(open, neighbour);
+    });
+
+  }
+
+  return false;
+}
+
+var heuristic = function(start, goal) {
+  return Math.abs(start.x - goal.x) + Math.abs(start.y - goal.y);
+}
+
+var cardEquals = function(start, goal) {
+  return start.x === goal.x && start.y === goal.y;
+}
+
+var pushOrdered = function(list, card) {
+  for (var i = list.length - 1; i >= 0; i--) {
+    var theCard = list[i];
+    if (theCard.score > card.score) {
+      list.splice(i, 0, card);
+      return;
+    }
+  };
+  list.push(card);
+}
 
 module.exports = Board;
