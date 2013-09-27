@@ -75,4 +75,16 @@ GameManager.prototype.getCurrentPlayer = function() {
   return this.players[this.currentPlayerIndex];
 };
 
+GameManager.prototype.startPlayerTurn = function() {
+		this.getCurrentPlayer().socket.emit('start turn', "start player turn");
+};
+
+GameManager.prototype.nextPlayer = function(){
+	this.currentPlayerIndex = this.currentPlayerIndex + 1;
+	if (this.currentPlayerIndex === this.players.length) {
+		this.currentPlayerIndex = 0;
+	}
+	this.startPlayerTurn();	
+};
+
 module.exports = GameManager;
