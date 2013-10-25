@@ -47,9 +47,14 @@ var HandView = function(app) {
       console.log(data);
   });
   
+	// so that you can't click anything
+	var unbindCardClick = function() {
+		$('.card').unbind('click');
+	};
+	
   // handling what happens when you click card from hand view
   var bindCardClick = function() {
-     $('.card').unbind('click');
+     unbindCardClick();
      
     $('.card').click(function() {
       $('.play-card > div').removeAttr('card').removeClass();
@@ -85,6 +90,7 @@ var HandView = function(app) {
 		console.log('card accepted by server');
 		// removing card from hand
 		unbindButtons();
+		unbindCardClick();
 		$('.hand [card='+$('.selected-card').attr('card')+']').first().remove();
 		$('#game').attr('page', 'hand');
 		$('.hand').fadeIn(400).delay(300).queue( function(next){ 
@@ -114,11 +120,18 @@ var HandView = function(app) {
     $('.hand').css('width', window.innerWidth-45);
     $('.hand ul').css('width', window.innerWidth-45);
     
-    bindCardClick();
+    //bindCardClick();
     
     $('#game').attr('page', 'choose-role');
   });
     
+	app.socket.on('start turn', function(data){
+		console.log('turn started');
+		
+		bindCardClick();
+		
+	});
+		
 
   $('.job-card').click(function() {
     // flip cards
@@ -133,6 +146,10 @@ var HandView = function(app) {
     });
   });  
   
+
+
+	
+	
 	var unbindButtons = function() {
 		$('.rotate-button').unbind('click');
     $('.play-button').unbind('click');
@@ -179,7 +196,7 @@ var HandView = function(app) {
 	app.socket.on('deal', function(data) {
     console.log('dealt ' + data.card + ' to player');
     $('.hand ul').append($('<li />').attr('card', data.card).addClass('card'));
-    bindCardClick();
+    //bindCardClick();
   });
 	
   app.socket.on('reveal-goal', function(data) {

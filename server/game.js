@@ -42,6 +42,7 @@ Game.prototype.start = function(socket) {
   });
 
   this.gameManager.board.socket.emit('start', this.gameManager.board.serialize());
+	this.gameManager.startPlayerTurn();
 };
 
 Game.prototype.play = function(socket, card, data) {
@@ -50,6 +51,7 @@ Game.prototype.play = function(socket, card, data) {
     socket.emit('place card');
     this.gameManager.getCurrentPlayer().socket.emit('deal', {card: this.gameManager.deck.deal()});
     this.sockets.to(this.name).emit('next player', this.gameManager.getCurrentPlayer().socket.id);
+		this.gameManager.nextPlayer();
   } else {
     socket.emit('error', 'invalid play');
   }
