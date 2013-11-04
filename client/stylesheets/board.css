@@ -67,3 +67,7 @@
   margin: 0 auto;
   width: 300px;
 }
+
+[blocked=true] {
+  outline: 5px solid red;
+}

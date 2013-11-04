@@ -86,6 +86,7 @@ var HandView = function(app) {
     });
   };
   
+  // when turn is over
 	app.socket.on('next player', function(data) {
 		console.log('card accepted by server');
 		// removing card from hand

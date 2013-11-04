@@ -62,7 +62,8 @@ var Server = function() {
                  game.play(socket, data.card, {type: data.type, x: data.position.column, y: data.position.row, rotated: data.position.rotated});
               }
               if (data.type === 'play-action') {
-                game.play(socket, data.card, {type: data.type});
+                // TODO: get board to send the target player's number
+                game.play(socket, data.card, {type: data.type, target: data.target});
               }
 							if (data.type === 'play-map') {
 								// send current player the selected card
@@ -90,7 +91,7 @@ var Server = function() {
           socket.get('game', function(x, gameId) {
             var game = self.games[gameId];
             if (game) {  
-							console.log(data);
+							console.log('SERVER.JS - ' + data);
               // sending to host
               if (data.type == 'preview'){
                 if (data.cardType == 'path'){
@@ -99,14 +100,14 @@ var Server = function() {
                 if (data.cardType == 'action') {
                   // get all the players and their blocks on them and display them on the board
                   // for each player emit their block cards to the board, then tell the board to update the view with the selected card.
-                  console.log('emitting player block cards');
+                  console.log('SERVER.JS - Emitting player block cards');
                   for (var i=0; i < game.gameManager.players.length; i++) {
                     game.host.emit('player-block-status', {playerNumber: i, isBlocked: game.gameManager.players[i].isBlocked(), blocks: game.gameManager.players[i].blocks});
                   }
                   game.host.emit('player-action-card', {card: data.card, currentPlayer: game.gameManager.currentPlayerIndex});
                 }
 								if (data.cardType == 'map') {
-									console.log('player played a map card');
+									console.log('SERVER.JS - Player played a map card');
 									// send server goal positions that are not flipped
 									// emit coordinates of goals to board in array
 									game.host.emit('map-card', game.gameManager.board.goalLocations);

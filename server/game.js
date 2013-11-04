@@ -53,7 +53,7 @@ Game.prototype.play = function(socket, card, data) {
     this.sockets.to(this.name).emit('next player', this.gameManager.getCurrentPlayer().socket.id);
 		this.gameManager.nextPlayer();
   } else {
-    socket.emit('error', 'invalid play');
+    socket.emit('error', data);
   }
 };
 

@@ -50,15 +50,15 @@ GameManager.prototype.start = function() {
 GameManager.prototype.playCard = function(card, data) {
   console.log('game manager has ' + card);
   if (data.type == 'play') {
-    // TODO Place on board
     return this.board.placeCard(data.y, data.x, card, data.rotated);
   } else if (data.type == 'play-map') {
     console.log('emitting card to the current player: ' + this.getCurrentPlayer().socket.id);
     this.getCurrentPlayer().socket.emit('reveal-goal', {card: card});
     return true;
-  } else if (!isNaN(parseFloat(data)) && isFinite(data)) {
+  } else if (data.type == 'play-action') {
     // TODO Action on Player number
-    return this.players[data].applyCard(data);
+    console.log(data);
+    return this.players[data.target].applyCard(card);
   }
   
   return false;

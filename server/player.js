@@ -1,4 +1,3 @@
-
 var Player = function(socket) {
   this.socket = socket;
   this.job = null;
@@ -22,23 +21,36 @@ Player.prototype.serialize = function() {
 };
 
 Player.prototype.applyCard = function(card) {
-  var parts = card.split(' ');
+  var parts = card.split('-');
   var action = parts.splice(0, 1)[0];
 
+  console.log('card played: ' + card);
+  console.log('action type: ' + action);  
+  
   if (action === 'block') {
   	// TODO validate if possible to free
+    if (this.blocks[parts.pop()] == true) {
+      console.log('player is already blocked with ' + parts.pop());
+      return false;
+    }
+    console.log('player is now blocked');
   	this.blocks[parts.pop()] = true;
   	return true;
   } else if (card.indexOf('free') >= 0) {
   	// TODO validate if blocked
-  	this.blocks[parts.pop()] = false;
-  	if (parts.length >0) {	// Second part
-  		this.blocks[parts.pop()] = false;
-  	}
-  	return true;
+    if (this.blocks[parts.pop()] == false) {
+      console.log('player is not blocked with ' + parts.pop());
+      return false;
+    }
+    this.blocks[parts.pop()] = false;
+    if (parts.length >0) {	// Second part
+      console.log('player got ' + parts.pop() + 'removed from there');
+      this.blocks[parts.pop()] = false;
+      return true;
+    }
   }
   return false;
-};
+}
 
 Player.prototype.isBlocked = function() {
   return this.blocks.pickaxe || this.blocks.light || this.blocks.cart;
