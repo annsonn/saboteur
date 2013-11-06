@@ -36,7 +36,6 @@ Player.prototype.applyCard = function(card) {
     }
     console.log('player is now blocked with ' + actionType);
   	this.blocks[actionType] = true;
-    console.log('set block[' + actionType + '] to ' + this.blocks[actionType]);
   	return true;
   } else if (card.indexOf('free') >= 0) {
   	// TODO validate if blocked
@@ -44,13 +43,12 @@ Player.prototype.applyCard = function(card) {
       console.log('player is not blocked with ' + actionType);
       return false;
     }
+    console.log('player is free of ' + actionType);
     this.blocks[actionType] = false;
-    if (parts.length >0) {	// Second part
-      console.log('player got ' + actionType + 'removed from there');
-      this.blocks[actionType] = false;
-      console.log('set block[' + actionType + '] to ' + this.blocks[actionType]);
-      return true;
-    }
+    
+    //TODO: Handle for situtions where you free two types
+    
+    return true;
   }
   return false;
 }
