@@ -102,7 +102,7 @@ var Server = function() {
                   // for each player emit their block cards to the board, then tell the board to update the view with the selected card.
                   console.log('SERVER.JS - Emitting player block cards');
                   for (var i=0; i < game.gameManager.players.length; i++) {
-                    game.host.emit('player-block-status', {playerNumber: i, isBlocked: game.gameManager.players[i].isBlocked(), blocks: game.gameManager.players[i].blocks});
+                    game.host.emit('player-block-status', {playerNumber: i, isBlocked: game.gameManager.players[i].isBlocked(), blocks: game.gameManager.players[i].getBlocks()});
                   }
                   game.host.emit('player-action-card', {card: data.card, currentPlayer: game.gameManager.currentPlayerIndex});
                 }

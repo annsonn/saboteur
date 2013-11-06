@@ -67,6 +67,8 @@ li[playernumber] {
   padding: 10px;
   margin: 5px;
   border-radius: 10px;
+  -webkit-filter: grayscale(1);
+  filter: grayscale(1);
 }
 
 .playernumber {
@@ -92,6 +94,8 @@ li[playernumber] {
 	-webkit-animation-name: bluePulse;
 	-webkit-animation-duration: 2s;
 	-webkit-animation-iteration-count: infinite;
+  -webkit-filter: grayscale(0);
+  filter: grayscale(0);
 }
 
 @-webkit-keyframes bluePulse {

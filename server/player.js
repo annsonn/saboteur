@@ -2,7 +2,7 @@ var Player = function(socket) {
   this.socket = socket;
   this.job = null;
   this.hand = [];
-  this.blocks = {};
+  this.blocks = {pickaxe: 'false', lamp: 'false', cart: 'false'};
 };
 
 Player.prototype.setJob = function(job) {
@@ -23,29 +23,32 @@ Player.prototype.serialize = function() {
 Player.prototype.applyCard = function(card) {
   var parts = card.split('-');
   var action = parts.splice(0, 1)[0];
+  var actionType = parts.splice(0, 1)[0];
 
   console.log('card played: ' + card);
-  console.log('action type: ' + action);  
+  console.log('action type: ' + action + ' -_- ' + actionType);  
   
   if (action === 'block') {
   	// TODO validate if possible to free
-    if (this.blocks[parts.pop()] == true) {
-      console.log('player is already blocked with ' + parts.pop());
+    if (this.blocks[actionType] == true) {
+      console.log('player is already blocked with ' + actionType);
       return false;
     }
-    console.log('player is now blocked');
-  	this.blocks[parts.pop()] = true;
+    console.log('player is now blocked with ' + actionType);
+  	this.blocks[actionType] = true;
+    console.log('set block[' + actionType + '] to ' + this.blocks[actionType]);
   	return true;
   } else if (card.indexOf('free') >= 0) {
   	// TODO validate if blocked
-    if (this.blocks[parts.pop()] == false) {
-      console.log('player is not blocked with ' + parts.pop());
+    if (this.blocks[actionType] == false) {
+      console.log('player is not blocked with ' + actionType);
       return false;
     }
-    this.blocks[parts.pop()] = false;
+    this.blocks[actionType] = false;
     if (parts.length >0) {	// Second part
-      console.log('player got ' + parts.pop() + 'removed from there');
-      this.blocks[parts.pop()] = false;
+      console.log('player got ' + actionType + 'removed from there');
+      this.blocks[actionType] = false;
+      console.log('set block[' + actionType + '] to ' + this.blocks[actionType]);
       return true;
     }
   }
@@ -54,6 +57,10 @@ Player.prototype.applyCard = function(card) {
 
 Player.prototype.isBlocked = function() {
   return this.blocks.pickaxe || this.blocks.light || this.blocks.cart;
+};
+
+Player.prototype.getBlocks = function() {
+  return {pickaxe: this.blocks['pickaxe'], lamp: this.blocks['lamp'], cart: this.blocks['cart']};
 };
 
 module.exports = Player;

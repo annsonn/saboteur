@@ -68,6 +68,12 @@
   width: 300px;
 }
 
+[blocked=false] {
+  -webkit-filter: blur(2px);
+  filter: blur(2px);
+}
+
 [blocked=true] {
-  outline: 5px solid red;
+  -webkit-filter: blur(0px);
+  filter: blur(0px);
 }

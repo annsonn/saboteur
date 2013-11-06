@@ -3,6 +3,7 @@ var HandView = function(app) {
   
   $('#game').attr('page', 'lobby-controller');
   $('#join-game').click(function(event) {
+    console.log('id: ' + app.player.id);
     app.socket.emit('join', $('#input-code').val());
   });
   $('.ready-button').click(function(event) {
