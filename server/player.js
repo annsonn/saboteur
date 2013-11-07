@@ -23,34 +23,30 @@ Player.prototype.serialize = function() {
 Player.prototype.applyCard = function(card) {
   var parts = card.split('-');
   var action = parts.splice(0, 1)[0];
-  var actionType = parts.splice(0, 1)[0];
-
-  console.log('card played: ' + card);
-  console.log('action type: ' + action + ' -_- ' + actionType);  
   
   if (action === 'block') {
-  	// TODO validate if possible to free
-    if (this.blocks[actionType] == true) {
-      console.log('player is already blocked with ' + actionType);
+    if (this.blocks[parts[0]] == true) {
       return false;
     }
-    console.log('player is now blocked with ' + actionType);
-  	this.blocks[actionType] = true;
+  	this.blocks[parts[0]] = true;
   	return true;
-  } else if (card.indexOf('free') >= 0) {
-  	// TODO validate if blocked
-    if (this.blocks[actionType] == false) {
-      console.log('player is not blocked with ' + actionType);
-      return false;
-    }
-    console.log('player is free of ' + actionType);
-    this.blocks[actionType] = false;
-    
-    //TODO: Handle for situtions where you free two types
-    
-    return true;
+  } else if (action === 'free') {
+    var freed = false;
+    freed = ( freePlayer(this.blocks, parts[0]) || freePlayer(this.blocks, parts[1]) )? true : false; 
+    return freed;
   }
   return false;
+}
+
+var freePlayer = function(blocks, actionType){
+  if (!actionType) {
+    return false;
+  }  
+  if (blocks[actionType] == false) {
+    return false;
+  }
+  blocks[actionType] = false;
+  return true;
 }
 
 Player.prototype.isBlocked = function() {
