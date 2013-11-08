@@ -48,19 +48,17 @@ GameManager.prototype.start = function() {
 };
 
 GameManager.prototype.playCard = function(card, data) {
-  console.log('game manager has ' + card);
+  console.log('Game manager has ' + card);
   if (data.type == 'play') {
-    // TODO Place on board
     return this.board.placeCard(data.y, data.x, card, data.rotated);
   } else if (data.type == 'play-map') {
-    console.log('emitting card to the current player: ' + this.getCurrentPlayer().socket.id);
     this.getCurrentPlayer().socket.emit('reveal-goal', {card: card});
     return true;
-  } else if (!isNaN(parseFloat(data)) && isFinite(data)) {
-    // TODO Action on Player number
-    return this.players[data].applyCard(data);
+  } else if (data.type == 'play-action') {
+    var applyCard = this.players[data.target].applyCard(card)
+    console.log('Done Applying Returned: ' + applyCard);
+    return applyCard;
   }
-  
   return false;
 }
 

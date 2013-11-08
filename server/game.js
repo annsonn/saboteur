@@ -6,10 +6,10 @@ var Game = function(sockets, hostSocket) {
   this.host = hostSocket;
   //this.name = Math.random().toString(20).substr(2, 5);
   var rand1 = Math.floor(Math.random() * Names.colors.length);
-  //var rand2 = Math.floor(Math.random() * Names.adjectives.length);
-  //var rand3 = Math.floor(Math.random() * Names.nouns.length);
-  //this.name = Names.adjectives[rand2] + ' ' + Names.colors[rand1] + ' ' + Names.nouns[rand3];
-  this.name = Names.adjectives[rand1];
+  var rand2 = Math.floor(Math.random() * Names.adjectives.length);
+  var rand3 = Math.floor(Math.random() * Names.nouns.length);
+  this.name = Names.adjectives[rand2] + ' ' + Names.colors[rand1] + ' ' + Names.nouns[rand3];
+  //this.name = Names.adjectives[rand1];
   this.players = [];
   this.playerLimit = 10;
   this.state = 'waiting';
@@ -46,14 +46,13 @@ Game.prototype.start = function(socket) {
 };
 
 Game.prototype.play = function(socket, card, data) {
-  //TODO: more logic to handle when you play action cards on people
   if (this.gameManager.playCard(card, data)) {
     socket.emit('place card');
     this.gameManager.getCurrentPlayer().socket.emit('deal', {card: this.gameManager.deck.deal()});
     this.sockets.to(this.name).emit('next player', this.gameManager.getCurrentPlayer().socket.id);
 		this.gameManager.nextPlayer();
   } else {
-    socket.emit('error', 'invalid play');
+    socket.emit('error', data);
   }
 };
 

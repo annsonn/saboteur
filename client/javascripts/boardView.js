@@ -266,21 +266,35 @@ var BoardView = function(app) {
   });
   
   app.socket.on('player-block-status', function(data) {
-  
-    if ($('[playernumber="' + data.playerNumber + '"]').length == 0 ) {
-      var playerStatus = $('<li />').addClass(((data.isBlocked) ? 'blocked' : '')).attr('playerNumber', data.playerNumber);
+    console.log(data);
+    console.log(data.blocks);
+    
+    var playerStatus = $('[playernumber="' + data.playerNumber + '"]');
+    
+    if (playerStatus.length == 0 ) {
+      playerStatus = $('<li />').addClass(((data.isBlocked) ? 'blocked' : '')).attr('playerNumber', data.playerNumber);
       playerStatus.append($('<div />').addClass('player').append($('<div class="playernumber center">player<br>'+ (data.playerNumber+1) +'</div>')));
-      var playerBlocks = $('<ul />').addClass('blocks');
-      console.log(data.blocks);
-      
-      // each block appends to the player blocks
-      playerBlocks.append($('<li/>').attr('card', 'block-pickaxe').attr('blocked', (data.blocks.pickaxe) ? 'true' : 'false'));
-      playerBlocks.append($('<li/>').attr('card', 'block-lamp').attr('blocked', (data.blocks.lamp) ? 'true' : 'false'));
-      playerBlocks.append($('<li/>').attr('card', 'block-cart').attr('blocked', (data.blocks.cart) ? 'true' : 'false'));
-  
-      playerBlocks.appendTo(playerStatus);
       $(playerStatus).appendTo('.players-status');
     }
+    
+    
+    if ($('[playernumber="' + data.playerNumber + '"] .blocks').length > 0) {
+      console.log('remove block cards');
+      $('[playernumber="' + data.playerNumber + '"] .blocks' ).remove();
+    }
+    
+    var playerBlocks = $('<ul />').addClass('blocks');
+    console.log('pickaxe: ' + data.blocks.pickaxe);
+    console.log('lamp: ' + data.blocks.lamp);
+    console.log('cart: ' + data.blocks.cart);
+    
+    // each block appends to the player blocks
+    playerBlocks.append($('<li/>').attr('card', 'block-pickaxe').attr('blocked', data.blocks.pickaxe));
+    playerBlocks.append($('<li/>').attr('card', 'block-lamp').attr('blocked', data.blocks.lamp));
+    playerBlocks.append($('<li/>').attr('card', 'block-cart').attr('blocked', data.blocks.cart));
+    
+    playerBlocks.appendTo(playerStatus);
+    
   });
   
   app.socket.on('player-action-card', function(data) {

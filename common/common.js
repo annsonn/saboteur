@@ -12,3 +12,4 @@ var typeOfCard = function(node) {
   }
     return 'path';
 };
+

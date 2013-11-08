@@ -1,9 +1,8 @@
-
 var Player = function(socket) {
   this.socket = socket;
   this.job = null;
   this.hand = [];
-  this.blocks = {};
+  this.blocks = {pickaxe: false, lamp: false, cart: false};
 };
 
 Player.prototype.setJob = function(job) {
@@ -22,26 +21,40 @@ Player.prototype.serialize = function() {
 };
 
 Player.prototype.applyCard = function(card) {
-  var parts = card.split(' ');
+  var parts = card.split('-');
   var action = parts.splice(0, 1)[0];
-
+  
   if (action === 'block') {
-  	// TODO validate if possible to free
-  	this.blocks[parts.pop()] = true;
+    if (this.blocks[parts[0]]) {
+      return false;
+    }
+  	this.blocks[parts[0]] = true;
   	return true;
-  } else if (card.indexOf('free') >= 0) {
-  	// TODO validate if blocked
-  	this.blocks[parts.pop()] = false;
-  	if (parts.length >0) {	// Second part
-  		this.blocks[parts.pop()] = false;
-  	}
-  	return true;
+  } else if (action === 'free') {
+    var freed = false;
+    freed = ( freePlayer(this.blocks, parts[0]) || freePlayer(this.blocks, parts[1]) ) ? true : false; 
+    return freed;
   }
   return false;
-};
+}
+
+var freePlayer = function(blocks, actionType){
+  if (!actionType) {
+    return false;
+  }  
+  if (!blocks[actionType]) {
+    return false;
+  }
+  blocks[actionType] = false;
+  return true;
+}
 
 Player.prototype.isBlocked = function() {
   return this.blocks.pickaxe || this.blocks.light || this.blocks.cart;
+};
+
+Player.prototype.getBlocks = function() {
+  return {pickaxe: this.blocks['pickaxe'], lamp: this.blocks['lamp'], cart: this.blocks['cart']};
 };
 
 module.exports = Player;

@@ -33,14 +33,14 @@ exports.testApplyAndIsBlocked = function(test) {
 
   test.ok(!player.isBlocked());
 
-  test.ok(player.applyCard('block light'));
-  test.ok(player.applyCard('block cart'));
+  test.ok(player.applyCard('block-lamp'));
+  test.ok(player.applyCard('block-cart'));
   test.ok(player.isBlocked());
-  test.ok(player.blocks.light);
+  test.ok(player.blocks.lamp);
   test.ok(!player.blocks.pickaxe);
 
-  test.ok(player.applyCard('free light'));
-  test.ok(player.applyCard('free cart'));
+  test.ok(player.applyCard('free-lamp'));
+  test.ok(player.applyCard('free-cart'));
   test.ok(!player.isBlocked());
 
   test.ok(!player.applyCard('invalid'));
