@@ -62,6 +62,10 @@ GameManager.prototype.playCard = function(card, data) {
   return false;
 }
 
+GameManager.prototype.checkForWinner = function() {
+  return this.board.hasWinner();
+};
+
 GameManager.prototype.eachPlayer = function(callback) {
   var self = this;
   this.players.forEach(function(player, index) {

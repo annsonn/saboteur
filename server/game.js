@@ -48,9 +48,16 @@ Game.prototype.start = function(socket) {
 Game.prototype.play = function(socket, card, data) {
   if (this.gameManager.playCard(card, data)) {
     socket.emit('place card');
-    this.gameManager.getCurrentPlayer().socket.emit('deal', {card: this.gameManager.deck.deal()});
-    this.sockets.to(this.name).emit('next player', this.gameManager.getCurrentPlayer().socket.id);
-		this.gameManager.nextPlayer();
+    if (this.gameManager.checkForWinner()) {
+      this.sockets.to(this.name).emit('winner', {
+        winner: this.gameManager.getCurrentPlayer().socket.id,
+        goldCard: this.gameManater.board.gold
+      });
+    } else {
+      this.gameManager.getCurrentPlayer().socket.emit('deal', {card: this.gameManager.deck.deal()});
+      this.sockets.to(this.name).emit('next player', this.gameManager.getCurrentPlayer().socket.id);
+      this.gameManager.nextPlayer();
+    }
   } else {
     socket.emit('error', data);
   }
