@@ -119,11 +119,14 @@ var Server = function() {
               }
               
 							// if is submitted, then trigger turn ending event (deal new card and move to next player)
-							if (data.type == 'submit' || data.type == 'discard') {
+							if (data.type == 'submit') {
                 game.host.emit('player-action', {type: data.type, cardType: data.cardType});
-                //TODO manage discard deck
-                socket.emit('deal', {card: game.gameManager.deck.deal()});
 							};
+              
+              if (data.type == 'discard') {
+                game.gameManager.nextPlayer();
+                socket.emit('deal', {card: game.gameManager.deck.deal()});
+              }
             }
           });
         }

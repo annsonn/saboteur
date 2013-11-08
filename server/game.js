@@ -46,10 +46,7 @@ Game.prototype.start = function(socket) {
 };
 
 Game.prototype.play = function(socket, card, data) {
-  //TODO: more logic to handle when you play action cards on people
-  var playCard = this.gameManager.playCard(card, data);
-  console.log('Done Play Card Returned: ' + playCard);
-  if (playCard == false) {
+  if (this.gameManager.playCard(card, data)) {
     socket.emit('place card');
     this.gameManager.getCurrentPlayer().socket.emit('deal', {card: this.gameManager.deck.deal()});
     this.sockets.to(this.name).emit('next player', this.gameManager.getCurrentPlayer().socket.id);
