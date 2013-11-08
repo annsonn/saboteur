@@ -2,7 +2,7 @@ var Player = function(socket) {
   this.socket = socket;
   this.job = null;
   this.hand = [];
-  this.blocks = {pickaxe: 'false', lamp: 'false', cart: 'false'};
+  this.blocks = {pickaxe: false, lamp: false, cart: false};
 };
 
 Player.prototype.setJob = function(job) {
@@ -25,14 +25,14 @@ Player.prototype.applyCard = function(card) {
   var action = parts.splice(0, 1)[0];
   
   if (action === 'block') {
-    if (this.blocks[parts[0]] == true) {
+    if (this.blocks[parts[0]]) {
       return false;
     }
   	this.blocks[parts[0]] = true;
   	return true;
   } else if (action === 'free') {
     var freed = false;
-    freed = ( freePlayer(this.blocks, parts[0]) || freePlayer(this.blocks, parts[1]) )? true : false; 
+    freed = ( freePlayer(this.blocks, parts[0]) || freePlayer(this.blocks, parts[1]) ) ? true : false; 
     return freed;
   }
   return false;
@@ -42,7 +42,7 @@ var freePlayer = function(blocks, actionType){
   if (!actionType) {
     return false;
   }  
-  if (blocks[actionType] == false) {
+  if (!blocks[actionType]) {
     return false;
   }
   blocks[actionType] = false;
