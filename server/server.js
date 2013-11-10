@@ -112,6 +112,10 @@ var Server = function() {
 									// emit coordinates of goals to board in array
 									game.host.emit('map-card', game.gameManager.board.goalLocations);
 								}
+								if (data.cardType == 'avalanche') {
+									console.log('SERVER.JS - Player played a avalanche card');each
+									game.host.emit('avalanche-card', game.gameManager.board.startLocation);
+								}
               }
                 
               if (data.type == 'back') {
