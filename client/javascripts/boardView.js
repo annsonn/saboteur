@@ -86,9 +86,9 @@ var BoardView = function(app) {
 		return null;		
 	};
 
-  var isRotated = function(row, column) {
-    return $('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').hasClass('rotated');
-  };
+	var isRotated = function(row, column) {
+	  return $('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').hasClass('rotated');
+	};
 	
 	var displayCard = function(row, column, card, rotated) {
     if (card == 'null') {
@@ -118,6 +118,16 @@ var BoardView = function(app) {
 		}
 	};	
 
+	var highlightCard = function(type, direction) {
+		$('.board ul:nth-child('+ currentRow +') .board-card:nth-child('+ currentColumn +')').removeAttr('type');
+		if (type === 'column'){
+			currentColumn = currentColumn + direction;
+		} else if (type === 'row') {
+			currentRow = currentRow + direction;
+		}
+		$('.board ul:nth-child('+ currentRow +') .board-card:nth-child('+ currentColumn +')').attr('type', 'preview');
+	}
+	
   app.socket.on('card-action', function (data) {  	
     //add just for moving between players to block/free
 
@@ -210,12 +220,55 @@ var BoardView = function(app) {
     }
    
     if (data.cardType === 'avalanche') {
-      
+			if (data.type === 'left' && currentColumn!=0) {
+					for (var i = currentColumn; i>0; i--) {
+						if (!isSpaceEmpty(currentRow, i)) {
+							moveDistance = i - currentColumn;
+							break;
+						}
+					}
+					highlightCard('column', moveDistance);
+				};
+				
+				// Moving the card right
+				if (data.type === 'right' && currentColumn!=maxColumn) {
+					for (var i = currentColumn; i<=maxColumn; i++) {
+						if (!isSpaceEmpty(currentRow, i)) {
+							moveDistance = i - currentColumn;
+							break;
+						}
+					}
+					highlightCard('column', moveDistance);
+				};
+				
+				// Move card up
+				if (data.type === 'up' && currentColumn!=0) {
+					for (var i = currentRow; i>0; i--) {
+						if (!isSpaceEmpty(i, currentColumn)) {
+							moveDistance = i - currentRow;
+							break;
+						}
+					}
+					highlightCard('column', moveDistance);
+				};
+				
+				// Move card down
+				if (data.type === 'down' && currentColumn!=maxColumn) {
+					for (var i = currentRow; i<=maxRow; i++) {
+						if (!isSpaceEmpty(i, currentColumn)) {
+							moveDistance = i - currentRow;
+							break;
+						}
+					}
+					highlightCard('column', moveDistance);
+				};
+			}
+	   
     };
-    
-		if (data.type === 'rotate') {
-			$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').toggleClass('rotated');
-		};
+
+	if (data.type === 'rotate') {
+		$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').toggleClass('rotated');
+	};
   });
   
   app.socket.on('player-action', function (data) { 
@@ -324,7 +377,7 @@ var BoardView = function(app) {
   app.socket.on('avalanche-card', function(data) {
     currentRow = data.row;
     currentColumn = data.column;
-    $('.board ul:nth-child('+ (goalLocations[currentRow].row + 1) +') .board-card:nth-child('+ (goalLocations[currentRow].column + 1) +')').attr('type', 'preview');
+    $('.board ul:nth-child('+ currentRow +') .board-card:nth-child('+ currentColumn +')').attr('type', 'preview');
   });
   
 };
