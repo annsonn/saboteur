@@ -208,6 +208,10 @@ var BoardView = function(app) {
       
       $('.board ul:nth-child('+ (goalLocations[currentRow].row + 1) +') .board-card:nth-child('+ (goalLocations[currentRow].column + 1) +')').attr('type', 'preview');
     }
+   
+    if (data.cardType === 'avalanche') {
+      
+    };
     
 		if (data.type === 'rotate') {
 			$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').toggleClass('rotated');
@@ -316,5 +320,11 @@ var BoardView = function(app) {
 		console.log(goalLocations);
 		$('.board ul:nth-child('+ (goalLocations[currentRow].row + 1) +') .board-card:nth-child('+ (goalLocations[currentRow].column + 1) +')').attr('type', 'preview');
 	});
+  
+  app.socket.on('avalanche-card', function(data) {
+    currentRow = data.row;
+    currentColumn = data.column;
+    $('.board ul:nth-child('+ (goalLocations[currentRow].row + 1) +') .board-card:nth-child('+ (goalLocations[currentRow].column + 1) +')').attr('type', 'preview');
+  });
   
 };
