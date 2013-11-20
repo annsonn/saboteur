@@ -130,7 +130,6 @@ var BoardView = function(app) {
 	
   app.socket.on('card-action', function (data) {  	
     //add just for moving between players to block/free
-
     var moveDistance = 0;    
     
     if (data.cardType == 'path') {
@@ -221,48 +220,47 @@ var BoardView = function(app) {
    
     if (data.cardType === 'avalanche') {
 			if (data.type === 'left' && currentColumn!=0) {
-					for (var i = currentColumn; i>0; i--) {
-						if (!isSpaceEmpty(currentRow, i)) {
+				for (var i = currentColumn; i>0; i--) {
+					if (!isSpaceEmpty(currentRow, i) && i != currentColumn) {
 							moveDistance = i - currentColumn;
 							break;
-						}
 					}
-					highlightCard('column', moveDistance);
-				};
+				}
+				highlightCard('column', moveDistance);
+			};
 				
-				// Moving the card right
-				if (data.type === 'right' && currentColumn!=maxColumn) {
-					for (var i = currentColumn; i<=maxColumn; i++) {
-						if (!isSpaceEmpty(currentRow, i)) {
-							moveDistance = i - currentColumn;
-							break;
-						}
+			// Moving the card right
+			if (data.type === 'right' && currentColumn!=maxColumn) {
+				for (var i = currentColumn; i<=maxColumn; i++) {					
+					if (!isSpaceEmpty(currentRow, i) && i != currentColumn) {
+						moveDistance = i - currentColumn;
+						break;
 					}
-					highlightCard('column', moveDistance);
-				};
-				
-				// Move card up
-				if (data.type === 'up' && currentColumn!=0) {
-					for (var i = currentRow; i>0; i--) {
-						if (!isSpaceEmpty(i, currentColumn)) {
-							moveDistance = i - currentRow;
-							break;
-						}
+				}
+				highlightCard('column', moveDistance);
+			};
+			
+			// Move card up
+			if (data.type === 'up' && currentRow!=0) {
+				for (var i = currentRow; i>0; i--) {
+					if (!isSpaceEmpty(i, currentColumn) && i != currentRow) {
+						moveDistance = i - currentRow;
+						break;
 					}
-					highlightCard('column', moveDistance);
-				};
-				
-				// Move card down
-				if (data.type === 'down' && currentColumn!=maxColumn) {
-					for (var i = currentRow; i<=maxRow; i++) {
-						if (!isSpaceEmpty(i, currentColumn)) {
-							moveDistance = i - currentRow;
-							break;
-						}
+				}
+				highlightCard('row', moveDistance);
+			};
+			
+			// Move card down
+			if (data.type === 'down' && currentRow!=maxColumn) {
+				for (var i = currentRow; i<=maxRow; i++) {
+					if (!isSpaceEmpty(i, currentColumn) && i != currentRow) {
+						moveDistance = i - currentRow;
+						break;
 					}
-					highlightCard('column', moveDistance);
-				};
-			}
+				}
+				highlightCard('row', moveDistance);
+			};
 	   
     };
 
@@ -375,9 +373,10 @@ var BoardView = function(app) {
 	});
   
   app.socket.on('avalanche-card', function(data) {
-    currentRow = data.row;
-    currentColumn = data.column;
-    $('.board ul:nth-child('+ currentRow +') .board-card:nth-child('+ currentColumn +')').attr('type', 'preview');
+		console.log(data)
+    currentRow = data.row + 1;
+    currentColumn = data.column + 1;
+    $('.board ul:nth-child('+ currentRow +') .board-card:nth-child('+ currentColumn	+')').attr('type', 'preview');
   });
   
 };

@@ -7,7 +7,7 @@ module.exports = [
   'connected-top-right-left', 'connected-top-right-left', 'connected-top-right-left', 'connected-top-right-left', 'connected-top-right-left', 
   'connected-cross', 'connected-cross', 'connected-cross', 'connected-cross', 'connected-cross', 
   
-  'deadend-top',
+  /*'deadend-top',
   'deadend-right',
   'deadend-top-right',
   'deadend-top-left',
@@ -26,7 +26,7 @@ module.exports = [
   'block-pickaxe', 'block-pickaxe', 'block-pickaxe', 
   'block-lamp', 'block-lamp', 'block-lamp', 
   'block-cart', 'block-cart', 'block-cart', 
-  
-  'avalanche', 'avalanche', 'avalanche', 
-  'map', 'map', 'map', 'map', 'map', 'map', 'map', 
+  */
+  'avalanche', 'avalanche', 'avalanche'
+  //'map', 'map', 'map', 'map', 'map', 'map', 'map', 
 ];
