@@ -57,6 +57,14 @@ GameManager.prototype.playCard = function(card, data) {
   } else if (data.type == 'play-action') {
     var applyCard = this.players[data.target].applyCard(card)
     console.log('Done Applying Returned: ' + applyCard);
+    
+    // sends info back to blocked/free player
+    if (applyCard === 'blocked') {
+      this.players[data.target].socket.emit('blocked', {card: card});
+    } else if (applyCard === 'freed') {
+      this.players[data.target].socket.emit('freed', {card: card});
+    }
+    
     return applyCard;
   }
   return false;

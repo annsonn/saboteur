@@ -29,11 +29,11 @@ Player.prototype.applyCard = function(card) {
       return false;
     }
   	this.blocks[parts[0]] = true;
-  	return true;
+  	return 'blocked';
   } else if (action === 'free') {
     var freed = false;
     freed = ( freePlayer(this.blocks, parts[0]) || freePlayer(this.blocks, parts[1]) ) ? true : false; 
-    return freed;
+    return 'freed';
   }
   return false;
 }
