@@ -131,7 +131,7 @@ var Server = function() {
 							};
               
               if (data.type == 'discard') {
-								game.play(socket, 'null', {type: 'discard', cardType: data.cardType});
+								game.play(socket, 'discard-card', {type: data.type, cardType: data.cardType});
               }
             }
           });
