@@ -131,10 +131,22 @@ Board.prototype.placeCard = function( locationY, locationX, card, rotated ) {
   }
 };
 
+var isRemovable = function ( locationY, locationX, locationSet ) {
+	for (var i = 0; i < locationSet.length; i++) {
+		if ( locationSet[i].row == locationY && locationSet[i].column == locationX) {
+			console.log('cannot remove card');
+			return false;
+		}
+	}
+	return true;
+};
+
 Board.prototype.removeCard = function( locationY, locationX ) {
-  // TODO: check if card is start or end positions
-	if ( !this.board[locationY][locationX] )	{
+	if (isRemovable(locationY, locationX, [this.startLocation]) 
+			&& isRemovable(locationY, locationX, this.goalLocations) 
+			&& this.board[locationY][locationX]) {		
     this.board[locationY][locationX] = null;
+		console.log('removing card from board');
 		return true;
   }
 	return false;
