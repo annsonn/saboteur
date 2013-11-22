@@ -27,6 +27,6 @@ module.exports = [
   'block-lamp', 'block-lamp', 'block-lamp', 
   'block-cart', 'block-cart', 'block-cart', 
   
-  'avalanche', 'avalanche', 'avalanche', 
-  'map', 'map', 'map', 'map', 'map', 'map', 'map', 
+  'avalanche', 'avalanche', 'avalanche',
+  'map', 'map', 'map', 'map', 'map', 'map', 'map'
 ];

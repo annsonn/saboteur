@@ -131,10 +131,25 @@ Board.prototype.placeCard = function( locationY, locationX, card, rotated ) {
   }
 };
 
-Board.prototype.removeCard = function( locationX, locationY ) {
-  if ( !this.board[locationY][locationX] ) {
+var isRemovable = function ( locationY, locationX, locationSet ) {
+	for (var i = 0; i < locationSet.length; i++) {
+		if ( locationSet[i].row == locationY && locationSet[i].column == locationX) {
+			console.log('cannot remove card');
+			return false;
+		}
+	}
+	return true;
+};
+
+Board.prototype.removeCard = function( locationY, locationX ) {
+	if (isRemovable(locationY, locationX, [this.startLocation]) 
+			&& isRemovable(locationY, locationX, this.goalLocations) 
+			&& this.board[locationY][locationX]) {		
     this.board[locationY][locationX] = null;
+		console.log('removing card from board');
+		return true;
   }
+	return false;
 };
 
 Board.prototype.serialize = function() {

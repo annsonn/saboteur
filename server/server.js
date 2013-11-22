@@ -69,6 +69,9 @@ var Server = function() {
 								// send current player the selected card
                 game.play(socket, data.card, {type: data.type});
 							}
+							if (data.type === 'play-avalanche') {
+								game.play(socket, 'avalanche', {type: data.type, x: data.position.column, y: data.position.row});
+							}
             }
           });
         };
@@ -112,6 +115,10 @@ var Server = function() {
 									// emit coordinates of goals to board in array
 									game.host.emit('map-card', game.gameManager.board.goalLocations);
 								}
+								if (data.cardType == 'avalanche') {
+									console.log('SERVER.JS - Player played a avalanche card');
+									game.host.emit('avalanche-card', game.gameManager.board.startLocation);
+								}
               }
                 
               if (data.type == 'back') {
@@ -124,8 +131,7 @@ var Server = function() {
 							};
               
               if (data.type == 'discard') {
-                game.gameManager.nextPlayer();
-                socket.emit('deal', {card: game.gameManager.deck.deal()});
+								game.play(socket, 'discard-card', {type: data.type, cardType: data.cardType});
               }
             }
           });

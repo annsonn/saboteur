@@ -9,7 +9,7 @@ var Game = function(sockets, hostSocket) {
   var rand2 = Math.floor(Math.random() * Names.adjectives.length);
   var rand3 = Math.floor(Math.random() * Names.nouns.length);
   this.name = Names.adjectives[rand2] + ' ' + Names.colors[rand1] + ' ' + Names.nouns[rand3];
-  //this.name = Names.adjectives[rand1];
+  //this.name = Names.adjectives[rand3];
   this.players = [];
   this.playerLimit = 10;
   this.state = 'waiting';
@@ -46,7 +46,7 @@ Game.prototype.start = function(socket) {
 };
 
 Game.prototype.play = function(socket, card, data) {
-  if (this.gameManager.playCard(card, data)) {
+  if (this.gameManager.playCard(card, data) || card === 'discard-card' ) {
     socket.emit('place card');
     if (this.gameManager.checkForWinner()) {
       this.sockets.to(this.name).emit('winner', {
@@ -72,6 +72,7 @@ Game.prototype.play = function(socket, card, data) {
         this.gameManager.nextPlayer();
       }
     }
+
   } else {
     socket.emit('error', data);
   }
