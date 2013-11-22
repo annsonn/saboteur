@@ -57,10 +57,18 @@ var HandView = function(app) {
   // handling what happens when you click card from hand view
   var bindCardClick = function() {
     unbindCardClick();
-     
-    // Check to see if they are free otherwise disable path cards
-    
+         
     $('.card').click(function() {
+      
+      var card = $(this).attr('card');
+			var cardType = typeOfCard($(this).attr('card'));
+      
+      // if the player is block no click function for card
+      if (typeOfCard($(this).attr('card') === 'path' && playerStatus === 'blocked') {
+          console.log('path is unavaliable since player is blocked');
+          break;
+      }
+          
       $('.play-card > div').removeAttr('card').removeClass();
       $('.play-card > div').attr('card', $(this).attr('card')).addClass('selected-card');
       
@@ -75,8 +83,7 @@ var HandView = function(app) {
         });
       }
       
-      var card = $(this).attr('card');
-			var cardType = typeOfCard($(this).attr('card'));
+      
       console.log('sending:' + card + ' to server as cardtype: ' + cardType);
       
       // updates play button based on card picked
