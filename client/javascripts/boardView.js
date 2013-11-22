@@ -294,10 +294,16 @@ var BoardView = function(app) {
         app.socket.emit('board-action', {type: 'play-map', card: $('[type=preview][card]').attr('card')});
 				$('[type=preview][card]').removeAttr('type');
       }
+			if (data.cardType === 'avalanche') {
+				console.log('emit avalanche for row ' + currentRow + ' and column ' + currentColumn);
+				app.socket.emit('board-action', {type: 'play-avalanche', position: {row: currentRow - 1, column: currentColumn - 1}});
+				$('[type=preview][card]').removeAttr('type');
+			}
     }
     
     if (data.type === 'back' || data.type === 'discard') {
       if (data.cardType === 'path') {
+				console.log('removing card from board do to ' + data.type + ' played');
         $('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').removeClass('rotated');
         displayCard(currentRow, currentColumn, 'null');
       }
@@ -309,7 +315,14 @@ var BoardView = function(app) {
 
 	app.socket.on('next player', function(data) {
 		console.log('card accepted by server');
-		$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').attr('type', 'submitted');
+		if ( data.type === 'play' ) {
+			$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').attr('type', 'submitted');
+		} else if (data.type === 'play-avalanche' || (data.type === 'discard' && data.cardType === 'path')) {
+			displayCard(currentRow, currentColumn, 'null');
+		}
+		
+		
+		
 	});
 	
   app.socket.on('winner', function(data) {

@@ -69,6 +69,9 @@ var Server = function() {
 								// send current player the selected card
                 game.play(socket, data.card, {type: data.type});
 							}
+							if (data.type === 'play-avalanche') {
+								game.play(socket, 'avalanche', {type: data.type, x: data.position.column, y: data.position.row});
+							}
             }
           });
         };
@@ -128,8 +131,7 @@ var Server = function() {
 							};
               
               if (data.type == 'discard') {
-                game.gameManager.nextPlayer();
-                socket.emit('deal', {card: game.gameManager.deck.deal()});
+								game.play(socket, 'null', {type: 'discard', cardType: data.cardType});
               }
             }
           });

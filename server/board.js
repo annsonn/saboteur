@@ -131,10 +131,13 @@ Board.prototype.placeCard = function( locationY, locationX, card, rotated ) {
   }
 };
 
-Board.prototype.removeCard = function( locationX, locationY ) {
-  if ( !this.board[locationY][locationX] ) {
+Board.prototype.removeCard = function( locationY, locationX ) {
+  // TODO: check if card is start or end positions
+	if ( !this.board[locationY][locationX] )	{
     this.board[locationY][locationX] = null;
+		return true;
   }
+	return false;
 };
 
 Board.prototype.serialize = function() {

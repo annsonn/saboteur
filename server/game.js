@@ -46,7 +46,7 @@ Game.prototype.start = function(socket) {
 };
 
 Game.prototype.play = function(socket, card, data) {
-  if (this.gameManager.playCard(card, data)) {
+  if (this.gameManager.playCard(card, data) || card === 'null' ) {
     socket.emit('place card');
     if (this.gameManager.checkForWinner()) {
       this.sockets.to(this.name).emit('winner', {
@@ -72,6 +72,7 @@ Game.prototype.play = function(socket, card, data) {
         this.gameManager.nextPlayer();
       }
     }
+
   } else {
     socket.emit('error', data);
   }

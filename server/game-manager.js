@@ -58,7 +58,9 @@ GameManager.prototype.playCard = function(card, data) {
     var applyCard = this.players[data.target].applyCard(card)
     console.log('Done Applying Returned: ' + applyCard);
     return applyCard;
-  }
+  } else if (data.type == 'play-avalanche') {
+		return this.board.removeCard(data.y, data.x);
+	}
   return false;
 }
 
