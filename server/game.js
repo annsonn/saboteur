@@ -28,7 +28,7 @@ Game.prototype.join = function(socket) {
   this.players.push(socket.id);
   this.sockets.to(this.name).emit('joined', {playerId: socket.id, game: this.serialize()});
 };
-  
+
 Game.prototype.start = function(socket) {
   this.state = 'start game';
   this.gameManager = new GameManager(this.sockets, this.name, this.players);
@@ -48,9 +48,30 @@ Game.prototype.start = function(socket) {
 Game.prototype.play = function(socket, card, data) {
   if (this.gameManager.playCard(card, data)) {
     socket.emit('place card');
-    this.gameManager.getCurrentPlayer().socket.emit('deal', {card: this.gameManager.deck.deal()});
-    this.sockets.to(this.name).emit('next player', this.gameManager.getCurrentPlayer().socket.id);
-		this.gameManager.nextPlayer();
+    if (this.gameManager.checkForWinner()) {
+      this.sockets.to(this.name).emit('winner', {
+        winner: 'miners',
+        goldCard: this.gameManater.board.gold
+      });
+    } else {
+      // check if last card
+      var saboteursWin = true;
+      this.gameManager.eachPlayer(function(player) {
+        if (player.hand.length > 0) {
+          saboteursWin = false;
+        }
+      });
+
+      if (saboteursWin) {
+        this.sockets.to(this.name).emit('winner', {
+          winner: 'saboteurs'
+        });
+      } else {
+        this.gameManager.getCurrentPlayer().socket.emit('deal', {card: this.gameManager.deck.deal()});
+        this.sockets.to(this.name).emit('next player', this.gameManager.getCurrentPlayer().socket.id);
+        this.gameManager.nextPlayer();
+      }
+    }
   } else {
     socket.emit('error', data);
   }

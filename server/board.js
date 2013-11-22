@@ -44,9 +44,13 @@ Board.prototype.reset = function() {
   var goal = new Deck(['gold', 'coal-left', 'coal-right']);
   goal.shuffle();
   this.initBoard();
-  this.placeCard(this.startLocation.row, this.startLocation.column, 'start');
+  this.board[this.startLocation.row][this.startLocation.column] = 'start';
   for (var i = 0; i < this.goalLocations.length; i++) {
-    this.placeCard(this.goalLocations[i].row, this.goalLocations[i].column, goal.deal());
+    var card = goal.deal();
+    if (card == 'gold') {
+      this.gold = {x: this.goalLocations[i].column, y: this.goalLocations[i].row};
+    }
+    this.board[this.goalLocations[i].row][this.goalLocations[i].column] = card;
   };
 };
 
@@ -65,10 +69,6 @@ Board.prototype.placeCard = function( locationY, locationX, card, rotated ) {
     card = card[0];
   }
 
-  if (card === 'gold') {
-    this.gold = {x: locationX, y: locationY};
-  }
-
   if ( !this.board[locationY] ) {
     this.board[locationY] = [];
   }
@@ -83,6 +83,7 @@ Board.prototype.placeCard = function( locationY, locationX, card, rotated ) {
   // validate move
 
   var isAttached = false;
+
   // Top
   if (locationY - 1 >= 0 && this.board[locationY - 1][locationX]) {
     isAttached = true;
@@ -123,10 +124,11 @@ Board.prototype.placeCard = function( locationY, locationX, card, rotated ) {
     }
   }
 
-  // All good
-  this.board[locationY][locationX] = card;
-
-  return true;
+  if (isAttached) {
+    // All good
+    this.board[locationY][locationX] = card;
+    return true;
+  }
 };
 
 Board.prototype.removeCard = function( locationX, locationY ) {

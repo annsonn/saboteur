@@ -14,7 +14,7 @@ var GameManager = function(sockets, name, playerList) {
   this.players = [];
   initializePlayers(this, sockets, playerList);
   this.currentPlayerIndex = 0;  // Player 1 goes first
-  
+
   this.board.reset();
   this.deck.reset();
   this.jobManager.makeJobStack(gameRules.saboteurs, gameRules.miners);
@@ -27,7 +27,7 @@ var initializePlayers = function(self, sockets, playerList) {
       self.board = new Board(sockets.sockets[playerId]);
     } else {
       var player = new Player(sockets.sockets[playerId]);
-      self.players.push(player); 
+      self.players.push(player);
     }
   });
 };
@@ -62,6 +62,10 @@ GameManager.prototype.playCard = function(card, data) {
   return false;
 }
 
+GameManager.prototype.checkForWinner = function() {
+  return this.board.hasWinner();
+};
+
 GameManager.prototype.eachPlayer = function(callback) {
   var self = this;
   this.players.forEach(function(player, index) {
@@ -73,6 +77,16 @@ GameManager.prototype.getCurrentPlayer = function() {
   return this.players[this.currentPlayerIndex];
 };
 
+GameManager.prototype.getPlayer = function(id) {
+  var result = null;
+  this.players.forEach(function(player, index) {
+    if (player.socket.id === id) {
+      result = player;
+    }
+  });
+  return result;
+}
+
 GameManager.prototype.startPlayerTurn = function() {
 		this.getCurrentPlayer().socket.emit('start turn', "start player turn");
 };
@@ -82,7 +96,7 @@ GameManager.prototype.nextPlayer = function(){
 	if (this.currentPlayerIndex === this.players.length) {
 		this.currentPlayerIndex = 0;
 	}
-	this.startPlayerTurn();	
+	this.startPlayerTurn();
 };
 
 module.exports = GameManager;
