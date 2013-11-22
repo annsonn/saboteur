@@ -1,5 +1,6 @@
 var HandView = function(app) {
   console.log('hand view');
+  var playerStatus = 'free';
   
   $('#game').attr('page', 'lobby-controller');
   $('#join-game').click(function(event) {
@@ -57,6 +58,8 @@ var HandView = function(app) {
   var bindCardClick = function() {
     unbindCardClick();
      
+    // Check to see if they are free otherwise disable path cards
+    
     $('.card').click(function() {
       $('.play-card > div').removeAttr('card').removeClass();
       $('.play-card > div').attr('card', $(this).attr('card')).addClass('selected-card');
@@ -178,6 +181,7 @@ var HandView = function(app) {
 		$('#game').attr('page', 'hand');
 	});
 	
+  // When Clicking on DPad
   $('.left-button').click(function() {
     app.socket.emit('card-action', {type: 'left', cardType: typeOfCard($('.selected-card').attr('card')) });
   });
@@ -191,12 +195,13 @@ var HandView = function(app) {
     app.socket.emit('card-action', {type: 'down', cardType: typeOfCard($('.selected-card').attr('card')) });
   });  
   
+  // On Deal
 	app.socket.on('deal', function(data) {
     // console.log('dealt ' + data.card + ' to player');
     $('.hand ul').append($('<li />').attr('card', data.card).addClass('card'));
-    //bindCardClick();
   });
-	
+  
+  // After Map Card is Played
   app.socket.on('reveal-goal', function(data) {
     // console.log('reveal goal: ' + data.card);
     $('.revealed-goal').attr('card', data.card).removeClass('hide');
@@ -211,4 +216,15 @@ var HandView = function(app) {
 		$('.hand').removeClass('hide');
   });
   
+  // When Blocked
+  app.socket.on('blocked', function(data) {
+    console.log('you are now blocked');
+    playerStatus = 'blocked';
+  });
+  
+  // When Freed
+  app.socket.on('freed', function(data) {
+    console.log('you are now free');
+    playerStatus = 'free';
+  });
 };
