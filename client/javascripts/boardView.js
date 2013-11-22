@@ -257,6 +257,11 @@ var BoardView = function(app) {
 		$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').attr('type', 'submitted');
 	});
 	
+  app.socket.on('winner', function(data) {
+    console.log('We have a winner! ', data);
+  });
+
+
   app.socket.on('error', function(data) {
 		console.log(data);
     if (data === 'invalid play') {
