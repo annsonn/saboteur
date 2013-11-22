@@ -54,7 +54,7 @@ Game.prototype.play = function(socket, card, data) {
         goldCard: this.gameManater.board.gold
       });
     } else {
-      // TODO check if last card
+      // check if last card
       var saboteursWin = true;
       this.gameManager.eachPlayer(function(player) {
         if (player.hand.length > 0) {
