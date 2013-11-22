@@ -54,7 +54,7 @@ var Server = function() {
         return function(data) {
           socket.get('game', function(x, gameId) {
             var game = self.games[gameId];
-            console.log(data);
+            // console.log(data);
             
             if (game) {
               if (data.type === 'play') {
@@ -91,7 +91,7 @@ var Server = function() {
           socket.get('game', function(x, gameId) {
             var game = self.games[gameId];
             if (game) {  
-							console.log('SERVER.JS - ' + data);
+							// console.log('SERVER.JS - ' + data);
               // sending to host
               if (data.type == 'preview'){
                 if (data.cardType == 'path'){
@@ -107,7 +107,7 @@ var Server = function() {
                   game.host.emit('player-action-card', {card: data.card, currentPlayer: game.gameManager.currentPlayerIndex});
                 }
 								if (data.cardType == 'map') {
-									console.log('SERVER.JS - Player played a map card');
+									// console.log('SERVER.JS - Player played a map card');
 									// send server goal positions that are not flipped
 									// emit coordinates of goals to board in array
 									game.host.emit('map-card', game.gameManager.board.goalLocations);

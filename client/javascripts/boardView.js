@@ -76,7 +76,7 @@ var BoardView = function(app) {
 		for (var i = 1; i <= maxRow; i++ ) {
 			for (var j =1; j<= maxColumn; j++ ) {
 				if (isSpaceEmpty(i, j)) {
-					console.log('empty space found at row ' + i + 'and column ' + j);
+					// console.log('empty space found at row ' + i + 'and column ' + j);
 					return ({row: i, column: j});
 				};			
 			};
@@ -215,7 +215,7 @@ var BoardView = function(app) {
   });
   
   app.socket.on('player-action', function (data) { 
-    console.log(data);
+    // console.log(data);
     $('#game').attr('page', 'board'); // regardless of view goes back to the board view
     
 		if (data.type === 'preview') {
@@ -308,7 +308,7 @@ var BoardView = function(app) {
 	app.socket.on('map-card', function(data) {
 		goalLocations = data;    
     currentRow = 0;
-		console.log(goalLocations);
+		// console.log(goalLocations);
 		$('.board ul:nth-child('+ (goalLocations[currentRow].row + 1) +') .board-card:nth-child('+ (goalLocations[currentRow].column + 1) +')').attr('type', 'preview');
 	});
   

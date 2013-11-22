@@ -91,6 +91,7 @@ var HandView = function(app) {
 	app.socket.on('next player', function(data) {
 		console.log('card accepted by server');
 		// removing card from hand
+    // change colours to tell player that it is not their turn anymore.
 		unbindCardClick();
 		$('.hand [card='+$('.selected-card').attr('card')+']').first().remove();
 		$('#game').attr('page', 'hand');
@@ -128,7 +129,7 @@ var HandView = function(app) {
     
 	app.socket.on('start turn', function(data){
 		console.log('turn started');
-		
+    // TODO: tell player it's their turn
 		bindCardClick();
 		
 	});
@@ -147,10 +148,6 @@ var HandView = function(app) {
     });
   });  
   
-
-
-	
-	
 	var unbindButtons = function() {
 		$('.rotate-button').unbind('click');
     $('.play-button').unbind('click');
@@ -195,13 +192,13 @@ var HandView = function(app) {
   });  
   
 	app.socket.on('deal', function(data) {
-    console.log('dealt ' + data.card + ' to player');
+    // console.log('dealt ' + data.card + ' to player');
     $('.hand ul').append($('<li />').attr('card', data.card).addClass('card'));
     //bindCardClick();
   });
 	
   app.socket.on('reveal-goal', function(data) {
-    console.log('reveal goal: ' + data.card);
+    // console.log('reveal goal: ' + data.card);
     $('.revealed-goal').attr('card', data.card).removeClass('hide');
     $('.hand').addClass('hide');
 		$('.revealed-goal').addClass('flip-goal');
@@ -212,7 +209,6 @@ var HandView = function(app) {
 		$('.revealed-goal').removeAttr('card');
     $('.revealed-goal').addClass('hide');
 		$('.hand').removeClass('hide');
-		
   });
   
 };
