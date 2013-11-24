@@ -1,5 +1,6 @@
 var HandView = function(app) {
   console.log('hand view');
+  var playerStatus = 'free';
   
   $('#game').attr('page', 'lobby-controller');
   $('#join-game').click(function(event) {
@@ -56,34 +57,42 @@ var HandView = function(app) {
   // handling what happens when you click card from hand view
   var bindCardClick = function() {
     unbindCardClick();
-     
+         
     $('.card').click(function() {
-      $('.play-card > div').removeAttr('card').removeClass();
-      $('.play-card > div').attr('card', $(this).attr('card')).addClass('selected-card');
-      
-      // disables rotate if not a map card
-      if ($('.selected-card[card*=connected]').length === 0 && $('.selected-card[card*=deadend]').length === 0) {
-        $('.rotate-button').css('background-color', 'grey');
-        $('.rotate-button').unbind('click');
-      } else {
-        $('.rotate-button').click(function() {    
-          $('.selected-card').toggleClass('rotated');            
-          app.socket.emit('card-action', {type: 'rotate'});  
-        });
-      }
       
       var card = $(this).attr('card');
 			var cardType = typeOfCard($(this).attr('card'));
-      console.log('sending:' + card + ' to server as cardtype: ' + cardType);
       
-      // updates play button based on card picked
-      $('.play-button').click(function() {
-        app.socket.emit('player-action', {card: card, type: 'submit', cardType: cardType}); 
-      });
+      // if the player is block no click function for card
+      if (typeOfCard($(this).attr('card')) != 'path' || playerStatus === 'free') {
+        $('.play-card > div').removeAttr('card').removeClass();
+        $('.play-card > div').attr('card', $(this).attr('card')).addClass('selected-card');
+        
+        // disables rotate if not a map card
+        if ($('.selected-card[card*=connected]').length === 0 && $('.selected-card[card*=deadend]').length === 0) {
+          $('.rotate-button').css('background-color', 'grey');
+          $('.rotate-button').unbind('click');
+        } else {
+          $('.rotate-button').click(function() {    
+            $('.selected-card').toggleClass('rotated');            
+            app.socket.emit('card-action', {type: 'rotate'});  
+          });
+        }
+        
+        // console.log('sending:' + card + ' to server as cardtype: ' + cardType);        
+        // updates play button based on card picked
+        $('.play-button').click(function() {
+          app.socket.emit('player-action', {card: card, type: 'submit', cardType: cardType}); 
+        });
+        
+        app.socket.emit('player-action', {card: card, type: 'preview', cardType: cardType});
+        
+        $('#game').attr('page', 'play-card');    
+          
+      } else {
+          console.log('card is disabled because user is blocked');
+      }
       
-      app.socket.emit('player-action', {card: card, type: 'preview', cardType: cardType});
-      
-      $('#game').attr('page', 'play-card');
     });
   };
   
@@ -91,6 +100,7 @@ var HandView = function(app) {
 	app.socket.on('next player', function(data) {
 		console.log('card accepted by server');
 		// removing card from hand
+    // change colours to tell player that it is not their turn anymore.
 		unbindCardClick();
 		$('.hand [card='+$('.selected-card').attr('card')+']').first().remove();
 		$('#game').attr('page', 'hand');
@@ -128,7 +138,7 @@ var HandView = function(app) {
     
 	app.socket.on('start turn', function(data){
 		console.log('turn started');
-		
+    // TODO: tell player it's their turn
 		bindCardClick();
 		
 	});
@@ -147,10 +157,6 @@ var HandView = function(app) {
     });
   });  
   
-
-
-	
-	
 	var unbindButtons = function() {
 		$('.rotate-button').unbind('click');
     $('.play-button').unbind('click');
@@ -181,6 +187,7 @@ var HandView = function(app) {
 		$('#game').attr('page', 'hand');
 	});
 	
+  // When Clicking on DPad
   $('.left-button').click(function() {
     app.socket.emit('card-action', {type: 'left', cardType: typeOfCard($('.selected-card').attr('card')) });
   });
@@ -194,14 +201,15 @@ var HandView = function(app) {
     app.socket.emit('card-action', {type: 'down', cardType: typeOfCard($('.selected-card').attr('card')) });
   });  
   
+  // On Deal
 	app.socket.on('deal', function(data) {
-    console.log('dealt ' + data.card + ' to player');
+    // console.log('dealt ' + data.card + ' to player');
     $('.hand ul').append($('<li />').attr('card', data.card).addClass('card'));
-    //bindCardClick();
   });
-	
+  
+  // After Map Card is Played
   app.socket.on('reveal-goal', function(data) {
-    console.log('reveal goal: ' + data.card);
+    // console.log('reveal goal: ' + data.card);
     $('.revealed-goal').attr('card', data.card).removeClass('hide');
     $('.hand').addClass('hide');
 		$('.revealed-goal').addClass('flip-goal');
@@ -212,7 +220,17 @@ var HandView = function(app) {
 		$('.revealed-goal').removeAttr('card');
     $('.revealed-goal').addClass('hide');
 		$('.hand').removeClass('hide');
-		
   });
   
+  // When Blocked
+  app.socket.on('blocked', function(data) {
+    console.log('you are now blocked');
+    playerStatus = 'blocked';
+  });
+  
+  // When Freed
+  app.socket.on('freed', function(data) {
+    console.log('you are now free');
+    playerStatus = 'free';
+  });
 };
