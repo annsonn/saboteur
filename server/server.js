@@ -124,8 +124,7 @@ var Server = function() {
 							};
               
               if (data.type == 'discard') {
-                game.gameManager.nextPlayer();
-                socket.emit('deal', {card: game.gameManager.deck.deal()});
+                game.play(socket, 'discard-card', {type: data.type, cardType: data.cardType});
               }
             }
           });

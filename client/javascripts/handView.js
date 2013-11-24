@@ -64,36 +64,35 @@ var HandView = function(app) {
 			var cardType = typeOfCard($(this).attr('card'));
       
       // if the player is block no click function for card
-      if (typeOfCard($(this).attr('card') === 'path' && playerStatus === 'blocked') {
-          console.log('path is unavaliable since player is blocked');
-          break;
-      }
-          
-      $('.play-card > div').removeAttr('card').removeClass();
-      $('.play-card > div').attr('card', $(this).attr('card')).addClass('selected-card');
-      
-      // disables rotate if not a map card
-      if ($('.selected-card[card*=connected]').length === 0 && $('.selected-card[card*=deadend]').length === 0) {
-        $('.rotate-button').css('background-color', 'grey');
-        $('.rotate-button').unbind('click');
-      } else {
-        $('.rotate-button').click(function() {    
-          $('.selected-card').toggleClass('rotated');            
-          app.socket.emit('card-action', {type: 'rotate'});  
+      if (typeOfCard($(this).attr('card')) != 'path' || playerStatus === 'free') {
+        $('.play-card > div').removeAttr('card').removeClass();
+        $('.play-card > div').attr('card', $(this).attr('card')).addClass('selected-card');
+        
+        // disables rotate if not a map card
+        if ($('.selected-card[card*=connected]').length === 0 && $('.selected-card[card*=deadend]').length === 0) {
+          $('.rotate-button').css('background-color', 'grey');
+          $('.rotate-button').unbind('click');
+        } else {
+          $('.rotate-button').click(function() {    
+            $('.selected-card').toggleClass('rotated');            
+            app.socket.emit('card-action', {type: 'rotate'});  
+          });
+        }
+        
+        // console.log('sending:' + card + ' to server as cardtype: ' + cardType);        
+        // updates play button based on card picked
+        $('.play-button').click(function() {
+          app.socket.emit('player-action', {card: card, type: 'submit', cardType: cardType}); 
         });
+        
+        app.socket.emit('player-action', {card: card, type: 'preview', cardType: cardType});
+        
+        $('#game').attr('page', 'play-card');    
+          
+      } else {
+          console.log('card is disabled because user is blocked');
       }
       
-      
-      console.log('sending:' + card + ' to server as cardtype: ' + cardType);
-      
-      // updates play button based on card picked
-      $('.play-button').click(function() {
-        app.socket.emit('player-action', {card: card, type: 'submit', cardType: cardType}); 
-      });
-      
-      app.socket.emit('player-action', {card: card, type: 'preview', cardType: cardType});
-      
-      $('#game').attr('page', 'play-card');
     });
   };
   
