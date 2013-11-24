@@ -68,7 +68,7 @@ Game.prototype.play = function(socket, card, data) {
         });
       } else {
         this.gameManager.getCurrentPlayer().socket.emit('deal', {card: this.gameManager.deck.deal()});
-        this.sockets.to(this.name).emit('next player', this.gameManager.getCurrentPlayer().socket.id);
+        this.sockets.to(this.name).emit('next player', {currentPlayer: this.gameManager.getCurrentPlayer().socket.id, type: data.type});
         this.gameManager.nextPlayer();
       }
     }
