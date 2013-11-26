@@ -316,7 +316,9 @@ var BoardView = function(app) {
 	app.socket.on('next player', function(data) {
 		console.log('card accepted by server');
 		if ( data.type === 'play' ) {
-			$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').attr('type', 'submitted');
+			$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').attr('type', 'submitted');      
+      // TODO: FLIP GOAL CARDS HERE      
+      
 		} else if (data.type === 'play-avalanche' || (data.type === 'discard' && data.cardType === 'path')) {
 			displayCard(currentRow, currentColumn, 'null');
 		}
@@ -327,6 +329,8 @@ var BoardView = function(app) {
 	
   app.socket.on('winner', function(data) {
     console.log('We have a winner! ', data);
+    
+    // TODO: add class to body so show winner   
   });
 
 

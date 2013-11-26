@@ -233,4 +233,12 @@ var HandView = function(app) {
     console.log('you are now free');
     playerStatus = 'free';
   });
+  
+  // Winner detected
+  app.socket.on('winner', function(data) {
+    console.log('We have a winner! ', data);
+    
+    // TODO: show end game screen
+  });
+  
 };
