@@ -101,6 +101,7 @@ var HandView = function(app) {
 		console.log('card accepted by server');
 		// removing card from hand
     // change colours to tell player that it is not their turn anymore.
+    $('body').removeClass('current-player');
 		unbindCardClick();
 		$('.hand [card='+$('.selected-card').attr('card')+']').first().remove();
 		$('#game').attr('page', 'hand');
@@ -137,6 +138,7 @@ var HandView = function(app) {
   });
     
 	app.socket.on('start turn', function(data){
+    $('body').addClass('current-player');
 		console.log('turn started');
     // TODO: tell player it's their turn
 		bindCardClick();

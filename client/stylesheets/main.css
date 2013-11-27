@@ -52,6 +52,11 @@ body {
   vertical-align: middle;
 }
 
+.current-player .screen {
+  background: -webkit-radial-gradient(circle, transparent, lightgrey);
+}
+
+
 .title {
 	color: #FFDD00;
   font-family: "PT+Serif";
