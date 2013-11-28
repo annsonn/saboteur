@@ -152,6 +152,12 @@ Board.prototype.removeCard = function( locationY, locationX ) {
 	return false;
 };
 
+Board.prototype.checkToFlipGoal = function( row, column ) {
+
+	return false;
+};
+
+
 Board.prototype.serialize = function() {
   return this.board;
 };
