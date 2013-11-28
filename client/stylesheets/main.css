@@ -53,25 +53,25 @@ body {
 }
 
 .current-player.red .screen {
-  background: -webkit-radial-gradient(circle, transparent, red);
+  background: -webkit-radial-gradient(circle, transparent 60%, red);
 }
 .current-player.orange .screen {
-  background: -webkit-radial-gradient(circle, transparent, orange);
+  background: -webkit-radial-gradient(circle, transparent 60%, orange);
 }
 .current-player.yellow .screen {
-  background: -webkit-radial-gradient(circle, transparent, yellow);
+  background: -webkit-radial-gradient(circle, transparent 60%, yellow);
 }
 .current-player.green .screen {
-  background: -webkit-radial-gradient(circle, transparent, green);
+  background: -webkit-radial-gradient(circle, transparent 60%, green);
 }
 .current-player.blue.screen {
-  background: -webkit-radial-gradient(circle, transparent, blue);
+  background: -webkit-radial-gradient(circle, transparent 60%, blue);
 }
 .current-player.indigo .screen {
-  background: -webkit-radial-gradient(circle, transparent, indigo);
+  background: -webkit-radial-gradient(circle, transparent 60%, indigo);
 }
 .current-player.violet.screen {
-  background: -webkit-radial-gradient(circle, transparent, violet);
+  background: -webkit-radial-gradient(circle, transparent 60%, violet);
 }
 
 .title {

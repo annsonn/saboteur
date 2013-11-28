@@ -1,6 +1,7 @@
 var BoardView = function(app) {
   console.log('board view');
   $('#game').attr('page', 'lobby-view');
+	var currentPlayerNum = 1;
 	
   $('#create-game').click(function(event) {
     app.socket.emit('create');
@@ -23,6 +24,16 @@ var BoardView = function(app) {
     }
   });
 
+	// To keep track of who the current player is and their colour 
+	
+	var incrementCurrentPlayerNum = function() {
+		currentPlayerNum = currentPlayerNum + 1;
+		if (currentPlayerNum > app.game.playerCount) {
+			currentPlayerNum = 1;
+		}		
+	};
+	
+	
   // Once the game start the board is loaded
   app.socket.on('start', function(data) {
     console.log('game started', data);
@@ -55,7 +66,8 @@ var BoardView = function(app) {
 			$(this).css('top', cardHeight*(-0.8));
       next(); 
     });   
-    
+		
+		$('body').addClass('current-player ' + playerColours[currentPlayerNum]);
 	
   });
   
@@ -317,8 +329,14 @@ var BoardView = function(app) {
     }
   });
 
+	
+	// Player's Turn is Over	
 	app.socket.on('next player', function(data) {
 		console.log('card accepted by server');
+		
+		incrementCurrentPlayerNum();
+		$('body').removeClass().addClass('current-player ' + playerColours[currentPlayerNum]);
+		
 		if ( data.type === 'play' ) {
 			$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').attr('type', 'submitted');      
       // TODO: FLIP GOAL CARDS HERE      
@@ -327,11 +345,10 @@ var BoardView = function(app) {
 			displayCard(currentRow, currentColumn, 'null');
 		}
 		
-		
-		
 	});
 	
-  app.socket.on('winner', function(data) {
+  // Winner code
+	app.socket.on('winner', function(data) {
     console.log('We have a winner! ', data);
     
     // TODO: add class to body so show winner   
