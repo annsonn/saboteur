@@ -1,7 +1,7 @@
 var BoardView = function(app) {
   console.log('board view');
   $('#game').attr('page', 'lobby-view');
-
+	
   $('#create-game').click(function(event) {
     app.socket.emit('create');
   })
@@ -27,7 +27,7 @@ var BoardView = function(app) {
   app.socket.on('start', function(data) {
     console.log('game started', data);
     
-    var visbleRows = data.length;
+    var visibleRows = data.length;
     
     for (var i = 0; i < data.length; i++) {
       var boardRow = $('<ul />');
@@ -43,7 +43,7 @@ var BoardView = function(app) {
       $(boardRow).appendTo('.board');
     };
     
-    var cardHeight = (windowHeight-40)/visbleRows;
+    var cardHeight = (windowHeight-40)/visibleRows;
     var cardWidth = cardHeight*0.6275; 
     
     $('.board ul li').css({height: cardHeight, width: cardWidth});  
@@ -56,6 +56,7 @@ var BoardView = function(app) {
       next(); 
     });   
     
+	
   });
   
 	
@@ -86,10 +87,12 @@ var BoardView = function(app) {
 		return null;		
 	};
 
+	// checking if it's rotated
 	var isRotated = function(row, column) {
 	  return $('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').hasClass('rotated');
 	};
 	
+	// displaying the card in new location
 	var displayCard = function(row, column, card, rotated) {
     if (card == 'null') {
       $('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').removeAttr('card');
@@ -102,6 +105,7 @@ var BoardView = function(app) {
     };
 	};
 	
+	// figuring out location to move to
 	var move = function(type, direction) {
 		var rotated = isRotated(currentRow, currentColumn);
 

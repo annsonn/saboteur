@@ -1,6 +1,7 @@
 var HandView = function(app) {
   console.log('hand view');
   var playerStatus = 'free';
+	var playerColour = '';
   
   $('#game').attr('page', 'lobby-controller');
   $('#join-game').click(function(event) {
@@ -27,12 +28,14 @@ var HandView = function(app) {
     console.log(data);
     app.game.playerCount = data.game.players.length - 1;
     console.log("num players: " + app.game.playerCount);
-    
+    playerColour = playerColours[app.game.playerCount];
+		
+		
     if (app.player.id == data.playerId) {
       $('#game').attr('page', 'join-mobile');
-      $('#join-mobile .screen').css({
-         "background": "-webkit-radial-gradient(circle, transparent, " + playerColours[app.game.playerCount] + ")"
-      });
+      $('body').addClass(playerColour);
+			$('body').addClass('current-player');
+			
       $('.player-text').append(app.game.playerCount);
       if (app.game.playerCount > 1) {
         $('.ready-button').hide();
@@ -113,6 +116,7 @@ var HandView = function(app) {
 	
   // Game Screens
   app.socket.on('start', function(data) {
+		$('body').removeClass('current-player');
     console.log('game started', data);
     
     if (data.job == "gold-digger") {

@@ -52,10 +52,27 @@ body {
   vertical-align: middle;
 }
 
-.current-player .screen {
-  background: -webkit-radial-gradient(circle, transparent, lightgrey);
+.current-player.red .screen {
+  background: -webkit-radial-gradient(circle, transparent, red);
 }
-
+.current-player.orange .screen {
+  background: -webkit-radial-gradient(circle, transparent, orange);
+}
+.current-player.yellow .screen {
+  background: -webkit-radial-gradient(circle, transparent, yellow);
+}
+.current-player.green .screen {
+  background: -webkit-radial-gradient(circle, transparent, green);
+}
+.current-player.blue.screen {
+  background: -webkit-radial-gradient(circle, transparent, blue);
+}
+.current-player.indigo .screen {
+  background: -webkit-radial-gradient(circle, transparent, indigo);
+}
+.current-player.violet.screen {
+  background: -webkit-radial-gradient(circle, transparent, violet);
+}
 
 .title {
 	color: #FFDD00;
