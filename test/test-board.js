@@ -34,6 +34,29 @@ exports.testPlaceCardPass = function(test) {
   test.done();
 }
 
+exports.testCheckToFlipGoal = function(test) {
+  var board = new Board('socket');
+
+  var card = 'connected-top-right';
+  var deadendCard = 'deadend-top-right';
+
+  board.reset();
+
+  test.equal(board.checkToFlipGoal(3, 2, card), false);
+  test.equal(board.checkToFlipGoal(3, 8, deadendCard), false);
+  test.notEqual(board.checkToFlipGoal(0, 9, card), false);
+  test.notEqual(board.checkToFlipGoal(1, 8, card), false);
+  test.notEqual(board.checkToFlipGoal(1, 10, card), false);
+  test.notEqual(board.checkToFlipGoal(2, 9, card), false);
+  test.notEqual(board.checkToFlipGoal(3, 8, card), false);
+  test.notEqual(board.checkToFlipGoal(3, 10, card), false);
+  test.notEqual(board.checkToFlipGoal(4, 9, card), false);
+  test.notEqual(board.checkToFlipGoal(5, 8, card), false);
+  test.notEqual(board.checkToFlipGoal(5, 10, card), false);
+  test.notEqual(board.checkToFlipGoal(6, 9, card), false);
+  test.done();
+}
+
 exports.testPlaceCardFail = function(test) {
   var board = new Board('socket');
 
