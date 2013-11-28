@@ -1,7 +1,9 @@
 var BoardView = function(app) {
   console.log('board view');
   $('#game').attr('page', 'lobby-view');
+	
 	var currentPlayerNum = 1;
+	var goalLocations = [{row: 1, column: 9}, {row: 3, column: 9}, {row: 5, column: 9}];
 	
   $('#create-game').click(function(event) {
     app.socket.emit('create');
@@ -280,9 +282,9 @@ var BoardView = function(app) {
 	   
     };
 
-	if (data.type === 'rotate') {
-		$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').toggleClass('rotated');
-	};
+		if (data.type === 'rotate') {
+			$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').toggleClass('rotated');
+		};
   });
   
   app.socket.on('player-action', function (data) { 
@@ -329,19 +331,33 @@ var BoardView = function(app) {
     }
   });
 
+	// Checking new Card connects to GOAL
+	var isCardConnectedToGoal = function() {
+		if (currentCard.indexOf('connected') > 0) {
+			for (var i = 0; i < goalLocations.length; i++) {
+				if ( (Math.abs(goalLocations[i].row - currentRow) === 1 && goalLocations[i].column == currentColumn)
+					|| (Math.abs(goalLocations[i].column - currentColumn) === 1 && goalLocations[i].row == currentRow) ) {
+					return goalLocations[i];
+					$('.board ul:nth-child('+goalLocations[i].row+') .board-card:nth-child('+goalLocations[i].column+')').addClass('flipped');
+				}
+			}
+		}		
+		return false;		
+	};
+
 	
 	// Player's Turn is Over	
 	app.socket.on('next player', function(data) {
-		console.log('card accepted by server');
+		console.log('card accepted by server ' + data);
 		
 		incrementCurrentPlayerNum();
 		$('body').removeClass().addClass('current-player ' + playerColours[currentPlayerNum]);
 		
 		if ( data.type === 'play' ) {
 			$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').attr('type', 'submitted');      
-      // TODO: FLIP GOAL CARDS HERE      
+			isCardConnectedToGoal()
       
-		} else if (data.type === 'play-avalanche' || (data.type === 'discard' && data.cardType === 'path')) {
+		} else if (data.type === 'play-avalanche' || (data.type === 'discard' && typeOfCard(currentCard) === 'path')) {
 			displayCard(currentRow, currentColumn, 'null');
 		}
 		
