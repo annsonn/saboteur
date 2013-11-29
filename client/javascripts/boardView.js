@@ -332,8 +332,8 @@ var BoardView = function(app) {
   });
 
   app.socket.on('flip goal', function(data) {
-    console.log('flipping goal row:' + data.row + ' column:' + data.column);
-    $('.board ul:nth-child('+data.row+') .board-card:nth-child('+data.column+')').addClass('flipped');    
+    console.log('flipping goal row:' + (data.row+1) + ' column:' + (data.column+1));
+    $('.board ul:nth-child('+(data.row+1)+') .board-card:nth-child('+(data.column+1)+')').addClass('flipped');    
   });
   
 	// Player's Turn is Over	
