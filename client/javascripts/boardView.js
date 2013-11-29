@@ -1,7 +1,10 @@
 var BoardView = function(app) {
   console.log('board view');
   $('#game').attr('page', 'lobby-view');
-
+	
+	var currentPlayerNum = 1;
+	var goalLocations = [{row: 1, column: 9}, {row: 3, column: 9}, {row: 5, column: 9}];
+	
   $('#create-game').click(function(event) {
     app.socket.emit('create');
   })
@@ -23,11 +26,21 @@ var BoardView = function(app) {
     }
   });
 
+	// To keep track of who the current player is and their colour 
+	
+	var incrementCurrentPlayerNum = function() {
+		currentPlayerNum = currentPlayerNum + 1;
+		if (currentPlayerNum > app.game.playerCount) {
+			currentPlayerNum = 1;
+		}		
+	};
+	
+	
   // Once the game start the board is loaded
   app.socket.on('start', function(data) {
     console.log('game started', data);
     
-    var visbleRows = data.length;
+    var visibleRows = data.length;
     
     for (var i = 0; i < data.length; i++) {
       var boardRow = $('<ul />');
@@ -43,7 +56,7 @@ var BoardView = function(app) {
       $(boardRow).appendTo('.board');
     };
     
-    var cardHeight = (windowHeight-40)/visbleRows;
+    var cardHeight = (windowHeight-40)/visibleRows;
     var cardWidth = cardHeight*0.6275; 
     
     $('.board ul li').css({height: cardHeight, width: cardWidth});  
@@ -55,7 +68,9 @@ var BoardView = function(app) {
 			$(this).css('top', cardHeight*(-0.8));
       next(); 
     });   
-    
+		
+		$('body').addClass('current-player ' + playerColours[currentPlayerNum]);
+	
   });
   
 	
@@ -86,10 +101,12 @@ var BoardView = function(app) {
 		return null;		
 	};
 
+	// checking if it's rotated
 	var isRotated = function(row, column) {
 	  return $('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').hasClass('rotated');
 	};
 	
+	// displaying the card in new location
 	var displayCard = function(row, column, card, rotated) {
     if (card == 'null') {
       $('.board ul:nth-child('+row+') .board-card:nth-child('+column+')').removeAttr('card');
@@ -102,6 +119,7 @@ var BoardView = function(app) {
     };
 	};
 	
+	// figuring out location to move to
 	var move = function(type, direction) {
 		var rotated = isRotated(currentRow, currentColumn);
 
@@ -264,9 +282,9 @@ var BoardView = function(app) {
 	   
     };
 
-	if (data.type === 'rotate') {
-		$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').toggleClass('rotated');
-	};
+		if (data.type === 'rotate') {
+			$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').toggleClass('rotated');
+		};
   });
   
   app.socket.on('player-action', function (data) { 
@@ -313,20 +331,32 @@ var BoardView = function(app) {
     }
   });
 
+  app.socket.on('flip goal', function(data) {
+    console.log('flipping goal row:' + data.row + ' column:' + data.column);
+    $('.board ul:nth-child('+data.row+') .board-card:nth-child('+data.column+')').addClass('flipped');    
+  });
+  
+	// Player's Turn is Over	
 	app.socket.on('next player', function(data) {
-		console.log('card accepted by server');
+		console.log('card accepted by server ' + data);
+
+		$('body').removeClass().addClass('current-player ' + playerColours[currentPlayerNum]);
+		
 		if ( data.type === 'play' ) {
-			$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').attr('type', 'submitted');
-		} else if (data.type === 'play-avalanche' || (data.type === 'discard' && data.cardType === 'path')) {
+			$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').attr('type', 'submitted');      
+			isCardConnectedToGoal()
+      
+		} else if (data.type === 'play-avalanche' || (data.type === 'discard' && typeOfCard(currentCard) === 'path')) {
 			displayCard(currentRow, currentColumn, 'null');
 		}
 		
-		
-		
 	});
 	
-  app.socket.on('winner', function(data) {
+  // Winner code
+	app.socket.on('winner', function(data) {
     console.log('We have a winner! ', data);
+    
+    // TODO: add class to body so show winner   
   });
 
 

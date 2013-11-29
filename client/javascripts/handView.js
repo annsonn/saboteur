@@ -1,6 +1,7 @@
 var HandView = function(app) {
   console.log('hand view');
   var playerStatus = 'free';
+	var playerColour = '';
   
   $('#game').attr('page', 'lobby-controller');
   $('#join-game').click(function(event) {
@@ -27,12 +28,14 @@ var HandView = function(app) {
     console.log(data);
     app.game.playerCount = data.game.players.length - 1;
     console.log("num players: " + app.game.playerCount);
-    
+    playerColour = playerColours[app.game.playerCount];
+		
+		
     if (app.player.id == data.playerId) {
       $('#game').attr('page', 'join-mobile');
-      $('#join-mobile .screen').css({
-         "background": "-webkit-radial-gradient(circle, transparent, " + playerColours[app.game.playerCount] + ")"
-      });
+      $('body').addClass(playerColour);
+			$('body').addClass('current-player');
+			
       $('.player-text').append(app.game.playerCount);
       if (app.game.playerCount > 1) {
         $('.ready-button').hide();
@@ -101,6 +104,7 @@ var HandView = function(app) {
 		console.log('card accepted by server');
 		// removing card from hand
     // change colours to tell player that it is not their turn anymore.
+    $('body').removeClass('current-player');
 		unbindCardClick();
 		$('.hand [card='+$('.selected-card').attr('card')+']').first().remove();
 		$('#game').attr('page', 'hand');
@@ -112,6 +116,7 @@ var HandView = function(app) {
 	
   // Game Screens
   app.socket.on('start', function(data) {
+		$('body').removeClass('current-player');
     console.log('game started', data);
     
     if (data.job == "gold-digger") {
@@ -137,6 +142,7 @@ var HandView = function(app) {
   });
     
 	app.socket.on('start turn', function(data){
+    $('body').addClass('current-player');
 		console.log('turn started');
     // TODO: tell player it's their turn
 		bindCardClick();
@@ -233,4 +239,12 @@ var HandView = function(app) {
     console.log('you are now free');
     playerStatus = 'free';
   });
+  
+  // Winner detected
+  app.socket.on('winner', function(data) {
+    console.log('We have a winner! ', data);
+    
+    // TODO: show end game screen
+  });
+  
 };

@@ -1,4 +1,4 @@
-var playerColours = new Array ( "", "red", "orange", "yellow", "green", "blue", "purple", "white", "black" );
+var playerColours = new Array ( "", "red", "orange", "yellow", "green", "blue", "indigo", "violet" );
 
 var Application = function() {
   var app = {

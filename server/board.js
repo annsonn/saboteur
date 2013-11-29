@@ -152,6 +152,20 @@ Board.prototype.removeCard = function( locationY, locationX ) {
 	return false;
 };
 
+Board.prototype.checkToFlipGoal = function( row, column, card ) {
+  if (card.indexOf('connected') >= 0) {
+    for (var i = 0; i < this.goalLocations.length; i++) {
+      if ( (Math.abs(row - this.goalLocations[i].row) === 1 && column === this.goalLocations[i].column)
+        || (Math.abs(column - this.goalLocations[i].column) === 1 && row === this.goalLocations[i].row) ) {
+        return this.goalLocations[i];
+      }
+    }
+  }
+ 
+	return false;
+};
+
+
 Board.prototype.serialize = function() {
   return this.board;
 };

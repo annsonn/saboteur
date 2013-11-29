@@ -18,7 +18,8 @@
 #game[page=hand] #hand,
 #game[page=play-card] #play-card,
 #game[page=board] #board,
-#game[page=player-action] #player-action  {
+#game[page=player-action] #player-action,
+#game[page=hand-end-game] #hand-end-game  {
   display: block
 }
 
@@ -49,6 +50,28 @@ body {
   display: table-cell;
   overflow: hidden;
   vertical-align: middle;
+}
+
+.current-player.red .screen {
+  background: -webkit-radial-gradient(circle, transparent 60%, red);
+}
+.current-player.orange .screen {
+  background: -webkit-radial-gradient(circle, transparent 60%, orange);
+}
+.current-player.yellow .screen {
+  background: -webkit-radial-gradient(circle, transparent 60%, yellow);
+}
+.current-player.green .screen {
+  background: -webkit-radial-gradient(circle, transparent 60%, green);
+}
+.current-player.blue.screen {
+  background: -webkit-radial-gradient(circle, transparent 60%, blue);
+}
+.current-player.indigo .screen {
+  background: -webkit-radial-gradient(circle, transparent 60%, indigo);
+}
+.current-player.violet.screen {
+  background: -webkit-radial-gradient(circle, transparent 60%, violet);
 }
 
 .title {
@@ -92,4 +115,8 @@ body {
 
 .hide {
   display: none !important;
+}
+
+.end-game {
+	display: none;
 }

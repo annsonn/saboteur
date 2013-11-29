@@ -144,11 +144,8 @@
 						</div>
 						<div class="grid-50 right">
 							<div class="buttons">
-								<!-- TODO rotates the button, but only is enabled for path cards -->              
 								<div class="rotate-button"></div>
-								<!-- TODO allows the user to go back to their hand -->
 								<div class="back-button"></div>
-								<!-- TODO allows the user to discard the card to pass -->
 								<div class="discard-button">
 									Discard
 								</div>
@@ -181,6 +178,11 @@
           <div class="board center">
             <!-- board is added in with javascript -->  
           </div>
+					
+					<div id="board-end-game" class="end-game">
+						<div id="saboteurs-win">Saboteurs Win!</div>
+						<div id="miners-win">Miners Win!</div>
+					</div>
         </div>
       </section>
 			
@@ -192,6 +194,21 @@
           </div>
         </div>
       </section>
+										
+			<section id="hand-end-game" class="layer white-border end-game">
+        <div class="screen">
+          <div class="winner center">
+						Winner!
+          </div>
+					<div class="loser center">
+						Loser!
+          </div>
+					<div class="center input title">
+						Replay?
+					</div>
+        </div>
+      </section>	
+			
     </article>
   </body>
 </html>
