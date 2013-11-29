@@ -340,6 +340,7 @@ var BoardView = function(app) {
 	app.socket.on('next player', function(data) {
 		console.log('card accepted by server ' + data);
 
+		incrementCurrentPlayerNum();
 		$('body').removeClass().addClass('current-player ' + playerColours[currentPlayerNum]);
 		
 		if ( data.type === 'play' ) {
