@@ -344,8 +344,6 @@ var BoardView = function(app) {
 		
 		if ( data.type === 'play' ) {
 			$('.board ul:nth-child('+currentRow+') .board-card:nth-child('+currentColumn+')').attr('type', 'submitted');      
-			isCardConnectedToGoal()
-      
 		} else if (data.type === 'play-avalanche' || (data.type === 'discard' && typeOfCard(currentCard) === 'path')) {
 			displayCard(currentRow, currentColumn, 'null');
 		}
