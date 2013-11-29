@@ -3,7 +3,7 @@ module.exports = [
   'connected-right-left', 'connected-right-left', 'connected-right-left', 'connected-right-left', 'connected-right-left', 
   'connected-top-right', 'connected-top-right', 'connected-top-right', 'connected-top-right', 'connected-top-right', 
   'connected-top-left', 'connected-top-left', 'connected-top-left', 'connected-top-left', 'connected-top-left', 
-  'connected-top-right-bottom', 'connected-top-right-bottom', 'connected-top-right-bottom', 'connected-top-right-bottom', 'connected-top-right-bottom', 
+  'connected-top-bottom-left', 'connected-top-bottom-left', 'connected-top-bottom-left', 'connected-top-bottom-left', 'connected-top-bottom-left',
   'connected-top-right-left', 'connected-top-right-left', 'connected-top-right-left', 'connected-top-right-left', 'connected-top-right-left', 
   'connected-cross', 'connected-cross', 'connected-cross', 'connected-cross', 'connected-cross', 
   
@@ -14,7 +14,7 @@ module.exports = [
   'deadend-top-bottom',
   'deadend-right-left',
   'deadend-top-right-bottom',
-  'deadend-top-right-left',
+  'deadend-right-bottom-left',
   'deadend-cross',
   
   'free-pickaxe', 'free-pickaxe', 
