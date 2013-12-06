@@ -332,8 +332,8 @@ var BoardView = function(app) {
   });
 
   app.socket.on('flip goal', function(data) {
-    console.log('flipping goal row:' + data.row + ' column:' + data.column);
-    $('.board ul:nth-child('+data.row+') .board-card:nth-child('+data.column+')').addClass('flipped');    
+    console.log('flipping goal row:' + (data.row+1) + ' column:' + (data.column+1));
+    $('.board ul:nth-child('+(data.row+1)+') .board-card:nth-child('+(data.column+1)+')').addClass('flipped');    
   });
   
 	// Player's Turn is Over	
@@ -408,16 +408,17 @@ var BoardView = function(app) {
   });
 
 	app.socket.on('map-card', function(data) {
-		goalLocations = data;    
+		currentCard = data.card;
+		goalLocations = data.location;    
     currentRow = 0;
 		// console.log(goalLocations);
 		$('.board ul:nth-child('+ (goalLocations[currentRow].row + 1) +') .board-card:nth-child('+ (goalLocations[currentRow].column + 1) +')').attr('type', 'preview');
 	});
   
   app.socket.on('avalanche-card', function(data) {
-		console.log(data)
-    currentRow = data.row + 1;
-    currentColumn = data.column + 1;
+		currentCard = data.card;
+    currentRow = data.location.row + 1;
+    currentColumn = data.location.column + 1;
     $('.board ul:nth-child('+ currentRow +') .board-card:nth-child('+ currentColumn	+')').attr('type', 'preview');
   });
   

@@ -5,7 +5,7 @@ module.exports = {
   'connected-right-left': {right: true, left: true},
   'connected-top-right': {top: true, right: true},
   'connected-top-left': {top: true, left: true},
-  'connected-top-right-bottom': {top: true, right: true, bottom: true},
+  'connected-top-bottom-left': {top: true, left: true, bottom: true},
   'connected-top-right-left': {top: true, right: true, left: true},
   'connected-cross': {top: true, right: true, left: true, bottom: true},
 
@@ -16,7 +16,7 @@ module.exports = {
   'deadend-top-bottom': {block: true, top: true, bottom: true},
   'deadend-right-left': {block: true, right: true, left: true},
   'deadend-top-right-bottom': {block: true, top: true, right: true, bottom: true},
-  'deadend-top-right-left': {block: true, top: true, right: true, left: true},
+  'deadend-right-bottom-left': {block: true, bottom: true, right: true, left: true},
   'deadend-cross': {block: true, top: true, right: true, left: true, bottom: true},
 
   'coal-left': {top: true, left: true},
