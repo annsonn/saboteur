@@ -4,6 +4,7 @@
   "description": "game",
   "main": "index",
   "scripts": {
+	“start”: “node server.js”,
     "test": "nodeunit test"
   },
   "repository": {
